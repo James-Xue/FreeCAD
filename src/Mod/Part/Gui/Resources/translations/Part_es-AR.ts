@@ -1231,8 +1231,8 @@ Posición. Funciona en objetos con ubicaciones y aristas de elipse/parábola/hip
     </message>
     <message>
       <location filename="../../Command.cpp" line="2229"/>
-      <source>Clear all dimensions from the screen.</source>
-      <translation>Borra todas las cotas de la pantalla.</translation>
+      <source>Clear all dimensions from the active 3D view.</source>
+      <translation>Eliminar todas las cotas de la vista 3D activa.</translation>
     </message>
   </context>
   <context>
@@ -2369,7 +2369,7 @@ de proyección.</translation>
       <translation>Barrido</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="198"/>
+      <location filename="../../ViewProviderMirror.cpp" line="211"/>
       <source>Edit Mirror</source>
       <translation>Editar Reflejo en Espejo</translation>
     </message>
@@ -4526,57 +4526,78 @@ se utilizará el vector normal del plano de croquis</translation>
       <translation>Simetrizar</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="33"/>
+      <location filename="../../Mirroring.ui" line="121"/>
+      <source>Use selected reference</source>
+      <translation>Usar referencia seleccionada</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="142"/>
       <source>Shapes</source>
       <translation>Formas</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="41"/>
+      <location filename="../../Mirroring.ui" line="98"/>
       <source>Mirror plane:</source>
       <translation>Plano de Simetría:</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="49"/>
+      <location filename="../../Mirroring.ui" line="106"/>
       <source>XY plane</source>
       <translation>Plano XY</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="54"/>
+      <location filename="../../Mirroring.ui" line="111"/>
       <source>XZ plane</source>
       <translation>Plano XZ</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="59"/>
+      <location filename="../../Mirroring.ui" line="116"/>
       <source>YZ plane</source>
       <translation>Plano YZ</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="67"/>
+      <location filename="../../Mirroring.ui" line="150"/>
+      <location filename="../../Mirroring.cpp" line="215"/>
+      <source>Selecting</source>
+      <translation>Seleccionando</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="166"/>
+      <source>Mirror plane reference</source>
+      <translation>Reflejar plano de referencia</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="20"/>
       <source>Base point</source>
       <translation>Punto base</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="73"/>
+      <location filename="../../Mirroring.ui" line="26"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="96"/>
+      <location filename="../../Mirroring.ui" line="49"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="119"/>
+      <location filename="../../Mirroring.ui" line="72"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="126"/>
+      <location filename="../../Mirroring.cpp" line="211"/>
+      <source>Select reference</source>
+      <translation>Seleccionar referencia</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.cpp" line="280"/>
       <source>Select a shape for mirroring, first.</source>
       <translation>Seleccione primero una forma para simetrizar.</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="133"/>
+      <location filename="../../Mirroring.cpp" line="287"/>
       <source>No such document '%1'.</source>
       <translation>No existe el documento '%1'.</translation>
     </message>
@@ -4732,7 +4753,7 @@ solo los cortes creados serán visibles</translation>
       <translation>Mantener solo los cortes visibles al cerrar</translation>
     </message>
     <message>
-      <location filename="../../SectionCutting.cpp" line="520"/>
+      <location filename="../../SectionCutting.cpp" line="1103"/>
       <source>Sliders are disabled for assemblies</source>
       <translation>Los deslizadores están desactivados para ensamblar</translation>
     </message>
@@ -4976,7 +4997,7 @@ del objeto que se adjunta.</translation>
     <message>
       <location filename="../../TaskAttacher.ui" line="211"/>
       <source>In z-direction:</source>
-      <translation>En dirección z:</translation>
+      <translation>En la dirección z:</translation>
     </message>
     <message>
       <location filename="../../TaskAttacher.ui" line="247"/>
@@ -5702,21 +5723,21 @@ in the 3D view for the sweep path.</source>
       <translation>Editar %1</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="228"/>
+      <location filename="../../AppPartGui.cpp" line="235"/>
       <source>Part and Part Design workbench</source>
-      <translation>Piezas y banco de trabajo de diseño de piezas</translation>
+      <translation>Entornos de trabajo Part y Part Design</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="229"/>
-      <location filename="../../AppPartGui.cpp" line="230"/>
-      <location filename="../../AppPartGui.cpp" line="231"/>
-      <location filename="../../AppPartGui.cpp" line="232"/>
+      <location filename="../../AppPartGui.cpp" line="236"/>
+      <location filename="../../AppPartGui.cpp" line="237"/>
+      <location filename="../../AppPartGui.cpp" line="238"/>
+      <location filename="../../AppPartGui.cpp" line="239"/>
       <source>Part/Part Design</source>
       <translation>Diseño de parte/parte</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="233"/>
-      <location filename="../../AppPartGui.cpp" line="234"/>
+      <location filename="../../AppPartGui.cpp" line="240"/>
+      <location filename="../../AppPartGui.cpp" line="241"/>
       <source>Import-Export</source>
       <translation>Importar-Exportar</translation>
     </message>
@@ -6124,27 +6145,27 @@ Do you want to continue?</source>
       <translation>Establecer colores...</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="78"/>
+      <location filename="../../ViewProviderMirror.cpp" line="85"/>
       <source>Edit mirror plane</source>
       <translation>Editar plano de simetría</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="282"/>
+      <location filename="../../ViewProviderMirror.cpp" line="295"/>
       <source>Edit fillet edges</source>
       <translation>Editar redondeado de aristas</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="392"/>
+      <location filename="../../ViewProviderMirror.cpp" line="405"/>
       <source>Edit chamfer edges</source>
       <translation>Editar biselado de aristas</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="528"/>
+      <location filename="../../ViewProviderMirror.cpp" line="541"/>
       <source>Edit offset</source>
       <translation>Editar desfase</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="610"/>
+      <location filename="../../ViewProviderMirror.cpp" line="623"/>
       <source>Edit thickness</source>
       <translation>Editar espesor</translation>
     </message>
@@ -6816,7 +6837,7 @@ Un 'Filtro Compuesto' se puede utilizar para extraer las piezas restantes.</tran
     <message>
       <location filename="../../DlgScale.cpp" line="206"/>
       <source>The document '%1' doesn't exist.</source>
-      <translation>El documento '%1' es inexistente.</translation>
+      <translation type="unfinished">The document '%1' doesn't exist.</translation>
     </message>
     <message>
       <location filename="../../DlgScale.cpp" line="254"/>
@@ -6843,6 +6864,72 @@ Un 'Filtro Compuesto' se puede utilizar para extraer las piezas restantes.</tran
       <location filename="../../Command.cpp" line="1309"/>
       <source>Scale a selected shape</source>
       <translation>Escala una forma seleccionada</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdSelectFilter</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="46"/>
+      <source>Selection filter</source>
+      <translation>Filtro de selección</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="47"/>
+      <location filename="../../CommandFilter.cpp" line="48"/>
+      <source>Change the selection filter</source>
+      <translation>Cambio de filtro de selección</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdVertexSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="173"/>
+      <source>Vertex selection</source>
+      <translation>Selección de vértices</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="174"/>
+      <location filename="../../CommandFilter.cpp" line="176"/>
+      <source>Only allow the selection of vertices</source>
+      <translation>Permitir solo la selección de vértices</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdEdgeSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="198"/>
+      <source>Edge selection</source>
+      <translation>Selección de bordes</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="199"/>
+      <location filename="../../CommandFilter.cpp" line="201"/>
+      <source>Only allow the selection of edges</source>
+      <translation>Permitir solo la selección de bordes</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdFaceSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="223"/>
+      <source>Face selection</source>
+      <translation>Selección de caras</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="224"/>
+      <location filename="../../CommandFilter.cpp" line="226"/>
+      <source>Only allow the selection of faces</source>
+      <translation>Permitir solo la selección de caras</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdRemoveSelectionGate</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="248"/>
+      <location filename="../../CommandFilter.cpp" line="249"/>
+      <location filename="../../CommandFilter.cpp" line="251"/>
+      <source>All selection filters cleared</source>
+      <translation>Todos los filtros de selección eliminados</translation>
     </message>
   </context>
 </TS>

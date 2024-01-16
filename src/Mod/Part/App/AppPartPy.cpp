@@ -607,7 +607,7 @@ public:
             "* transform: if False, then skip obj's transformation. Use this if mat already include obj's\n"
             "             transformation matrix\n"
             "* retType: 0: return TopoShape,\n"
-            "           1: return (shape,subObj,mat), where subObj is the object referenced in 'subname',\n"
+            "           1: return (shape,mat,subObj), where subObj is the object referenced in 'subname',\n"
             "              and 'mat' is the accumulated transformation matrix of that sub-object.\n"
             "           2: same as 1, but make sure 'subObj' is resolved if it is a link.\n"
             "* refine: refine the returned shape"
@@ -805,7 +805,7 @@ private:
             PyObject* item = (*it).ptr();
             if (PyObject_TypeCheck(item, &(App::DocumentObjectPy::Type))) {
                 App::DocumentObject* obj = static_cast<App::DocumentObjectPy*>(item)->getDocumentObjectPtr();
-                if (obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
+                if (obj->isDerivedFrom<Part::Feature>()) {
                     Part::Feature* part = static_cast<Part::Feature*>(obj);
                     const TopoDS_Shape& shape = part->Shape.getValue();
                     if (!shape.IsNull())
@@ -838,7 +838,7 @@ private:
     Py::Object show(const Py::Tuple& args)
     {
         PyObject *pcObj = nullptr;
-        char *name = "Shape";
+        const char *name = "Shape";
         if (!PyArg_ParseTuple(args.ptr(), "O!|s", &(TopoShapePy::Type), &pcObj, &name))
             throw Py::Exception();
 
@@ -1741,7 +1741,7 @@ private:
         PyObject *pshape;
         double radius;
         double tolerance=0.001;
-        char* scont = "C0";
+        const char* scont = "C0";
         int maxdegree = 3;
         int maxsegment = 30;
 

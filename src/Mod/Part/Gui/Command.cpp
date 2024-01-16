@@ -26,7 +26,6 @@
 # include <QFileInfo>
 # include <QPointer>
 # include <QString>
-# include <Standard_math.hxx>
 # include <Standard_Version.hxx>
 # include <TopExp_Explorer.hxx>
 # include <TopoDS_Shape.hxx>
@@ -2226,7 +2225,7 @@ CmdMeasureClearAll::CmdMeasureClearAll()
     sAppModule    = "Part";
     sGroup        = QT_TR_NOOP("Part");
     sMenuText     = QT_TR_NOOP("Clear All");
-    sToolTipText  = QT_TR_NOOP("Clear all dimensions from the screen.");
+    sToolTipText  = QT_TR_NOOP("Clear all dimensions from the active 3D view.");
     sWhatsThis    = "Part_Measure_Clear_All";
     sStatusTip    = sToolTipText;
     sPixmap       = "Part_Measure_Clear_All";

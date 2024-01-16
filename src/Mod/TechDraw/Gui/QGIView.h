@@ -77,7 +77,6 @@ class TechDrawGuiExport  QGIView : public QObject, public QGraphicsItemGroup
     Q_OBJECT
 public:
     QGIView();
-    ~QGIView() override;
 
     enum {Type = QGraphicsItem::UserType + 101};
     int type() const override { return Type;}
@@ -103,7 +102,9 @@ public:
     virtual void isVisible(bool state);
     virtual bool isVisible();
 
+    virtual bool getGroupSelection();
     virtual void setGroupSelection(bool isSelected);
+    virtual void setGroupSelection(bool isSelected, const std::vector<std::string> &subNames);
 
     virtual void draw();
     virtual void drawCaption();
@@ -119,7 +120,6 @@ public:
     inline qreal getY() { return y() * -1; }
     bool isInnerView() const { return m_innerView; }
     void isInnerView(bool state) { m_innerView = state; }
-    double getYInClip(double y);
     QGIViewClip* getClipGroup();
 
 
@@ -141,8 +141,7 @@ public:
 
     static Gui::ViewProvider* getViewProvider(App::DocumentObject* obj);
     static ViewProviderPage* getViewProviderPage(TechDraw::DrawView* dView);
-    static QGVPage* getQGVPage(TechDraw::DrawView* dView);
-    static QGSPage* getQGSPage(TechDraw::DrawView* dView);
+
     static int calculateFontPixelSize(double sizeInMillimetres);
     static int calculateFontPixelWidth(const QFont &font);
     static const double DefaultFontSizeInMM;
@@ -163,8 +162,6 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
-
-    boost::signals2::signal<void (QGIView*, QPointF)> signalSelectPoint;
 
 public Q_SLOTS:
     virtual void onSourceChange(TechDraw::DrawView* newParent);
@@ -188,6 +185,7 @@ private:
     QHash<QString, QGraphicsItem*> alignHash;
     bool m_locked;
     bool m_innerView;                                                  //View is inside another View
+    bool m_multiselectActivated;
 
     QPen m_pen;
     QBrush m_brush;
@@ -204,7 +202,6 @@ private:
     QPen m_decorPen;
     double m_lockWidth;
     double m_lockHeight;
-    int m_dragState;
     int m_zOrder;
 
 };

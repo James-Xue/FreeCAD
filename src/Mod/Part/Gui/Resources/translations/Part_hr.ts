@@ -1230,8 +1230,8 @@
     </message>
     <message>
       <location filename="../../Command.cpp" line="2229"/>
-      <source>Clear all dimensions from the screen.</source>
-      <translation>Izbriši sve dimenzije sa zaslona.</translation>
+      <source>Clear all dimensions from the active 3D view.</source>
+      <translation>Izbriši sve dimenzije iz aktivnog 3D pogleda</translation>
     </message>
   </context>
   <context>
@@ -2372,7 +2372,7 @@ projekcije.</translation>
       <translation>Zamah</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="198"/>
+      <location filename="../../ViewProviderMirror.cpp" line="211"/>
       <source>Edit Mirror</source>
       <translation>Uredi zrcaljenje</translation>
     </message>
@@ -4539,57 +4539,78 @@ u suprotnom koristit će se normalni vektor ravnine skice
       <translation>Zrcaljenje</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="33"/>
+      <location filename="../../Mirroring.ui" line="121"/>
+      <source>Use selected reference</source>
+      <translation>Koristi odabranu referencu</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="142"/>
       <source>Shapes</source>
       <translation>Oblici</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="41"/>
+      <location filename="../../Mirroring.ui" line="98"/>
       <source>Mirror plane:</source>
       <translation>Površina zrcaljenja:</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="49"/>
+      <location filename="../../Mirroring.ui" line="106"/>
       <source>XY plane</source>
       <translation>XY ravnina</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="54"/>
+      <location filename="../../Mirroring.ui" line="111"/>
       <source>XZ plane</source>
       <translation>Xz ravnina</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="59"/>
+      <location filename="../../Mirroring.ui" line="116"/>
       <source>YZ plane</source>
       <translation>YZ ravnina</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="67"/>
+      <location filename="../../Mirroring.ui" line="150"/>
+      <location filename="../../Mirroring.cpp" line="215"/>
+      <source>Selecting</source>
+      <translation>Odabir </translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="166"/>
+      <source>Mirror plane reference</source>
+      <translation>Referenca ravnine zrcaljenja</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="20"/>
       <source>Base point</source>
       <translation>Osnovna točka</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="73"/>
+      <location filename="../../Mirroring.ui" line="26"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="96"/>
+      <location filename="../../Mirroring.ui" line="49"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="119"/>
+      <location filename="../../Mirroring.ui" line="72"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="126"/>
+      <location filename="../../Mirroring.cpp" line="211"/>
+      <source>Select reference</source>
+      <translation>Odaberite referencu</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.cpp" line="280"/>
       <source>Select a shape for mirroring, first.</source>
       <translation>Prvo odaberite oblik za zrcaljenje.</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="133"/>
+      <location filename="../../Mirroring.cpp" line="287"/>
       <source>No such document '%1'.</source>
       <translation>Ne postoji takav dokument '%1'.</translation>
     </message>
@@ -4745,7 +4766,7 @@ bit će vidljivi samo stvoreni rezovi</translation>
       <translation>Pri zatvaranju neka budu vidljivi samo rezovi</translation>
     </message>
     <message>
-      <location filename="../../SectionCutting.cpp" line="520"/>
+      <location filename="../../SectionCutting.cpp" line="1103"/>
       <source>Sliders are disabled for assemblies</source>
       <translation>Klizači su onemogućeni za sklopove</translation>
     </message>
@@ -5724,21 +5745,21 @@ u 3D pogledu kao putanju za zamah.</translation>
       <translation>Uređivanje %1</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="228"/>
+      <location filename="../../AppPartGui.cpp" line="235"/>
       <source>Part and Part Design workbench</source>
       <translation>Radni stol Djelovi i Izrada djelova</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="229"/>
-      <location filename="../../AppPartGui.cpp" line="230"/>
-      <location filename="../../AppPartGui.cpp" line="231"/>
-      <location filename="../../AppPartGui.cpp" line="232"/>
+      <location filename="../../AppPartGui.cpp" line="236"/>
+      <location filename="../../AppPartGui.cpp" line="237"/>
+      <location filename="../../AppPartGui.cpp" line="238"/>
+      <location filename="../../AppPartGui.cpp" line="239"/>
       <source>Part/Part Design</source>
       <translation>Djelovi/Izrada djelova</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="233"/>
-      <location filename="../../AppPartGui.cpp" line="234"/>
+      <location filename="../../AppPartGui.cpp" line="240"/>
+      <location filename="../../AppPartGui.cpp" line="241"/>
       <source>Import-Export</source>
       <translation>Uvoz / izvoz</translation>
     </message>
@@ -6145,27 +6166,27 @@ Do you want to continue?</source>
       <translation>Postavljanje boje ...</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="78"/>
+      <location filename="../../ViewProviderMirror.cpp" line="85"/>
       <source>Edit mirror plane</source>
       <translation>Uredi površinu zrcaljenja</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="282"/>
+      <location filename="../../ViewProviderMirror.cpp" line="295"/>
       <source>Edit fillet edges</source>
       <translation>Uredi zaobljene rubove</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="392"/>
+      <location filename="../../ViewProviderMirror.cpp" line="405"/>
       <source>Edit chamfer edges</source>
       <translation>Prilagodi krajeve zaruba</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="528"/>
+      <location filename="../../ViewProviderMirror.cpp" line="541"/>
       <source>Edit offset</source>
       <translation>Uredi pomak</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="610"/>
+      <location filename="../../ViewProviderMirror.cpp" line="623"/>
       <source>Edit thickness</source>
       <translation>Uredi debljinu</translation>
     </message>
@@ -6804,7 +6825,7 @@ To znači da će se ukloniti preklapajući volumeni oblika.
     <message>
       <location filename="../../DlgScale.ui" line="22"/>
       <source>X Factor</source>
-      <translation type="unfinished">X Factor</translation>
+      <translation>X faktor</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="29"/>
@@ -6814,37 +6835,37 @@ To znači da će se ukloniti preklapajući volumeni oblika.
     <message>
       <location filename="../../DlgScale.ui" line="64"/>
       <source>Z Factor</source>
-      <translation type="unfinished">Z Factor</translation>
+      <translation>Z faktor</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="71"/>
       <source>Scale the object by a single factor in all directions.</source>
-      <translation type="unfinished">Scale the object by a single factor in all directions.</translation>
+      <translation>Skaliraj objekt jednim faktorom u svim smjerovima.</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="74"/>
       <source>Uniform Scaling</source>
-      <translation type="unfinished">Uniform Scaling</translation>
+      <translation>Ujednačeno skaliranje</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="112"/>
       <source>Y Factor</source>
-      <translation type="unfinished">Y Factor</translation>
+      <translation>Y faktor</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="119"/>
       <source>Specify a different scale factor for each cardinal direction.</source>
-      <translation type="unfinished">Specify a different scale factor for each cardinal direction.</translation>
+      <translation>Za svaku kardinalnu smjer, navedite različiti faktor skale.</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="122"/>
       <source>Non-Uniform Scaling</source>
-      <translation type="unfinished">Non-Uniform Scaling</translation>
+      <translation>Neujednačeno skaliranje</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="195"/>
       <source>Select shape(s) that should be scaled</source>
-      <translation type="unfinished">Select shape(s) that should be scaled</translation>
+      <translation>Odaberite oblik(e) koje treba skalirati</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="199"/>
@@ -6854,7 +6875,7 @@ To znači da će se ukloniti preklapajući volumeni oblika.
     <message>
       <location filename="../../DlgScale.cpp" line="198"/>
       <source>No scalable shapes selected</source>
-      <translation type="unfinished">No scalable shapes selected</translation>
+      <translation>Nema odabranih skalabilnih oblika</translation>
     </message>
     <message>
       <location filename="../../DlgScale.cpp" line="206"/>
@@ -6866,7 +6887,7 @@ To znači da će se ukloniti preklapajući volumeni oblika.
       <location filename="../../DlgScale.cpp" line="260"/>
       <source>Creating Scale failed.
 %1</source>
-      <translation type="unfinished">Creating Scale failed.
+      <translation>Stvaranje skaliranja neuspješno.
 %1</translation>
     </message>
   </context>
@@ -6885,7 +6906,74 @@ To znači da će se ukloniti preklapajući volumeni oblika.
     <message>
       <location filename="../../Command.cpp" line="1309"/>
       <source>Scale a selected shape</source>
-      <translation type="unfinished">Scale a selected shape</translation>
+      <translation>
+Skalira odabrani oblik</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdSelectFilter</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="46"/>
+      <source>Selection filter</source>
+      <translation>Filter odabira</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="47"/>
+      <location filename="../../CommandFilter.cpp" line="48"/>
+      <source>Change the selection filter</source>
+      <translation>Promijeni filter odabira</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdVertexSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="173"/>
+      <source>Vertex selection</source>
+      <translation>Odabir tjemene točke</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="174"/>
+      <location filename="../../CommandFilter.cpp" line="176"/>
+      <source>Only allow the selection of vertices</source>
+      <translation>Molim odaberite samo vrhove</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdEdgeSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="198"/>
+      <source>Edge selection</source>
+      <translation>Odabir ruba</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="199"/>
+      <location filename="../../CommandFilter.cpp" line="201"/>
+      <source>Only allow the selection of edges</source>
+      <translation>Molim odaberite samo rubove</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdFaceSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="223"/>
+      <source>Face selection</source>
+      <translation>Odabir lica</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="224"/>
+      <location filename="../../CommandFilter.cpp" line="226"/>
+      <source>Only allow the selection of faces</source>
+      <translation>Molim odaberite samo lica</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdRemoveSelectionGate</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="248"/>
+      <location filename="../../CommandFilter.cpp" line="249"/>
+      <location filename="../../CommandFilter.cpp" line="251"/>
+      <source>All selection filters cleared</source>
+      <translation>Obrisani svi filteri odabira</translation>
     </message>
   </context>
 </TS>

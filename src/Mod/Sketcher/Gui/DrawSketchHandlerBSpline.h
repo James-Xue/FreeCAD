@@ -27,8 +27,15 @@
 #include <QInputDialog>
 
 #include <Gui/Notifications.h>
+#include <Gui/Command.h>
+#include <Gui/CommandT.h>
 
+#include <Mod/Sketcher/App/SketchObject.h>
+
+#include "DrawSketchHandler.h"
 #include "GeometryCreationMode.h"
+#include "Utils.h"
+#include "ViewProviderSketch.h"
 
 
 namespace SketcherGui
@@ -388,7 +395,12 @@ private:
 
     QString getCrosshairCursorSVGName() const override
     {
-        return QString::fromLatin1("Sketcher_Pointer_Create_BSpline");
+        if (SketcherGui::DrawSketchHandlerBSpline::ConstrMethod == 1) {
+            return QString::fromLatin1("Sketcher_Pointer_Create_Periodic_BSpline");
+        }
+        else {
+            return QString::fromLatin1("Sketcher_Pointer_Create_BSpline");
+        }
     }
 
     void addSugConstraint()
@@ -472,7 +484,7 @@ private:
                                       controlpoints.c_str(),
                                       ConstrMethod == 0 ? "False" : "True",
                                       std::min(maxDegree, SplineDegree),
-                                      geometryCreationMode == Construction ? "True" : "False");
+                                      constructionModeAsBooleanText());
 
                 currentgeoid++;
 

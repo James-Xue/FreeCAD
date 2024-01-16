@@ -1230,8 +1230,8 @@
     </message>
     <message>
       <location filename="../../Command.cpp" line="2229"/>
-      <source>Clear all dimensions from the screen.</source>
-      <translation>Удалить все размеры с экрана.</translation>
+      <source>Clear all dimensions from the active 3D view.</source>
+      <translation>Удалите все размеры из активного 3D-вида.</translation>
     </message>
   </context>
   <context>
@@ -2368,7 +2368,7 @@ of projection.</source>
       <translation>Профиль по траектории</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="198"/>
+      <location filename="../../ViewProviderMirror.cpp" line="211"/>
       <source>Edit Mirror</source>
       <translation>Изменить зеркалирование</translation>
     </message>
@@ -4525,57 +4525,78 @@ the sketch plane's normal vector will be used</source>
       <translation>Зеркальное отражение</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="33"/>
+      <location filename="../../Mirroring.ui" line="121"/>
+      <source>Use selected reference</source>
+      <translation>Использовать выбранную ссылку</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="142"/>
       <source>Shapes</source>
       <translation>Фигуры</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="41"/>
+      <location filename="../../Mirroring.ui" line="98"/>
       <source>Mirror plane:</source>
       <translation>Плоскость симметрии:</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="49"/>
+      <location filename="../../Mirroring.ui" line="106"/>
       <source>XY plane</source>
       <translation>Плоскость XY</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="54"/>
+      <location filename="../../Mirroring.ui" line="111"/>
       <source>XZ plane</source>
       <translation>Плоскость XZ</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="59"/>
+      <location filename="../../Mirroring.ui" line="116"/>
       <source>YZ plane</source>
       <translation>Плоскость YZ</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="67"/>
+      <location filename="../../Mirroring.ui" line="150"/>
+      <location filename="../../Mirroring.cpp" line="215"/>
+      <source>Selecting</source>
+      <translation>Выбор</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="166"/>
+      <source>Mirror plane reference</source>
+      <translation type="unfinished">Mirror plane reference</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="20"/>
       <source>Base point</source>
       <translation>Базовая точка</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="73"/>
+      <location filename="../../Mirroring.ui" line="26"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="96"/>
+      <location filename="../../Mirroring.ui" line="49"/>
       <source>y</source>
       <translation>у</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="119"/>
+      <location filename="../../Mirroring.ui" line="72"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="126"/>
+      <location filename="../../Mirroring.cpp" line="211"/>
+      <source>Select reference</source>
+      <translation>Выберите ориентир</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.cpp" line="280"/>
       <source>Select a shape for mirroring, first.</source>
       <translation>Сначала выберите фигуру для зеркального отображения.</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="133"/>
+      <location filename="../../Mirroring.cpp" line="287"/>
       <source>No such document '%1'.</source>
       <translation>Нет такого документа '%1'.</translation>
     </message>
@@ -4731,7 +4752,7 @@ only created cuts will be visible</source>
       <translation>Показывать разрез после закрытия</translation>
     </message>
     <message>
-      <location filename="../../SectionCutting.cpp" line="520"/>
+      <location filename="../../SectionCutting.cpp" line="1103"/>
       <source>Sliders are disabled for assemblies</source>
       <translation>Слайдеры отключены для сборки</translation>
     </message>
@@ -4870,7 +4891,7 @@ only created cuts will be visible</source>
     <message>
       <location filename="../../TaskSweep.cpp" line="339"/>
       <source>Wrong selection</source>
-      <translation>Неправильный выбор</translation>
+      <translation>Неправильное выделение</translation>
     </message>
     <message>
       <location filename="../../TaskSweep.cpp" line="339"/>
@@ -5701,21 +5722,21 @@ in the 3D view for the sweep path.</source>
       <translation>Редактировать %1</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="228"/>
+      <location filename="../../AppPartGui.cpp" line="235"/>
       <source>Part and Part Design workbench</source>
       <translation>Верстак Part и Part Design</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="229"/>
-      <location filename="../../AppPartGui.cpp" line="230"/>
-      <location filename="../../AppPartGui.cpp" line="231"/>
-      <location filename="../../AppPartGui.cpp" line="232"/>
+      <location filename="../../AppPartGui.cpp" line="236"/>
+      <location filename="../../AppPartGui.cpp" line="237"/>
+      <location filename="../../AppPartGui.cpp" line="238"/>
+      <location filename="../../AppPartGui.cpp" line="239"/>
       <source>Part/Part Design</source>
       <translation>Part/Part Design</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="233"/>
-      <location filename="../../AppPartGui.cpp" line="234"/>
+      <location filename="../../AppPartGui.cpp" line="240"/>
+      <location filename="../../AppPartGui.cpp" line="241"/>
       <source>Import-Export</source>
       <translation>Импорт/экспорт</translation>
     </message>
@@ -5727,7 +5748,7 @@ in the 3D view for the sweep path.</source>
       <location filename="../../Command.cpp" line="914"/>
       <location filename="../../Command.cpp" line="2035"/>
       <source>Wrong selection</source>
-      <translation>Неправильное выделение</translation>
+      <translation>Неправильный выбор</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="315"/>
@@ -6123,27 +6144,27 @@ Do you want to continue?</source>
       <translation>Установите цвета ...</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="78"/>
+      <location filename="../../ViewProviderMirror.cpp" line="85"/>
       <source>Edit mirror plane</source>
       <translation>Редактировать плоскость симметрии</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="282"/>
+      <location filename="../../ViewProviderMirror.cpp" line="295"/>
       <source>Edit fillet edges</source>
       <translation>Изменение скруглений ребер</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="392"/>
+      <location filename="../../ViewProviderMirror.cpp" line="405"/>
       <source>Edit chamfer edges</source>
       <translation>Редактировать фаску грани</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="528"/>
+      <location filename="../../ViewProviderMirror.cpp" line="541"/>
       <source>Edit offset</source>
       <translation>Изменить смещение</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="610"/>
+      <location filename="../../ViewProviderMirror.cpp" line="623"/>
       <source>Edit thickness</source>
       <translation>Изменить толщину</translation>
     </message>
@@ -6820,7 +6841,7 @@ A 'Compound Filter' can be used to extract the remaining pieces.</source>
     <message>
       <location filename="../../DlgScale.cpp" line="206"/>
       <source>The document '%1' doesn't exist.</source>
-      <translation>Документ «%1» не существует.</translation>
+      <translation type="unfinished">The document '%1' doesn't exist.</translation>
     </message>
     <message>
       <location filename="../../DlgScale.cpp" line="254"/>
@@ -6847,6 +6868,72 @@ A 'Compound Filter' can be used to extract the remaining pieces.</source>
       <location filename="../../Command.cpp" line="1309"/>
       <source>Scale a selected shape</source>
       <translation>Масштабировать выбранную фигуру</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdSelectFilter</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="46"/>
+      <source>Selection filter</source>
+      <translation>Фильтр выделения</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="47"/>
+      <location filename="../../CommandFilter.cpp" line="48"/>
+      <source>Change the selection filter</source>
+      <translation>Изменить фильтр выбора</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdVertexSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="173"/>
+      <source>Vertex selection</source>
+      <translation>Выбор вершин</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="174"/>
+      <location filename="../../CommandFilter.cpp" line="176"/>
+      <source>Only allow the selection of vertices</source>
+      <translation>Разрешить выбор только вершин</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdEdgeSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="198"/>
+      <source>Edge selection</source>
+      <translation>Выбор ребер</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="199"/>
+      <location filename="../../CommandFilter.cpp" line="201"/>
+      <source>Only allow the selection of edges</source>
+      <translation>Разрешить выбор только ребер</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdFaceSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="223"/>
+      <source>Face selection</source>
+      <translation>Выбор граней</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="224"/>
+      <location filename="../../CommandFilter.cpp" line="226"/>
+      <source>Only allow the selection of faces</source>
+      <translation>Разрешать только выбор граней</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdRemoveSelectionGate</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="248"/>
+      <location filename="../../CommandFilter.cpp" line="249"/>
+      <location filename="../../CommandFilter.cpp" line="251"/>
+      <source>All selection filters cleared</source>
+      <translation>Все фильтры выбора очищены</translation>
     </message>
   </context>
 </TS>

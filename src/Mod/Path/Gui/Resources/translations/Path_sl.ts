@@ -1124,7 +1124,7 @@ Ponastavitev izbriše vse trenutne predmete s seznama in izpolni seznam z vsemi 
     <message>
       <location filename="../panels/PageOpDeburrEdit.ui" line="195"/>
       <source>Width of chamfer cut.</source>
-      <translation>Širina prisekave.</translation>
+      <translation>Širina posnetega roba.</translation>
     </message>
     <message>
       <location filename="../panels/PageOpDeburrEdit.ui" line="222"/>
@@ -2947,48 +2947,48 @@ Navadno se priporoča uporabo odnosnih poti zaradi njihove prilagodljivosti in n
       <translation>Zajemi plasti</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="54"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="52"/>
       <source>Arc</source>
       <translation>Lok</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="55"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="53"/>
       <source>Tangent</source>
       <translation>Dotikalnica</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="56"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="54"/>
       <source>Perpendicular</source>
       <translation>Pravokoten</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="169"/>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="176"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="168"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="175"/>
       <source>Length/Radius positive not Null</source>
       <translation>Dolžina/polmer večja od nič</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="677"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="464"/>
       <source>LeadInOut</source>
       <translation>Vstopanje/Izstopanje</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="681"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="468"/>
       <source>Creates a Cutter Radius Compensation G41/G42 Entry Dressup object from a selected path</source>
       <translation>Ustvari iz izbrane poti dodelavo vstopanja G41/G42 s popravkom polmera orodja</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="696"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="483"/>
       <source>Please select one path object</source>
       <translation>Izberite eno pot</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="703"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="490"/>
       <source>The selected object is not a path</source>
       <translation>Izbrani predmet ni pot</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="709"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="496"/>
       <source>Please select a Profile object</source>
       <translation>Izberite oris</translation>
     </message>
@@ -4282,9 +4282,9 @@ Privzeto: 3 mm</translation>
   <context>
     <name>Path</name>
     <message>
-      <location filename="../../../InitGui.py" line="282"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="69"/>
       <source>The currently selected unit schema: 
-     '{}'
+     '{}' for this document
  Does not use 'minutes' for velocity values. 
  
 CNC machines require feed rate to be expressed in 
@@ -4294,30 +4294,30 @@ For example:
     'Metric, Small Parts &amp; CNC'
     'US Customary'
     'Imperial Decimal'</source>
-      <translation>Trenutno izbran način enot: 
-     '{}'
- Za vrednosti hitrosti ne uporablja "minut". 
+      <translation type="unfinished">The currently selected unit schema: 
+     '{}' for this document
+ Does not use 'minutes' for velocity values. 
  
-CNC stroji zahtevajo podajalno hitrost podano v
-enotah/minuto. Za zagotovitev pravilne G-kode: 
-Izberite v prednastavitvah način na osnovi minut.
-Na primer:
-    "Metrični, majhni delci in CNC"
-    "Ameriški merski sistem"
-    "Anglosaški decimalni"</translation>
+CNC machines require feed rate to be expressed in 
+unit/minute. To ensure correct G-code: 
+Select a minute-based schema in preferences.
+For example:
+    'Metric, Small Parts &amp; CNC'
+    'US Customary'
+    'Imperial Decimal'</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="284"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="71"/>
       <source>Warning</source>
       <translation>Opozorilo</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="286"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="76"/>
       <source>Ok</source>
       <translation>V redu</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="288"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="79"/>
       <source>Don't Show This Anymore</source>
       <translation>Ne prikazuj več tega</translation>
     </message>
@@ -4654,11 +4654,11 @@ Na primer:
     </message>
     <message>
       <location filename="../../../Path/Dressup/Boundary.py" line="53"/>
-      <location filename="../../../Path/Dressup/Tags.py" line="943"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="940"/>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="54"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="423"/>
       <location filename="../../../Path/Dressup/Gui/Dragknife.py" line="58"/>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="63"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="61"/>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="57"/>
       <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="62"/>
       <source>The base path to modify</source>
@@ -4675,72 +4675,72 @@ Na primer:
       <translation>Določa, če meja orisuje vključevalno ali izključevalno krinko.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="202"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="203"/>
       <source>The base path to dress up</source>
       <translation>Osnovna pot za dodelavo</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="210"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="211"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="429"/>
       <source>The side of path to insert bones</source>
       <translation>Stran poti za vstavljanje kosti</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="227"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="228"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="437"/>
       <source>The style of bones</source>
       <translation>Slog kosti</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="238"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="239"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="455"/>
       <source>The algorithm to determine the bone length</source>
       <translation>Algoritem za določitev dolžine kosti</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="249"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="250"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="463"/>
       <source>Dressup length if incision is set to 'custom'</source>
       <translation>Dolžina dodelave, če je vrez nastavljen "po meri'</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="257"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="258"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="445"/>
       <source>Bones that aren't dressed up</source>
       <translation>Kosti, ki niso dodelane</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="949"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="946"/>
       <source>Width of tags.</source>
       <translation>Širina mostičkov.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="955"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="952"/>
       <source>Height of tags.</source>
       <translation>Višina mostičkov.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="961"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="958"/>
       <source>Angle of tag plunge and ascent.</source>
       <translation>Kot spusta in vzpona pri mostičku.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="967"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="964"/>
       <source>Radius of the fillet for the tag.</source>
       <translation>Polmer zaokrožitve za mostiček.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="973"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="970"/>
       <source>Locations of inserted holding tags</source>
       <translation>Položaji vstavljenih mostičkov</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="979"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="976"/>
       <source>IDs of disabled holding tags</source>
       <translation>Določilniki onemogočenih mostičkov</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="988"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="985"/>
       <source>Factor determining the # of segments used to approximate rounded tags.</source>
       <translation>Količnik, ki določa # odsekov, uporabljenih za približek zaokrožitve mostičkov.</translation>
     </message>
@@ -4770,57 +4770,57 @@ Na primer:
       <translation>Višina na katero naj se dvigne med kotnim dejanjem</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="69"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="67"/>
       <source>Calculate roll-on to path</source>
       <translation>Izračunaj nagibanje s potjo</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="75"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="73"/>
       <source>Calculate roll-off from path</source>
       <translation>Izračunaj nagibanje od poti</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="81"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="79"/>
       <source>Keep the Tool Down in Path</source>
       <translation>Ohrani spuščeno orodje na poti</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="87"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="85"/>
       <source>Length or Radius of the approach</source>
       <translation>Dolžina ali polmer pristopa</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="93"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="91"/>
       <source>Length or Radius of the exit</source>
       <translation>Dolžina ali polmer izstopanja</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="99"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="97"/>
       <source>The Style of motion into the Path</source>
       <translation>Slog prehoda v pot</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="106"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="104"/>
       <source>The Style of motion out of the Path</source>
       <translation>Slog prehoda s pot</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="113"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="111"/>
       <source>Extends LeadIn distance</source>
       <translation>Poveča razdaljo vstopanja</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="119"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="117"/>
       <source>Extends LeadOut distance</source>
       <translation>Poveča razdaljo izstopanja</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="125"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="123"/>
       <source>Perform plunges with G0</source>
       <translation>Izvedi zarivanja z G0</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="133"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="131"/>
       <source>Apply LeadInOut to layers within an operation</source>
       <translation>Uveljavi vstop/izstop na plasteh znotraj dejanja</translation>
     </message>
@@ -5274,7 +5274,7 @@ Na primer:
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="125"/>
       <source>The desired width of the chamfer</source>
-      <translation>Želena širina posnetja</translation>
+      <translation>Želena širina posnetega roba</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="131"/>
@@ -5284,7 +5284,7 @@ Na primer:
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="137"/>
       <source>How to join chamfer segments</source>
-      <translation>Kako se združuje prisekane odseke</translation>
+      <translation>Kako združiti odseke posnetih robov</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="145"/>
@@ -6094,17 +6094,17 @@ Na primer:
   <context>
     <name>Path_DressupTag</name>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1310"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1307"/>
       <source>Cannot insert holding tags for this path - please select a Profile path</source>
       <translation type="unfinished">Cannot insert holding tags for this path - please select a Profile path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1360"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1357"/>
       <source>The selected object is not a path</source>
       <translation>Izbrani predmet ni pot</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1365"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1362"/>
       <source>Please select a Profile object</source>
       <translation>Izberite oris</translation>
     </message>
@@ -6146,7 +6146,7 @@ Na primer:
     <name>Path_Dressup</name>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="284"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="368"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="366"/>
       <source>Please select one path object
 </source>
       <translation type="unfinished">Please select one path object
@@ -6154,7 +6154,7 @@ Na primer:
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="289"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="373"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="371"/>
       <source>The selected object is not a path
 </source>
       <translation type="unfinished">The selected object is not a path
@@ -6162,7 +6162,7 @@ Na primer:
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="294"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="378"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="376"/>
       <source>Please select a Path object</source>
       <translation type="unfinished">Please select a Path object</translation>
     </message>
@@ -6314,12 +6314,12 @@ Na primer:
   <context>
     <name>Path_Probe</name>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="293"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="292"/>
       <source>Select Probe Point File</source>
       <translation type="unfinished">Select Probe Point File</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="295"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="294"/>
       <location filename="../../../Path/Op/Gui/Probe.py" line="95"/>
       <source>All Files (*.*)</source>
       <translation>Vse datoteke (*.*)</translation>
@@ -6343,12 +6343,12 @@ Na primer:
   <context>
     <name>Path_DressupZCorrect</name>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="347"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="346"/>
       <source>Z Depth Correction</source>
       <translation>Popravek globine Z</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="351"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="350"/>
       <source>Use Probe Map to correct Z depth</source>
       <translation type="unfinished">Use Probe Map to correct Z depth</translation>
     </message>
@@ -6372,7 +6372,7 @@ Na primer:
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="260"/>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="61"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="89"/>
       <source>2D</source>
       <translation>2D</translation>
     </message>
@@ -6467,27 +6467,27 @@ Na primer:
       <translation type="unfinished">Creates a Path Job</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="60"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="88"/>
       <source>Solids</source>
       <translation>Telesa</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="62"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="90"/>
       <source>Jobs</source>
       <translation>Zaposlitve</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="330"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="358"/>
       <source>Base -/+ %.2f/%.2f %.2f/%.2f %.2f/%.2f</source>
       <translation type="unfinished">Base -/+ %.2f/%.2f %.2f/%.2f %.2f/%.2f</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="340"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="368"/>
       <source>Box: %.2f x %.2f x %.2f</source>
       <translation type="unfinished">Box: %.2f x %.2f x %.2f</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="355"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="383"/>
       <source>Unsupported stock type</source>
       <translation type="unfinished">Unsupported stock type</translation>
     </message>
@@ -6578,7 +6578,7 @@ Na primer:
   <context>
     <name>Path_Job:</name>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="346"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="374"/>
       <source>Cylinder: %.2f x %.2f</source>
       <translation type="unfinished">Cylinder: %.2f x %.2f</translation>
     </message>
@@ -6984,7 +6984,7 @@ Na primer:
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="188"/>
       <source>Round</source>
-      <translation>Zaokroženo</translation>
+      <translation type="unfinished">Round</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="189"/>
@@ -7090,7 +7090,7 @@ Na primer:
     <message>
       <location filename="../../../Path/Op/Profile.py" line="204"/>
       <source>Round</source>
-      <translation>Zaokroženo</translation>
+      <translation type="unfinished">Round</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Profile.py" line="205"/>

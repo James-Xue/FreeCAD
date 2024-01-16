@@ -151,7 +151,7 @@ void ShapeBinder::getFilteredReferences(const App::PropertyLinkSubList* prop,
     //we only allow one part feature, so get the first one we find
     size_t index = 0;
     for (auto* it : objs) {
-        if (it && it->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
+        if (it && it->isDerivedFrom<Part::Feature>()) {
             obj = static_cast<Part::Feature*>(it);
             break;
         }
@@ -182,11 +182,11 @@ void ShapeBinder::getFilteredReferences(const App::PropertyLinkSubList* prop,
     else {
         // search for Origin features
         for (auto* it : objs) {
-            if (it && it->getTypeId().isDerivedFrom(App::Line::getClassTypeId())) {
+            if (it && it->isDerivedFrom<App::Line>()) {
                 obj = static_cast<App::GeoFeature*>(it);
                 break;
             }
-            else if (it && it->getTypeId().isDerivedFrom(App::Plane::getClassTypeId())) {
+            else if (it && it->isDerivedFrom<App::Plane>()) {
                 obj = static_cast<App::GeoFeature*>(it);
                 break;
             }
@@ -199,7 +199,7 @@ Part::TopoShape ShapeBinder::buildShapeFromReferences(App::GeoFeature* obj, std:
     if (!obj)
         return TopoDS_Shape();
 
-    if (obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
+    if (obj->isDerivedFrom<Part::Feature>()) {
         Part::Feature* part = static_cast<Part::Feature*>(obj);
         if (subs.empty())
             return part->Shape.getValue();
@@ -224,14 +224,14 @@ Part::TopoShape ShapeBinder::buildShapeFromReferences(App::GeoFeature* obj, std:
             return cmp;
         }
     }
-    else if (obj->getTypeId().isDerivedFrom(App::Line::getClassTypeId())) {
+    else if (obj->isDerivedFrom<App::Line>()) {
         gp_Lin line;
         BRepBuilderAPI_MakeEdge mkEdge(line);
         Part::TopoShape shape(mkEdge.Shape());
         shape.setPlacement(obj->Placement.getValue());
         return shape;
     }
-    else if (obj->getTypeId().isDerivedFrom(App::Plane::getClassTypeId())) {
+    else if (obj->isDerivedFrom<App::Plane>()) {
         gp_Pln plane;
         BRepBuilderAPI_MakeFace mkFace(plane);
         Part::TopoShape shape(mkFace.Shape());
@@ -273,7 +273,7 @@ void ShapeBinder::slotChangedObject(const App::DocumentObject& Obj, const App::P
         return;
     if (!TraceSupport.getValue())
         return;
-    if (!Prop.getTypeId().isDerivedFrom(App::PropertyPlacement::getClassTypeId()))
+    if (!Prop.isDerivedFrom<App::PropertyPlacement>())
         return;
 
     App::GeoFeature* obj = nullptr;
@@ -396,11 +396,11 @@ App::DocumentObject* SubShapeBinder::getSubObject(const char* subname, PyObject*
     std::string name(subname, dot - subname);
     for (auto& l : Support.getSubListValues()) {
         auto obj = l.getValue();
-        if (!obj || !obj->getNameInDocument())
+        if (!obj || !obj->isAttachedToDocument())
             continue;
         for (auto& sub : l.getSubValues()) {
             auto sobj = obj->getSubObject(sub.c_str());
-            if (!sobj || !sobj->getNameInDocument())
+            if (!sobj || !sobj->isAttachedToDocument())
                 continue;
             if (subname[0] == '$') {
                 if (sobj->Label.getStrValue() != name.c_str() + 1)
@@ -512,7 +512,7 @@ void SubShapeBinder::update(SubShapeBinder::UpdateOption options) {
     std::unordered_map<const App::DocumentObject*, Base::Matrix4D> mats;
     for (auto& l : Support.getSubListValues()) {
         auto obj = l.getValue();
-        if (!obj || !obj->getNameInDocument())
+        if (!obj || !obj->isAttachedToDocument())
             continue;
         auto res = mats.emplace(obj, Base::Matrix4D());
         if (parent && res.second) {
@@ -891,7 +891,7 @@ void SubShapeBinder::checkPropertyStatus() {
 
     // Make Shape transient can reduce some file size, and maybe reduce file
     // loading time as well. But there maybe complication arise when doing
-    // TopoShape version upgrade. So we DO NOT set trasient at the moment.
+    // TopoShape version upgrade. So we DO NOT set transient at the moment.
     //
     // Shape.setStatus(App::Property::Transient, !PartialLoad.getValue() && BindMode.getValue()==0);
 }
@@ -909,7 +909,7 @@ void SubShapeBinder::setLinks(std::map<App::DocumentObject*, std::vector<std::st
     inSet.insert(this);
 
     for (auto& v : values) {
-        if (!v.first || !v.first->getNameInDocument())
+        if (!v.first || !v.first->isAttachedToDocument())
             FC_THROWM(Base::ValueError, "Invalid document object");
         if (inSet.find(v.first) != inSet.end())
             FC_THROWM(Base::ValueError, "Cyclic reference to " << v.first->getFullName());

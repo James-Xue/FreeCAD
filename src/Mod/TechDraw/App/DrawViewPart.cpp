@@ -168,7 +168,7 @@ DrawViewPart::~DrawViewPart()
 //!  XSource property lists
 TopoDS_Shape DrawViewPart::getSourceShape(bool fuse) const
 {
-    //    Base::Console().Message("DVP::getSourceShape()\n");
+//    Base::Console().Message("DVP::getSourceShape()\n");
     const std::vector<App::DocumentObject*>& links = getAllSources();
     if (links.empty()) {
         return TopoDS_Shape();
@@ -184,7 +184,7 @@ TopoDS_Shape DrawViewPart::getSourceShape(bool fuse) const
 //! version of the shape?  Should we have a getShapeForSection?
 TopoDS_Shape DrawViewPart::getShapeForDetail() const
 {
-    return ShapeUtils::rotateShape(getSourceShape(true), getProjectionCS(), Rotation.getValue());
+    return ShapeUtils::rotateShape(getSourceShape(false), getProjectionCS(), Rotation.getValue());
 }
 
 //! combine the regular links and xlinks into a single list
@@ -201,13 +201,14 @@ std::vector<App::DocumentObject*> DrawViewPart::getAllSources() const
     return result;
 }
 
-//! pick supported 2d shapes out of the Source properties and
+//! pick vertex objects out of the Source properties and
 //! add them directly to the geometry without going through HLR
-void DrawViewPart::addShapes2d(void)
+void DrawViewPart::addPoints(void)
 {
+//    Base::Console().Message("DVP::addPoints()\n");
+    // get all the 2d shapes in the sources, then pick through them for vertices.
     std::vector<TopoDS_Shape> shapes = ShapeExtractor::getShapes2d(getAllSources());
     for (auto& s : shapes) {
-        //just vertices for now
         if (s.ShapeType() == TopAbs_VERTEX) {
             gp_Pnt gp = BRep_Tool::Pnt(TopoDS::Vertex(s));
             Base::Vector3d vp(gp.X(), gp.Y(), gp.Z());
@@ -216,20 +217,6 @@ void DrawViewPart::addShapes2d(void)
             Base::Vector3d projected = projectPoint(vp * getScale());
             TechDraw::VertexPtr v1(std::make_shared<TechDraw::Vertex>(projected));
             geometryObject->addVertex(v1);
-        }
-        else if (s.ShapeType() == TopAbs_EDGE) {
-            //not supporting edges yet.  Why?
-            //Base::Console().Message("DVP::add2dShapes - found loose edge - isNull: %d\n", s.IsNull());
-            TopoDS_Shape sTrans = ShapeUtils::moveShape(s,
-                                                      m_saveCentroid * -1.0);
-            TopoDS_Shape sScale = ShapeUtils::scaleShape(sTrans,
-                                                       getScale());
-            TopoDS_Shape sMirror = ShapeUtils::mirrorShape(sScale);
-            TopoDS_Edge edge = TopoDS::Edge(sMirror);
-            BaseGeomPtr bg = projectEdge(edge);
-
-            geometryObject->addEdge(bg);
-            //save connection between source feat and this edge
         }
     }
 }
@@ -443,7 +430,7 @@ void DrawViewPart::postHlrTasks(void)
     addCosmeticVertexesToGeom();
     addCosmeticEdgesToGeom();
     addReferencesToGeom();
-    addShapes2d();
+    addPoints();
 
     //balloons need to be recomputed here because their
     //references will be invalid until the geometry exists
@@ -717,7 +704,7 @@ std::vector<TechDraw::DrawHatch*> DrawViewPart::getHatches() const
     std::vector<TechDraw::DrawHatch*> result;
     std::vector<App::DocumentObject*> children = getInList();
     for (auto& child : children) {
-        if (child->getTypeId().isDerivedFrom(DrawHatch::getClassTypeId()) && !child->isRemoving()) {
+        if (child->isDerivedFrom<DrawHatch>() && !child->isRemoving()) {
             TechDraw::DrawHatch* hatch = dynamic_cast<TechDraw::DrawHatch*>(child);
             result.push_back(hatch);
         }
@@ -731,7 +718,7 @@ std::vector<TechDraw::DrawGeomHatch*> DrawViewPart::getGeomHatches() const
     std::vector<TechDraw::DrawGeomHatch*> result;
     std::vector<App::DocumentObject*> children = getInList();
     for (auto& child : children) {
-        if (child->getTypeId().isDerivedFrom(DrawGeomHatch::getClassTypeId())
+        if (child->isDerivedFrom<DrawGeomHatch>()
             && !child->isRemoving()) {
             TechDraw::DrawGeomHatch* geom = dynamic_cast<TechDraw::DrawGeomHatch*>(child);
             result.push_back(geom);
@@ -751,7 +738,7 @@ std::vector<TechDraw::DrawViewDimension*> DrawViewPart::getDimensions() const
     std::vector<App::DocumentObject*>::iterator newEnd =
         std::unique(children.begin(), children.end());
     for (std::vector<App::DocumentObject*>::iterator it = children.begin(); it != newEnd; ++it) {
-        if ((*it)->getTypeId().isDerivedFrom(DrawViewDimension::getClassTypeId())) {
+        if ((*it)->isDerivedFrom<DrawViewDimension>()) {
             TechDraw::DrawViewDimension* dim = dynamic_cast<TechDraw::DrawViewDimension*>(*it);
             result.push_back(dim);
         }
@@ -767,7 +754,7 @@ std::vector<TechDraw::DrawViewBalloon*> DrawViewPart::getBalloons() const
     std::vector<App::DocumentObject*>::iterator newEnd =
         std::unique(children.begin(), children.end());
     for (std::vector<App::DocumentObject*>::iterator it = children.begin(); it != newEnd; ++it) {
-        if ((*it)->getTypeId().isDerivedFrom(DrawViewBalloon::getClassTypeId())) {
+        if ((*it)->isDerivedFrom<DrawViewBalloon>()) {
             TechDraw::DrawViewBalloon* balloon = dynamic_cast<TechDraw::DrawViewBalloon*>(*it);
             result.push_back(balloon);
         }
@@ -783,6 +770,8 @@ const std::vector<TechDraw::VertexPtr> DrawViewPart::getVertexGeometry() const
     return std::vector<TechDraw::VertexPtr>();
 }
 
+
+//! TechDraw vertex names run from 0 to n-1
 TechDraw::VertexPtr DrawViewPart::getVertex(std::string vertexName) const
 {
     const std::vector<TechDraw::VertexPtr> allVertex(DrawViewPart::getVertexGeometry());
@@ -791,7 +780,7 @@ TechDraw::VertexPtr DrawViewPart::getVertex(std::string vertexName) const
         //should not happen
         throw Base::IndexError("DVP::getVertex - No vertices found.");
     }
-    if (iTarget > allVertex.size()) {
+    if (iTarget >= allVertex.size()) {
         //should not happen
         throw Base::IndexError("DVP::getVertex - Vertex not found.");
     }
@@ -800,6 +789,7 @@ TechDraw::VertexPtr DrawViewPart::getVertex(std::string vertexName) const
 }
 
 //! returns existing BaseGeom of 2D Edge
+//! TechDraw edge names run from 0 to n-1
 TechDraw::BaseGeomPtr DrawViewPart::getEdge(std::string edgeName) const
 {
     const std::vector<TechDraw::BaseGeomPtr>& geoms = getEdgeGeometry();
@@ -814,7 +804,9 @@ TechDraw::BaseGeomPtr DrawViewPart::getEdge(std::string edgeName) const
     return geoms.at(iEdge);
 }
 
+
 //! returns existing 2d Face
+//! TechDraw face names run from 0 to n-1
 TechDraw::FacePtr DrawViewPart::getFace(std::string faceName) const
 {
     const std::vector<TechDraw::FacePtr>& faces = getFaceGeometry();
@@ -1153,7 +1145,7 @@ std::vector<DrawViewSection*> DrawViewPart::getSectionRefs() const
     std::vector<DrawViewSection*> result;
     std::vector<App::DocumentObject*> inObjs = getInList();
     for (auto& o : inObjs) {
-        if (o->getTypeId().isDerivedFrom(DrawViewSection::getClassTypeId())) {
+        if (o->isDerivedFrom<DrawViewSection>()) {
             result.push_back(static_cast<TechDraw::DrawViewSection*>(o));
         }
     }
@@ -1165,7 +1157,7 @@ std::vector<DrawViewDetail*> DrawViewPart::getDetailRefs() const
     std::vector<DrawViewDetail*> result;
     std::vector<App::DocumentObject*> inObjs = getInList();
     for (auto& o : inObjs) {
-        if (o->getTypeId().isDerivedFrom(DrawViewDetail::getClassTypeId())) {
+        if (o->isDerivedFrom<DrawViewDetail>()) {
             if (!o->isRemoving()) {
                 result.push_back(static_cast<TechDraw::DrawViewDetail*>(o));
             }

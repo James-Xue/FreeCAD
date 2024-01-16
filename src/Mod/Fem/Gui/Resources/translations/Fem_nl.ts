@@ -321,17 +321,17 @@
   <context>
     <name>CmdFemPostApllyChanges</name>
     <message>
-      <location filename="../../Command.cpp" line="2442"/>
+      <location filename="../../Command.cpp" line="2445"/>
       <source>Fem</source>
       <translation>EEM</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2443"/>
+      <location filename="../../Command.cpp" line="2446"/>
       <source>Apply changes to pipeline</source>
       <translation type="unfinished">Apply changes to pipeline</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2444"/>
+      <location filename="../../Command.cpp" line="2447"/>
       <source>Apply changes to parameters directly and not on recompute only...</source>
       <translation type="unfinished">Apply changes to parameters directly and not on recompute only...</translation>
     </message>
@@ -354,12 +354,12 @@
       <translation>Definieer/creëer een clip filter dat functies gebruikt om de clip regio te definiëren</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2344"/>
+      <location filename="../../Command.cpp" line="2347"/>
       <source>Wrong selection</source>
       <translation>Verkeerde selectie</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2345"/>
+      <location filename="../../Command.cpp" line="2348"/>
       <source>Select a pipeline, please.</source>
       <translation type="unfinished">Select a pipeline, please.</translation>
     </message>
@@ -421,37 +421,37 @@
   <context>
     <name>CmdFemPostFunctions</name>
     <message>
-      <location filename="../../Command.cpp" line="2215"/>
+      <location filename="../../Command.cpp" line="2218"/>
       <source>Fem</source>
       <translation>EEM</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2216"/>
+      <location filename="../../Command.cpp" line="2219"/>
       <source>Filter functions</source>
       <translation>Filter functies</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2217"/>
+      <location filename="../../Command.cpp" line="2220"/>
       <source>Functions for use in postprocessing filter...</source>
       <translation type="unfinished">Functions for use in postprocessing filter...</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2396"/>
+      <location filename="../../Command.cpp" line="2399"/>
       <source>Plane</source>
       <translation>Vlak</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2403"/>
+      <location filename="../../Command.cpp" line="2406"/>
       <source>Sphere</source>
       <translation>Bol</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2410"/>
+      <location filename="../../Command.cpp" line="2413"/>
       <source>Cylinder</source>
       <translation>Cilinder</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2417"/>
+      <location filename="../../Command.cpp" line="2420"/>
       <source>Box</source>
       <translation>Balk</translation>
     </message>
@@ -510,14 +510,14 @@
       <translation>Definiëer/creëer spanningslinearisatie-grafieken</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2031"/>
-      <location filename="../../Command.cpp" line="2040"/>
+      <location filename="../../Command.cpp" line="2034"/>
+      <location filename="../../Command.cpp" line="2043"/>
       <source>Wrong selection</source>
       <translation>Verkeerde selectie</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2032"/>
-      <location filename="../../Command.cpp" line="2041"/>
+      <location filename="../../Command.cpp" line="2035"/>
+      <location filename="../../Command.cpp" line="2044"/>
       <source>Select a Clip filter which clips a STRESS field along a line, please.</source>
       <translation type="unfinished">Select a Clip filter which clips a STRESS field along a line, please.</translation>
     </message>
@@ -525,27 +525,27 @@
   <context>
     <name>CmdFemPostPipelineFromResult</name>
     <message>
-      <location filename="../../Command.cpp" line="2483"/>
+      <location filename="../../Command.cpp" line="2486"/>
       <source>Fem</source>
       <translation>EEM</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2484"/>
+      <location filename="../../Command.cpp" line="2487"/>
       <source>Post pipeline from result</source>
       <translation type="unfinished">Post pipeline from result</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2485"/>
+      <location filename="../../Command.cpp" line="2488"/>
       <source>Creates a post processing pipeline from a result object</source>
       <translation type="unfinished">Creates a post processing pipeline from a result object</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2563"/>
+      <location filename="../../Command.cpp" line="2566"/>
       <source>Wrong selection type</source>
       <translation>Verkeerd selectietype</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2564"/>
+      <location filename="../../Command.cpp" line="2567"/>
       <source>Select a result object, please.</source>
       <translation type="unfinished">Select a result object, please.</translation>
     </message>
@@ -553,17 +553,17 @@
   <context>
     <name>CmdFemPostScalarClipFilter</name>
     <message>
-      <location filename="../../Command.cpp" line="2067"/>
+      <location filename="../../Command.cpp" line="2070"/>
       <source>Fem</source>
       <translation>EEM</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2068"/>
+      <location filename="../../Command.cpp" line="2071"/>
       <source>Scalar clip filter</source>
       <translation type="unfinished">Scalar clip filter</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2070"/>
+      <location filename="../../Command.cpp" line="2073"/>
       <source>Define/create a clip filter which clips a field with a scalar value</source>
       <translation type="unfinished">Define/create a clip filter which clips a field with a scalar value</translation>
     </message>
@@ -571,17 +571,17 @@
   <context>
     <name>CmdFemPostWarpVectorFilter</name>
     <message>
-      <location filename="../../Command.cpp" line="2117"/>
+      <location filename="../../Command.cpp" line="2120"/>
       <source>Fem</source>
       <translation>EEM</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2118"/>
+      <location filename="../../Command.cpp" line="2121"/>
       <source>Warp filter</source>
       <translation>Warp filter</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2119"/>
+      <location filename="../../Command.cpp" line="2122"/>
       <source>Warp the geometry along a vector field by a certain factor</source>
       <translation type="unfinished">Warp the geometry along a vector field by a certain factor</translation>
     </message>
@@ -684,12 +684,12 @@
       <translation>Maak een filter aan</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2249"/>
+      <location filename="../../Command.cpp" line="2252"/>
       <source>Create function</source>
       <translation>Functie maken</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2535"/>
+      <location filename="../../Command.cpp" line="2538"/>
       <source>Create pipeline from result</source>
       <translation type="unfinished">Create pipeline from result</translation>
     </message>
@@ -776,22 +776,22 @@
   <context>
     <name>FEM_PostCreateFunctions</name>
     <message>
-      <location filename="../../Command.cpp" line="2398"/>
+      <location filename="../../Command.cpp" line="2401"/>
       <source>Create a plane function, defined by its origin and normal</source>
       <translation type="unfinished">Create a plane function, defined by its origin and normal</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2405"/>
+      <location filename="../../Command.cpp" line="2408"/>
       <source>Create a sphere function, defined by its center and radius</source>
       <translation type="unfinished">Create a sphere function, defined by its center and radius</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2411"/>
+      <location filename="../../Command.cpp" line="2414"/>
       <source>Create a cylinder function, defined by its center, axis and radius</source>
       <translation type="unfinished">Create a cylinder function, defined by its center, axis and radius</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2418"/>
+      <location filename="../../Command.cpp" line="2421"/>
       <source>Create a box function, defined by its center, length, width and height</source>
       <translation type="unfinished">Create a box function, defined by its center, length, width and height</translation>
     </message>
@@ -1709,15 +1709,9 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskDlgFemConstraintForce</name>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="474"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="517"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="487"/>
       <source>Input error</source>
       <translation>Invoerfout</translation>
-    </message>
-    <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="475"/>
-      <source>Please specify a force greater than 0</source>
-      <translation>Specificeer een kracht groter dan 0</translation>
     </message>
   </context>
   <context>
@@ -1748,7 +1742,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskDlgFemConstraintPressure</name>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="340"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="336"/>
       <source>Input error</source>
       <translation>Invoerfout</translation>
     </message>
@@ -1772,7 +1766,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskDlgFemConstraintTemperature</name>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="382"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="409"/>
       <source>Input error</source>
       <translation>Invoerfout</translation>
     </message>
@@ -1801,7 +1795,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskDlgPost</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="373"/>
+      <location filename="../../TaskPostBoxes.cpp" line="333"/>
       <source>Input error</source>
       <translation>Invoerfout</translation>
     </message>
@@ -2139,39 +2133,39 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskFemConstraintForce</name>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="138"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="148"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="187"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="210"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="220"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="126"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="136"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="175"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="208"/>
       <source>Selection error</source>
       <translation>Selectiefout</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="138"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="210"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="126"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="198"/>
       <source>Nothing selected!</source>
       <translation>Niets geselecteerd!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="148"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="220"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="136"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="208"/>
       <source>Selected object is not a part!</source>
       <translation>Geselecteerd object is geen deel!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="185"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="173"/>
       <source>Only one type of selection (vertex, face or edge) per analysis feature allowed!</source>
       <translation type="unfinished">Only one type of selection (vertex, face or edge) per analysis feature allowed!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="335"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="351"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="316"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="332"/>
       <source>Wrong selection</source>
       <translation>Verkeerde selectie</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="335"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="316"/>
       <source>Select an edge or a face, please.</source>
       <translation type="unfinished">Select an edge or a face, please.</translation>
     </message>
@@ -2278,28 +2272,28 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskFemConstraintPressure</name>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="133"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="143"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="152"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="188"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="132"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="142"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="151"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="187"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="197"/>
       <source>Selection error</source>
       <translation>Selectiefout</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="133"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="188"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="132"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="187"/>
       <source>Nothing selected!</source>
       <translation>Niets geselecteerd!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="143"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="142"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="197"/>
       <source>Selected object is not a part!</source>
       <translation>Geselecteerd object is geen deel!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="152"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="151"/>
       <source>Only faces can be picked</source>
       <translation>Alleen vlakken kunnen geselecteerd worden</translation>
     </message>
@@ -2349,22 +2343,22 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskFemConstraintTemperature</name>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="153"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="163"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="204"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="214"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="188"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="239"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="249"/>
       <source>Selection error</source>
       <translation>Selectiefout</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="153"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="204"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="188"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="239"/>
       <source>Nothing selected!</source>
       <translation>Niets geselecteerd!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="163"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="214"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="249"/>
       <source>Selected object is not a part!</source>
       <translation>Geselecteerd object is geen deel!</translation>
     </message>
@@ -2445,7 +2439,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostClip</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1266"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1272"/>
       <source>Clip region, choose implicit function</source>
       <translation type="unfinished">Clip region, choose implicit function</translation>
     </message>
@@ -2453,7 +2447,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostCut</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1567"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1566"/>
       <source>Function cut, choose implicit function</source>
       <translation type="unfinished">Function cut, choose implicit function</translation>
     </message>
@@ -2461,12 +2455,12 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostDataAlongLine</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="530"/>
+      <location filename="../../TaskPostBoxes.cpp" line="486"/>
       <source>Data along a line options</source>
       <translation type="unfinished">Data along a line options</translation>
     </message>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="869"/>
+      <location filename="../../TaskPostBoxes.cpp" line="882"/>
       <source>Length</source>
       <comment>X-Axis plot label</comment>
       <translation>Lengte</translation>
@@ -2475,12 +2469,12 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostDataAtPoint</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="896"/>
+      <location filename="../../TaskPostBoxes.cpp" line="911"/>
       <source>Data at point options</source>
       <translation type="unfinished">Data at point options</translation>
     </message>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1238"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1244"/>
       <source>%1 at (%2; %3; %4) is: %5 %6</source>
       <translation>%1 bij (%2; %3; %4) is: %5 %6</translation>
     </message>
@@ -2488,7 +2482,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostDisplay</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="412"/>
+      <location filename="../../TaskPostBoxes.cpp" line="371"/>
       <source>Result display options</source>
       <translation type="unfinished">Result display options</translation>
     </message>
@@ -2496,7 +2490,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostFunction</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="500"/>
+      <location filename="../../TaskPostBoxes.cpp" line="457"/>
       <source>Implicit function</source>
       <translation type="unfinished">Implicit function</translation>
     </message>
@@ -2504,7 +2498,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostScalarClip</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1713"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1709"/>
       <source>Scalar clip options</source>
       <translation type="unfinished">Scalar clip options</translation>
     </message>
@@ -2512,7 +2506,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostWarpVector</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1845"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1839"/>
       <source>Warp options</source>
       <translation type="unfinished">Warp options</translation>
     </message>
@@ -3317,8 +3311,8 @@ Note: has no effect if a solid was selected</translation>
     </message>
     <message>
       <location filename="../ui/MeshRegion.ui" line="14"/>
-      <source>Mesh region</source>
-      <translation type="unfinished">Mesh region</translation>
+      <source>Mesh refinement</source>
+      <translation type="unfinished">Mesh refinement</translation>
     </message>
     <message>
       <location filename="../ui/MeshRegion.ui" line="37"/>
@@ -3475,27 +3469,30 @@ Note: for 2D only setting for x is possible,
   <context>
     <name>PlaneWidget</name>
     <message>
-      <location filename="../../PlaneWidget.ui" line="22"/>
+      <location filename="../../PlaneWidget.ui" line="26"/>
+      <location filename="../../PlaneWidget.ui" line="86"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../PlaneWidget.ui" line="32"/>
+      <location filename="../../PlaneWidget.ui" line="43"/>
+      <location filename="../../PlaneWidget.ui" line="103"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../PlaneWidget.ui" line="42"/>
+      <location filename="../../PlaneWidget.ui" line="60"/>
+      <location filename="../../PlaneWidget.ui" line="120"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../PlaneWidget.ui" line="58"/>
+      <location filename="../../PlaneWidget.ui" line="20"/>
       <source>Origin</source>
       <translation>Oorsprong</translation>
     </message>
     <message>
-      <location filename="../../PlaneWidget.ui" line="104"/>
+      <location filename="../../PlaneWidget.ui" line="80"/>
       <source>Normal</source>
       <translation>Normaal</translation>
     </message>
@@ -3583,7 +3580,7 @@ Note: for 2D only setting for x is possible,
       <translation type="unfinished">Constraint spring</translation>
     </message>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="353"/>
+      <location filename="../../TaskPostBoxes.cpp" line="313"/>
       <source>Edit post processing object</source>
       <translation type="unfinished">Edit post processing object</translation>
     </message>
@@ -3648,7 +3645,7 @@ Note: for 2D only setting for x is possible,
       <translation>Vloeistof randvoorwaarde</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="452"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="433"/>
       <source>Force load</source>
       <translation type="unfinished">Force load</translation>
     </message>
@@ -3663,12 +3660,12 @@ Note: for 2D only setting for x is possible,
       <translation type="unfinished">Plane multi-point constraint</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="306"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="302"/>
       <source>Pressure load</source>
       <translation type="unfinished">Pressure load</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="339"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="366"/>
       <source>Temperature boundary condition</source>
       <translation type="unfinished">Temperature boundary condition</translation>
     </message>
@@ -3988,27 +3985,27 @@ For possible variables, see the description box below.</translation>
   <context>
     <name>SphereWidget</name>
     <message>
-      <location filename="../../SphereWidget.ui" line="22"/>
+      <location filename="../../SphereWidget.ui" line="26"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../SphereWidget.ui" line="32"/>
+      <location filename="../../SphereWidget.ui" line="49"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../SphereWidget.ui" line="42"/>
+      <location filename="../../SphereWidget.ui" line="72"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../SphereWidget.ui" line="110"/>
+      <location filename="../../SphereWidget.ui" line="112"/>
       <source>Radius</source>
       <translation>Radius</translation>
     </message>
     <message>
-      <location filename="../../SphereWidget.ui" line="58"/>
+      <location filename="../../SphereWidget.ui" line="20"/>
       <source>Center</source>
       <translation>Middelpunt</translation>
     </message>
@@ -4495,28 +4492,33 @@ normal vector of the face is used as direction</translation>
     </message>
     <message>
       <location filename="../../TaskFemConstraintForce.ui" line="93"/>
-      <source>Load [N]</source>
-      <translation>Belasting [N]</translation>
+      <source>Force</source>
+      <translation>Kracht</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.ui" line="111"/>
+      <location filename="../../TaskFemConstraintForce.ui" line="100"/>
+      <source>N</source>
+      <translation type="unfinished">N</translation>
+    </message>
+    <message>
+      <location filename="../../TaskFemConstraintForce.ui" line="117"/>
       <source>Select a planar edge or face, then press this button</source>
       <translation type="unfinished">Select a planar edge or face, then press this button</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.ui" line="114"/>
+      <location filename="../../TaskFemConstraintForce.ui" line="120"/>
       <source>Direction</source>
       <translation>Richting</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.ui" line="121"/>
+      <location filename="../../TaskFemConstraintForce.ui" line="127"/>
       <source>The direction of the edge or the direction of the
 normal vector of the face is used as direction</source>
       <translation type="unfinished">The direction of the edge or the direction of the
 normal vector of the face is used as direction</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.ui" line="131"/>
+      <location filename="../../TaskFemConstraintForce.ui" line="137"/>
       <source>Reverse direction</source>
       <translation>Richting omkeren</translation>
     </message>
@@ -4634,11 +4636,6 @@ normal vector of the face is used as direction</translation>
       <translation>Druk</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.ui" line="75"/>
-      <source>0 MPa</source>
-      <translation>0 MPa</translation>
-    </message>
-    <message>
       <location filename="../../TaskFemConstraintPressure.ui" line="87"/>
       <source>Reverse Direction</source>
       <translation>Omgekeerde richting</translation>
@@ -4703,12 +4700,16 @@ used for the Elmer solver</translation>
     </message>
     <message>
       <location filename="../../TaskFemConstraintTemperature.ui" line="56"/>
-      <location filename="../../TaskFemConstraintTemperature.ui" line="80"/>
+      <source>Constraint type</source>
+      <translation>Type beperking</translation>
+    </message>
+    <message>
+      <location filename="../../TaskFemConstraintTemperature.ui" line="66"/>
       <source>Temperature</source>
       <translation>Temperatuur</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.ui" line="69"/>
+      <location filename="../../TaskFemConstraintTemperature.ui" line="83"/>
       <source>Concentrated heat flux</source>
       <translation type="unfinished">Concentrated heat flux</translation>
     </message>
@@ -4796,57 +4797,57 @@ used for the Elmer solver</translation>
       <translation>Coördinaten</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="26"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="64"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="36"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="103"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="46"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="142"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="62"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="32"/>
       <source>Point 1</source>
       <translation>Punt 1</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="108"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="48"/>
       <source>Point 2</source>
       <translation>Punt 2</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="151"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="184"/>
       <source>Select Points</source>
       <translation>Selecteer punten</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="160"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="193"/>
       <source>Resolution</source>
       <translation>Resolutie</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="207"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="236"/>
       <source>Mode</source>
       <translation>Instelling</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="221"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="263"/>
       <source>Field</source>
       <translation>Veld</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="231"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="273"/>
       <source>Vector</source>
       <translation>Vector</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="250"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="292"/>
       <source>Create Plot</source>
       <translation type="unfinished">Create Plot</translation>
     </message>
@@ -4859,32 +4860,32 @@ used for the Elmer solver</translation>
       <translation>Middelpunt</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="23"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="29"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="33"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="58"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="43"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="87"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="86"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="113"/>
       <source>Select Point</source>
       <translation type="unfinished">Select Point</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="95"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="122"/>
       <source>Value:</source>
       <translation>Waarde:</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="142"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="169"/>
       <source>Field</source>
       <translation>Veld</translation>
     </message>
@@ -5668,19 +5669,6 @@ used for the Elmer solver</translation>
     </message>
   </context>
   <context>
-    <name>FEM_MeshRegion</name>
-    <message>
-      <location filename="../../../femcommands/commands.py" line="1002"/>
-      <source>FEM mesh region</source>
-      <translation type="unfinished">FEM mesh region</translation>
-    </message>
-    <message>
-      <location filename="../../../femcommands/commands.py" line="1006"/>
-      <source>Creates a FEM mesh region</source>
-      <translation type="unfinished">Creates a FEM mesh region</translation>
-    </message>
-  </context>
-  <context>
     <name>FEM_ResultShow</name>
     <message>
       <location filename="../../../femcommands/commands.py" line="1019"/>
@@ -5935,7 +5923,7 @@ used for the Elmer solver</translation>
     <message>
       <location filename="../../../femtaskpanels/task_result_mechanical.py" line="351"/>
       <source>von Mises Stress</source>
-      <translation>von Mises spanning</translation>
+      <translation type="unfinished">von Mises Stress</translation>
     </message>
     <message>
       <location filename="../../../femtaskpanels/task_result_mechanical.py" line="363"/>
@@ -5945,7 +5933,7 @@ used for the Elmer solver</translation>
     <message>
       <location filename="../../../femtaskpanels/task_result_mechanical.py" line="375"/>
       <source>Max Principal Stress</source>
-      <translation>Maximale principiële spanning</translation>
+      <translation type="unfinished">Max Principal Stress</translation>
     </message>
     <message>
       <location filename="../../../femtaskpanels/task_result_mechanical.py" line="387"/>
@@ -5955,7 +5943,7 @@ used for the Elmer solver</translation>
     <message>
       <location filename="../../../femtaskpanels/task_result_mechanical.py" line="399"/>
       <source>Mass Flow Rate</source>
-      <translation>Massastroomsnelheid</translation>
+      <translation type="unfinished">Mass Flow Rate</translation>
     </message>
     <message>
       <location filename="../../../femtaskpanels/task_result_mechanical.py" line="411"/>
@@ -5965,12 +5953,12 @@ used for the Elmer solver</translation>
     <message>
       <location filename="../../../femtaskpanels/task_result_mechanical.py" line="423"/>
       <source>Min Principal Stress</source>
-      <translation>Minimale principiële spanning</translation>
+      <translation type="unfinished">Min Principal Stress</translation>
     </message>
     <message>
       <location filename="../../../femtaskpanels/task_result_mechanical.py" line="435"/>
       <source>Equivalent Plastic Strain</source>
-      <translation>Equivalente plastische rek</translation>
+      <translation type="unfinished">Equivalent Plastic Strain</translation>
     </message>
     <message>
       <location filename="../../../femtaskpanels/task_result_mechanical.py" line="454"/>
@@ -6094,17 +6082,17 @@ Please select a result type first.</translation>
   <context>
     <name>CmdFemPostContoursFilter</name>
     <message>
-      <location filename="../../Command.cpp" line="2166"/>
+      <location filename="../../Command.cpp" line="2169"/>
       <source>Fem</source>
       <translation>EEM</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2167"/>
+      <location filename="../../Command.cpp" line="2170"/>
       <source>Contours filter</source>
       <translation type="unfinished">Contours filter</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2168"/>
+      <location filename="../../Command.cpp" line="2171"/>
       <source>Define/create a contours filter which displays iso contours</source>
       <translation type="unfinished">Define/create a contours filter which displays iso contours</translation>
     </message>
@@ -6112,7 +6100,7 @@ Please select a result type first.</translation>
   <context>
     <name>FemGui::TaskPostContours</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1435"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1438"/>
       <source>Contours filter options</source>
       <translation type="unfinished">Contours filter options</translation>
     </message>
@@ -6135,37 +6123,37 @@ Please select a result type first.</translation>
   <context>
     <name>BoxWidget</name>
     <message>
-      <location filename="../../BoxWidget.ui" line="22"/>
+      <location filename="../../BoxWidget.ui" line="32"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="32"/>
+      <location filename="../../BoxWidget.ui" line="61"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="42"/>
+      <location filename="../../BoxWidget.ui" line="84"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="58"/>
+      <location filename="../../BoxWidget.ui" line="20"/>
       <source>Center</source>
       <translation>Middelpunt</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="110"/>
+      <location filename="../../BoxWidget.ui" line="124"/>
       <source>Length</source>
       <translation>Lengte</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="136"/>
+      <location filename="../../BoxWidget.ui" line="153"/>
       <source>Width</source>
       <translation>Breedte</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="162"/>
+      <location filename="../../BoxWidget.ui" line="182"/>
       <source>Height</source>
       <translation>Hoogte</translation>
     </message>
@@ -6173,32 +6161,35 @@ Please select a result type first.</translation>
   <context>
     <name>CylinderWidget</name>
     <message>
-      <location filename="../../CylinderWidget.ui" line="22"/>
+      <location filename="../../CylinderWidget.ui" line="26"/>
+      <location filename="../../CylinderWidget.ui" line="110"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="32"/>
+      <location filename="../../CylinderWidget.ui" line="49"/>
+      <location filename="../../CylinderWidget.ui" line="133"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="42"/>
+      <location filename="../../CylinderWidget.ui" line="72"/>
+      <location filename="../../CylinderWidget.ui" line="156"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="58"/>
+      <location filename="../../CylinderWidget.ui" line="20"/>
       <source>Center</source>
       <translation>Middelpunt</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="110"/>
+      <location filename="../../CylinderWidget.ui" line="104"/>
       <source>Axis</source>
       <translation>As</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="162"/>
+      <location filename="../../CylinderWidget.ui" line="196"/>
       <source>Radius</source>
       <translation>Radius</translation>
     </message>
@@ -6375,6 +6366,19 @@ Please select a result type first.</translation>
       <location filename="../../../femcommands/commands.py" line="373"/>
       <source>Creates a tie constraint</source>
       <translation type="unfinished">Creates a tie constraint</translation>
+    </message>
+  </context>
+  <context>
+    <name>FEM_MeshRegion</name>
+    <message>
+      <location filename="../../../femcommands/commands.py" line="1002"/>
+      <source>FEM mesh refinement</source>
+      <translation type="unfinished">FEM mesh refinement</translation>
+    </message>
+    <message>
+      <location filename="../../../femcommands/commands.py" line="1006"/>
+      <source>Creates a FEM mesh refinement</source>
+      <translation type="unfinished">Creates a FEM mesh refinement</translation>
     </message>
   </context>
 </TS>

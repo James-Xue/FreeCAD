@@ -36,16 +36,26 @@ as they operate on selections and graphical properties.
 # @{
 import FreeCAD as App
 import FreeCADGui as Gui
-import draftutils.gui_utils as gui_utils
-import draftutils.utils as utils
-
+import WorkingPlane
+from draftutils import gui_utils
+from draftutils import params
+from draftutils import utils
 from draftutils.messages import _wrn
 
 # Set modifier keys from the parameter database
 MODS = ["shift", "ctrl", "alt"]
-MODCONSTRAIN = MODS[utils.get_param("modconstrain", 0)]
-MODSNAP = MODS[utils.get_param("modsnap", 1)]
-MODALT = MODS[utils.get_param("modalt", 2)]
+
+
+def get_mod_constrain_key():
+    return MODS[params.get_param("modconstrain")]
+
+
+def get_mod_snap_key():
+    return MODS[params.get_param("modsnap")]
+
+
+def get_mod_alt_key():
+    return MODS[params.get_param("modalt")]
 
 
 def format_unit(exp, unit="mm"):
@@ -186,14 +196,14 @@ def get_point(target, args, noTracker=False):
     else:
         last = None
 
-    amod = has_mod(args, MODSNAP)
-    cmod = has_mod(args, MODCONSTRAIN)
+    smod = has_mod(args, get_mod_snap_key())
+    cmod = has_mod(args, get_mod_constrain_key())
     point = None
 
     if hasattr(Gui, "Snapper"):
         point = Gui.Snapper.snap(args["Position"],
                                  lastpoint=last,
-                                 active=amod,
+                                 active=smod,
                                  constrain=cmod,
                                  noTracker=noTracker)
         info = Gui.Snapper.snapInfo
@@ -205,7 +215,7 @@ def get_point(target, args, noTracker=False):
         mask = None
 
     ctrlPoint = App.Vector(point)
-    wp = App.DraftWorkingPlane
+    wp = WorkingPlane.get_working_plane(update=False)
     if target.node:
         if target.featureName == "Rectangle":
             ui.displayPoint(point, target.node[0], plane=wp, mask=mask)
@@ -222,7 +232,7 @@ getPoint = get_point
 def set_working_plane_to_object_under_cursor(mouseEvent):
     """Align the working plane to the face under the cursor.
 
-    The working plane is only aligned if it is `'weak'`.
+    The working plane is only aligned if it is `'auto'`.
 
     Parameters
     ----------
@@ -242,8 +252,8 @@ def set_working_plane_to_object_under_cursor(mouseEvent):
         return None
     if "Face" not in objectUnderCursor["Component"]:
         return None
-    wp = App.DraftWorkingPlane
-    if wp.weak is False:
+    wp = WorkingPlane.get_working_plane(update=False)
+    if not wp.auto:
         return None
 
     import Part
@@ -255,11 +265,8 @@ def set_working_plane_to_object_under_cursor(mouseEvent):
         sub = objectUnderCursor["Component"]
     shape = Part.getShape(obj, sub, needSubElement=True, retType=0)
 
-    if wp.alignToFace(shape) is True:
-        wp.weak = True
-        if hasattr(Gui, "Snapper"):
-            Gui.Snapper.setGrid()
-            Gui.Snapper.restack()
+    if wp.align_to_face(shape, _hist_add=False):
+        wp.auto = True
         return obj
 
     return None
@@ -271,15 +278,15 @@ setWorkingPlaneToObjectUnderCursor = set_working_plane_to_object_under_cursor
 def set_working_plane_to_selected_object():
     """Align the working plane to a preselected face.
 
-    The working plane is only aligned if it is `'weak'`.
+    The working plane is only aligned if it is `'auto'`.
 
     Returns
     -------
     App::DocumentObject or None
         The parent object the face belongs to, if alignment occurred, or None.
     """
-    wp = App.DraftWorkingPlane
-    if wp.weak is False:
+    wp = WorkingPlane.get_working_plane(update=False)
+    if not wp.auto:
         return None
 
     sels = Gui.Selection.getSelectionEx("", 0)
@@ -293,11 +300,8 @@ def set_working_plane_to_selected_object():
                               needSubElement=True,
                               retType=0)
 
-        if wp.alignToFace(shape) is True:
-            wp.weak = True
-            if hasattr(Gui, "Snapper"):
-                Gui.Snapper.setGrid()
-                Gui.Snapper.restack()
+        if wp.align_to_face(shape, _hist_add=False):
+            wp.auto = True
             return sels[0].Object
 
     return None
@@ -309,7 +313,7 @@ setWorkingPlaneToSelectedObject = set_working_plane_to_selected_object
 def get_support(mouseEvent=None):
     """"Align the working plane to a preselected face or the face under the cursor.
 
-    The working plane is only aligned if it is `'weak'`.
+    The working plane is only aligned if it is `'auto'`.
 
     Parameters
     ----------

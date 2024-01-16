@@ -210,12 +210,12 @@ Svaka vrijednost Tabele postavki koja je promijenjena u odnosu na zadano je unap
     <message>
       <location filename="../panels/DlgJobTemplateExport.ui" line="107"/>
       <source>Enable to include the default rapid tool speeds in the template.</source>
-      <translation>Omogućite za uključivanje zadanih brzina brzog alata u predložak.</translation>
+      <translation>Omogućite za uključivanje zadanih brzina brzog pomaka alata u predložak.</translation>
     </message>
     <message>
       <location filename="../panels/DlgJobTemplateExport.ui" line="120"/>
       <source>Enable to include the default coolant mode in the template.</source>
-      <translation>Omogućite za uključivanje zadanog načina rashladne tekućine u predložak.</translation>
+      <translation>Omogućite za uključivanje zadanog načina rashladnog sredstva u predložak.</translation>
     </message>
     <message>
       <location filename="../panels/DlgJobTemplateExport.ui" line="145"/>
@@ -253,7 +253,7 @@ Imajte na umu da je ova opcija onemogućena ako se u zadatku koristi osnovni obj
     <message>
       <location filename="../panels/DlgJobTemplateExport.ui" line="123"/>
       <source>Coolant Mode</source>
-      <translation>Načini rada rashladne tekućine</translation>
+      <translation>Načini rada rashladnog sredstva</translation>
     </message>
     <message>
       <location filename="../panels/DlgJobTemplateExport.ui" line="133"/>
@@ -335,12 +335,12 @@ Za materijal obrade iz graničnog okvira to znači dodatni materijal u svim smje
     <message>
       <location filename="../panels/DlgToolControllerEdit.ui" line="125"/>
       <source>Horiz Rapid</source>
-      <translation>Vodoravni brzi hod</translation>
+      <translation>Vodoravni brzi pomak</translation>
     </message>
     <message>
       <location filename="../panels/DlgToolControllerEdit.ui" line="154"/>
       <source>Vert Rapid</source>
-      <translation>Okomiti brzi hod</translation>
+      <translation>Okomiti brzi pomak</translation>
     </message>
     <message>
       <location filename="../panels/DlgToolControllerEdit.ui" line="186"/>
@@ -902,7 +902,7 @@ Resetiranje briše sve trenutne stavke s popisa i popunjava popis svim okruglim 
     <message>
       <location filename="../panels/PageHeightsEdit.ui" line="31"/>
       <source>The height above which it is safe to move the tool bit with rapid movements. Below this height all lateral and downward movements are performed with feed rate speeds.</source>
-      <translation>Visina iznad koje je sigurno pomicati alat s brzim pokretima. Ispod ove visine svi bočni i nizbrdni pokreti izvode se brzinama pomaka dovoda.</translation>
+      <translation>Visina iznad koje je sigurno pomicati alat s brzim pokretima. Ispod ove visine svi bočni i silazni pokreti izvode se brzinama pomaka.</translation>
     </message>
     <message>
       <location filename="../panels/PageHeightsEdit.ui" line="54"/>
@@ -944,7 +944,7 @@ Resetiranje briše sve trenutne stavke s popisa i popunjava popis svim okruglim 
       <location filename="../panels/SetupGlobal.ui" line="255"/>
       <location filename="../panels/SetupGlobal.ui" line="261"/>
       <source>Coolant Mode</source>
-      <translation>Načini rada rashladne tekućine</translation>
+      <translation>Način rada rashladnog sredstva</translation>
     </message>
     <message>
       <location filename="../panels/PageOpCustomEdit.ui" line="62"/>
@@ -975,7 +975,7 @@ Resetiranje briše sve trenutne stavke s popisa i popunjava popis svim okruglim 
       <location filename="../panels/PageOpHelixEdit.ui" line="43"/>
       <location filename="../panels/SetupGlobal.ui" line="249"/>
       <source>Coolant</source>
-      <translation>Hlađenje</translation>
+      <translation>Rashladno sredstvo</translation>
     </message>
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="76"/>
@@ -1036,7 +1036,7 @@ Resetiranje briše sve trenutne stavke s popisa i popunjava popis svim okruglim 
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="97"/>
       <source>Force Clearing Inside-out</source>
-      <translation type="unfinished">Force Clearing Inside-out</translation>
+      <translation>Koristi prisilno čišćenje iznutra prema van.</translation>
     </message>
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="132"/>
@@ -1067,7 +1067,7 @@ Resetiranje briše sve trenutne stavke s popisa i popunjava popis svim okruglim 
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="207"/>
       <source>How much to lift the tool up during the rapid linking moves over cleared regions. If linking path is not clear tool is raised to clearance height.</source>
-      <translation>Koliko podići alat tijekom brzih povezujućih pokreta preko očišćenih područja. Ako putanja povezivanja nije jasna, alat se podiže na visinu prohodnosti.</translation>
+      <translation>Koliko podići alat tijekom brzih povezujućih pomicanja preko očišćenih područja. Ako putanja povezivanja nije jasna, alat se podiže na visinu prohodnosti.</translation>
     </message>
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="217"/>
@@ -1087,12 +1087,12 @@ Resetiranje briše sve trenutne stavke s popisa i popunjava popis svim okruglim 
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="256"/>
       <source>Angle of the helix ramp entry</source>
-      <translation type="unfinished">Angle of the helix ramp entry</translation>
+      <translation>Kut ulazane rampe spirale (helix)</translation>
     </message>
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="266"/>
       <source>Angle of the helix entry cone</source>
-      <translation type="unfinished">Angle of the helix entry cone</translation>
+      <translation>Kut ulaznog stošca spirale (helix)</translation>
     </message>
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="279"/>
@@ -1193,7 +1193,7 @@ Resetiranje briše sve trenutne stavke s popisa i popunjava popis svim okruglim 
     <message>
       <location filename="../panels/PageOpDrillingEdit.ui" line="63"/>
       <source>Don't retract after every hole</source>
-      <translation type="unfinished">Don't retract after every hole</translation>
+      <translation>Ne povlači se nazad nakon svake rupe</translation>
     </message>
     <message>
       <location filename="../panels/PageOpDrillingEdit.ui" line="66"/>
@@ -1309,7 +1309,7 @@ Resetiranje briše sve trenutne stavke s popisa i popunjava popis svim okruglim 
     <message>
       <location filename="../panels/PageOpPocketExtEdit.ui" line="85"/>
       <source>Set the extent of the dimension -the default value is half the tool diameter</source>
-      <translation type="unfinished">Set the extent of the dimension -the default value is half the tool diameter</translation>
+      <translation>Postavite opseg dimenzije - zadani parametar je polovica promjera alata</translation>
     </message>
     <message>
       <location filename="../panels/PageOpPocketExtEdit.ui" line="101"/>
@@ -1474,7 +1474,7 @@ Ovo se može koristiti za obradu cijelog područja obrade kako bi se osigurala u
     <message>
       <location filename="../panels/PageOpPocketFullEdit.ui" line="204"/>
       <source>Material Allowance</source>
-      <translation type="unfinished">Material Allowance</translation>
+      <translation>Granica prostora rada alata</translation>
     </message>
     <message>
       <location filename="../panels/PageOpPocketFullEdit.ui" line="227"/>
@@ -1496,7 +1496,7 @@ Ovo se može koristiti za obradu cijelog područja obrade kako bi se osigurala u
     <message>
       <location filename="../panels/PageOpProbeEdit.ui" line="52"/>
       <source>Probe Grid Points</source>
-      <translation type="unfinished">Probe Grid Points</translation>
+      <translation>Sondiranje točki rešetke rastera</translation>
     </message>
     <message>
       <location filename="../panels/PageOpProbeEdit.ui" line="58"/>
@@ -1536,12 +1536,12 @@ Ovo se može koristiti za obradu cijelog područja obrade kako bi se osigurala u
     <message>
       <location filename="../panels/PageOpProbeEdit.ui" line="145"/>
       <source>Enter the filename where the probe points should be written</source>
-      <translation type="unfinished">Enter the filename where the probe points should be written</translation>
+      <translation>Unesite naziv datoteke u koju bi trebali zapisati točke ispitivanja</translation>
     </message>
     <message>
       <location filename="../panels/PageOpProbeEdit.ui" line="148"/>
       <source>ProbePoints.txt</source>
-      <translation type="unfinished">ProbePoints.txt</translation>
+      <translation>TočkeSondiranja.txt</translation>
     </message>
     <message>
       <location filename="../panels/PageOpProfileFullEdit.ui" line="63"/>
@@ -1562,7 +1562,7 @@ Ovo se može koristiti za obradu cijelog područja obrade kako bi se osigurala u
     <message>
       <location filename="../panels/PageOpProfileFullEdit.ui" line="89"/>
       <source>The direction in which the profile is performed, clockwise or counterclockwise</source>
-      <translation type="unfinished">The direction in which the profile is performed, clockwise or counterclockwise</translation>
+      <translation>Smjer u kojem se profil izvodi, u smjeru kazaljke na satu ili suprotno od smjera kazaljke na satu</translation>
     </message>
     <message>
       <location filename="../panels/PageOpProfileFullEdit.ui" line="114"/>
@@ -1641,7 +1641,7 @@ Ovo se može koristiti za obradu cijelog područja obrade kako bi se osigurala u
       <location filename="../panels/PageOpSlotEdit.ui" line="102"/>
       <location filename="../panels/PageOpSlotEdit.ui" line="174"/>
       <source>Center of Bounding Box</source>
-      <translation type="unfinished">Center of Bounding Box</translation>
+      <translation>Središte graničnog okvira</translation>
     </message>
     <message>
       <location filename="../panels/PageOpSlotEdit.ui" line="107"/>
@@ -1684,7 +1684,7 @@ Ovo se može koristiti za obradu cijelog područja obrade kako bi se osigurala u
     <message>
       <location filename="../panels/PageOpSlotEdit.ui" line="222"/>
       <source> No Base Geometry selected </source>
-      <translation type="unfinished"> No Base Geometry selected </translation>
+      <translation> Nema odabrane osnovne geometrije </translation>
     </message>
     <message>
       <location filename="../panels/PageOpSlotEdit.ui" line="241"/>
@@ -1930,7 +1930,7 @@ Pomak od 100% rezultira bez preklapanja između dva različita ciklusa.</transla
     <message>
       <location filename="../panels/PageOpSurfaceEdit.ui" line="277"/>
       <source>Boundary Enforcement</source>
-      <translation type="unfinished">Boundary Enforcement</translation>
+      <translation>Očuvanje granice</translation>
     </message>
     <message>
       <location filename="../panels/PageOpSurfaceEdit.ui" line="290"/>
@@ -2024,12 +2024,12 @@ Default: "5mm"</translation>
     <message>
       <location filename="../panels/SetupGlobal.ui" line="205"/>
       <source>Rapid horizontal speed assigned as HorizRapid to new ToolController.</source>
-      <translation type="unfinished">Rapid horizontal speed assigned as HorizRapid to new ToolController.</translation>
+      <translation>Brzina vodoravnog brzog pomaka pridružena u Vodoravnu brzinu novih Upravljača alata.</translation>
     </message>
     <message>
       <location filename="../panels/SetupGlobal.ui" line="225"/>
       <source>Rapid vertical speed assigned to VertRapid of new ToolController.</source>
-      <translation type="unfinished">Rapid vertical speed assigned to VertRapid of new ToolController.</translation>
+      <translation>Brzina okomitog brzog pomaka pridružena u Okomitu brzinu novih Upravljača alata.</translation>
     </message>
     <message>
       <location filename="../panels/SetupGlobal.ui" line="138"/>
@@ -2048,7 +2048,7 @@ Default: 3 mm</translation>
     <message>
       <location filename="../panels/SetupGlobal.ui" line="186"/>
       <source>Rapid Speeds</source>
-      <translation>Brzine ubrzanog hoda</translation>
+      <translation>Brzine brzog pomaka</translation>
     </message>
     <message>
       <location filename="../panels/SetupGlobal.ui" line="192"/>
@@ -2725,7 +2725,7 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../../DlgSettingsPathColor.ui" line="169"/>
       <source>Rapid path color</source>
-      <translation>Boja staze brzog hoda</translation>
+      <translation>Boja staze brzog pomaka</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsPathColor.ui" line="304"/>
@@ -2805,12 +2805,12 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../preferences/Advanced.ui" line="45"/>
       <source>Suppress warning about setting the rapid speed rates for accurate cycle time calculation. Ignored if all speed warnings are already suppressed.</source>
-      <translation>Neprikazuj upozorenja o postavljanju ubrzane brzine pomaka za točno izračunavanje ciklusnog vremena. Zanemari ako su sva brzinska upozorenja već potisnuta.</translation>
+      <translation>Ne prikazuj upozorenja o postavljanju stope brzog pomaka za točnije izračunavanje vremena ciklusa. Zanemari ako su sva brzinska upozorenja već potisnuta.</translation>
     </message>
     <message>
       <location filename="../preferences/Advanced.ui" line="48"/>
       <source>Suppress missing rapid speeds warning</source>
-      <translation>Neprikazuj upozorenja o ubrzanoj brzini pomaka</translation>
+      <translation>Ne prikazuj upozorenja o brzinama brzog pomaka</translation>
     </message>
     <message>
       <location filename="../preferences/Advanced.ui" line="64"/>
@@ -2925,7 +2925,7 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../panels/DressUpLeadInOutEdit.ui" line="182"/>
       <source>Plunge at rapid speed</source>
-      <translation>Ubrzano Poniranje </translation>
+      <translation>Poniranje sa brzim pomakom</translation>
     </message>
     <message>
       <location filename="../panels/DressUpLeadInOutEdit.ui" line="192"/>
@@ -2953,48 +2953,48 @@ Should multiple tools or tool shapes with the same name exist in different direc
       <translation>Uključi Slojeve</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="54"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="52"/>
       <source>Arc</source>
       <translation>Luk</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="55"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="53"/>
       <source>Tangent</source>
       <translation>Tangenta</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="56"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="54"/>
       <source>Perpendicular</source>
       <translation>Okomito</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="169"/>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="176"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="168"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="175"/>
       <source>Length/Radius positive not Null</source>
       <translation>Dužina/Polumjer pozitivno različito od nule</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="677"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="464"/>
       <source>LeadInOut</source>
       <translation>NavođenjeIzvođenje</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="681"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="468"/>
       <source>Creates a Cutter Radius Compensation G41/G42 Entry Dressup object from a selected path</source>
       <translation>Stvara kompenzaciju radijusa glodala G41 / G42 ulaznog objekta pripreme iz odabrane staze</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="696"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="483"/>
       <source>Please select one path object</source>
       <translation>Odaberite jedan objekt staze</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="703"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="490"/>
       <source>The selected object is not a path</source>
       <translation>Odabrani objekt nije putanja staze</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="709"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="496"/>
       <source>Please select a Profile object</source>
       <translation>Odaberite jedan objekt profila</translation>
     </message>
@@ -3099,22 +3099,22 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../panels/DogboneEdit.ui" line="57"/>
       <source>T-bone horizontal</source>
-      <translation type="unfinished">T-bone horizontal</translation>
+      <translation>T-kost vodoravno</translation>
     </message>
     <message>
       <location filename="../panels/DogboneEdit.ui" line="62"/>
       <source>T-bone vertical</source>
-      <translation type="unfinished">T-bone vertical</translation>
+      <translation>T-kost uspravno</translation>
     </message>
     <message>
       <location filename="../panels/DogboneEdit.ui" line="67"/>
       <source>T-bone long edge</source>
-      <translation type="unfinished">T-bone long edge</translation>
+      <translation>T-kost dugačkog ruba</translation>
     </message>
     <message>
       <location filename="../panels/DogboneEdit.ui" line="72"/>
       <source>T-bone short edge</source>
-      <translation type="unfinished">T-bone short edge</translation>
+      <translation>T-kost kratkog ruba</translation>
     </message>
     <message>
       <location filename="../panels/DogboneEdit.ui" line="80"/>
@@ -3139,7 +3139,7 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../panels/DogboneEdit.ui" line="107"/>
       <source>Incision          </source>
-      <translation type="unfinished">Incision          </translation>
+      <translation>Zasjek         </translation>
     </message>
     <message>
       <location filename="../panels/DogboneEdit.ui" line="114"/>
@@ -3210,7 +3210,7 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../panels/DragKnifeEdit.ui" line="63"/>
       <source>Pivot Height</source>
-      <translation type="unfinished">Pivot Height</translation>
+      <translation>Visina okretišta</translation>
     </message>
     <message>
       <location filename="../panels/HoldingTagsEdit.ui" line="14"/>
@@ -3255,7 +3255,7 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../panels/HoldingTagsEdit.ui" line="97"/>
       <source>List of current tags. Edit coordinates by double click or Edit button. Tags are automatically disabled if they overlap with the previous tag, or don't lie on the base wire.</source>
-      <translation type="unfinished">List of current tags. Edit coordinates by double click or Edit button. Tags are automatically disabled if they overlap with the previous tag, or don't lie on the base wire.</translation>
+      <translation>Popis trenutnih držaća. Uredi koordinate dvostrukim klikom ili gumbom Uredi. Držaći se automatski onemogućavaju ako se preklapaju s prethodnim držaćem ili ne leže na osnovnoj liniji</translation>
     </message>
     <message>
       <location filename="../panels/HoldingTagsEdit.ui" line="116"/>
@@ -3396,7 +3396,7 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../panels/SurfaceEdit.ui" line="273"/>
       <source>Coolant Mode</source>
-      <translation>Načini rada rashladne tekućine</translation>
+      <translation>Način rada rashladnog sredstva</translation>
     </message>
     <message>
       <location filename="../panels/SurfaceEdit.ui" line="299"/>
@@ -3525,12 +3525,12 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../panels/TaskPathCamoticsSim.ui" line="68"/>
       <source>Launch Camotics</source>
-      <translation type="unfinished">Launch Camotics</translation>
+      <translation>Pokreni Camotics</translation>
     </message>
     <message>
       <location filename="../panels/TaskPathCamoticsSim.ui" line="75"/>
       <source>Make Camotics File</source>
-      <translation type="unfinished">Make Camotics File</translation>
+      <translation>Napravi Camotics datoteku</translation>
     </message>
   </context>
   <context>
@@ -3636,7 +3636,7 @@ Should multiple tools or tool shapes with the same name exist in different direc
     <message>
       <location filename="../panels/ToolBitSelector.ui" line="78"/>
       <source>Available Tool Bits to choose from.</source>
-      <translation type="unfinished">Available Tool Bits to choose from.</translation>
+      <translation>Dostupni alatni nastavci za izbor.</translation>
     </message>
     <message>
       <location filename="../panels/ToolBitSelector.ui" line="101"/>
@@ -3976,12 +3976,12 @@ Default: "5mm"</translation>
     <message>
       <location filename="../panels/PathEdit.ui" line="1347"/>
       <source>Rapid horizontal speed assigned as HorizRapid to new ToolController.</source>
-      <translation type="unfinished">Rapid horizontal speed assigned as HorizRapid to new ToolController.</translation>
+      <translation>Brzina vodoravnog brzog pomaka pridružena u Vodoravnu brzinu novih Upravljača alata.</translation>
     </message>
     <message>
       <location filename="../panels/PathEdit.ui" line="1367"/>
       <source>Rapid vertical speed assigned to VertRapid of new ToolController.</source>
-      <translation type="unfinished">Rapid vertical speed assigned to VertRapid of new ToolController.</translation>
+      <translation>Brzina okomitog brzog pomaka pridružena u Okomitu brzinu novih Upravljača alata.</translation>
     </message>
     <message>
       <location filename="../panels/PathEdit.ui" line="1046"/>
@@ -4132,12 +4132,12 @@ Default: 3 mm</translation>
     <message>
       <location filename="../panels/PathEdit.ui" line="1160"/>
       <source>Coolant</source>
-      <translation>Hlađenje</translation>
+      <translation>Rashladno sredstvo</translation>
     </message>
     <message>
       <location filename="../panels/PathEdit.ui" line="1166"/>
       <source>Coolant Mode</source>
-      <translation>Načini rada rashladne tekućine</translation>
+      <translation>Način rada rashladnog sredstva</translation>
     </message>
     <message>
       <location filename="../panels/PathEdit.ui" line="1197"/>
@@ -4179,7 +4179,7 @@ Default: 3 mm</translation>
     <message>
       <location filename="../panels/PathEdit.ui" line="1325"/>
       <source>Rapid Speeds</source>
-      <translation>Brzine ubrzanog hoda</translation>
+      <translation>Brzine brzog pomaka</translation>
     </message>
     <message>
       <location filename="../panels/PathEdit.ui" line="1334"/>
@@ -4292,9 +4292,9 @@ Default: 3 mm</translation>
   <context>
     <name>Path</name>
     <message>
-      <location filename="../../../InitGui.py" line="282"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="69"/>
       <source>The currently selected unit schema: 
-     '{}'
+     '{}' for this document
  Does not use 'minutes' for velocity values. 
  
 CNC machines require feed rate to be expressed in 
@@ -4304,33 +4304,30 @@ For example:
     'Metric, Small Parts &amp; CNC'
     'US Customary'
     'Imperial Decimal'</source>
-      <translation>Trenutno odabrana shema mjernih koristijedinica:  
-
-    '{}'
-
- Ne koristi 'minute' za vrijednosti brzine.  
-
- CNC strojevi zahtijevaju da se brzina hoda izrazi u  
-mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
- Odaberite minutnu shemu u postavkama.
- Na primjer:
+      <translation type="unfinished">The currently selected unit schema: 
+     '{}' for this document
+ Does not use 'minutes' for velocity values. 
+ 
+CNC machines require feed rate to be expressed in 
+unit/minute. To ensure correct G-code: 
+Select a minute-based schema in preferences.
+For example:
     'Metric, Small Parts &amp; CNC'
     'US Customary'
-    'Imperial Decimal'
-</translation>
+    'Imperial Decimal'</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="284"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="71"/>
       <source>Warning</source>
       <translation>Upozorenje</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="286"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="76"/>
       <source>Ok</source>
       <translation>"Ok"</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="288"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="79"/>
       <source>Don't Show This Anymore</source>
       <translation>Ne prikazuj ovo više</translation>
     </message>
@@ -4375,12 +4372,12 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Main/Gui/Job.py" line="636"/>
       <source>Horizontal feedrate</source>
-      <translation>Vodoravno Brzina pomaka</translation>
+      <translation>Vodoravno Brzina napredovanja</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Job.py" line="639"/>
       <source>Vertical feedrate</source>
-      <translation>Okomito Brzina pomaka</translation>
+      <translation>Okomito Brzina napredovanja</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Job.py" line="642"/>
@@ -4422,17 +4419,17 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Op/Base.py" line="852"/>
       <source>Tool Controller feedrates required to calculate the cycle time.</source>
-      <translation>Potrebna brzina pomaka Kontrolera alata za izračunavanje vremena ciklusa.</translation>
+      <translation>Kontroler alata treba brzinu napredovanja da bi izračunao vrijeme ciklusa.</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="855"/>
       <source>Feedrate Error</source>
-      <translation>Greška Brzine pomicanja</translation>
+      <translation>Greška Brzine napredovanja</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="863"/>
       <source>Add Tool Controller Rapid Speeds on the SetupSheet for more accurate cycle times.</source>
-      <translation>Dodajte brze brzine Kontrolera alata na tablu za podešavanje za preciznija vremena ciklusa.</translation>
+      <translation>Dodaj brzine upravljača alata brzog pomaka na stranicu postavki za točnije vrijeme ciklusa.</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="872"/>
@@ -4613,26 +4610,24 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Base/SetupSheet.py" line="117"/>
       <source>Default speed for horizontal rapid moves.</source>
-      <translation>Zadana brzina za vodoravni brzi hod.</translation>
+      <translation>Zadana brzina za vodoravne brze pomake.</translation>
     </message>
     <message>
       <location filename="../../../Path/Base/SetupSheet.py" line="125"/>
       <source>Default speed for vertical rapid moves.</source>
-      <translation>Zadana brzina za okomiti brzi hod.</translation>
+      <translation>Zadana brzina za okomite brze pomake.</translation>
     </message>
     <message>
       <location filename="../../../Path/Base/SetupSheet.py" line="131"/>
       <location filename="../../../Path/Base/SetupSheet.py" line="413"/>
       <source>Coolant Modes</source>
-      <translation>Načini rada rashladne tekućine</translation>
+      <translation>Načini rada rashladnog sredstva</translation>
     </message>
     <message>
       <location filename="../../../Path/Base/SetupSheet.py" line="137"/>
       <location filename="../../../Path/Base/SetupSheet.py" line="422"/>
       <source>Default coolant mode.</source>
-      <translation>Zadani način rada rashladne tekućine.
-
-</translation>
+      <translation>Zadani način rada rashladnog sredstva.</translation>
     </message>
     <message>
       <location filename="../../../Path/Base/SetupSheet.py" line="146"/>
@@ -4676,11 +4671,11 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     </message>
     <message>
       <location filename="../../../Path/Dressup/Boundary.py" line="53"/>
-      <location filename="../../../Path/Dressup/Tags.py" line="943"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="940"/>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="54"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="423"/>
       <location filename="../../../Path/Dressup/Gui/Dragknife.py" line="58"/>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="63"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="61"/>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="57"/>
       <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="62"/>
       <source>The base path to modify</source>
@@ -4697,72 +4692,73 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
       <translation>Određuje opisuju li granice masku za uključivanje ili isključivanje.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="202"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="203"/>
       <source>The base path to dress up</source>
       <translation>Osnovna staza za pripremu</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="210"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="211"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="429"/>
       <source>The side of path to insert bones</source>
       <translation>Strana staze za ubacivanje kostiju</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="227"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="228"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="437"/>
       <source>The style of bones</source>
       <translation>Forma kostiju</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="238"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="239"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="455"/>
       <source>The algorithm to determine the bone length</source>
       <translation>Algoritam za određivanje duljine kostiju</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="249"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="250"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="463"/>
       <source>Dressup length if incision is set to 'custom'</source>
       <translation>Duljina pripreme ako je zasjek postavljen na 'prilagođeno'</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="257"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="258"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="445"/>
       <source>Bones that aren't dressed up</source>
       <translation>Kosti koje nisu dotjerane (dressed up)</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="949"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="946"/>
       <source>Width of tags.</source>
-      <translation type="unfinished">Width of tags.</translation>
+      <translation>Širina potpornih šipki.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="955"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="952"/>
       <source>Height of tags.</source>
-      <translation type="unfinished">Height of tags.</translation>
+      <translation>
+Visina potpornih šipki.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="961"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="958"/>
       <source>Angle of tag plunge and ascent.</source>
-      <translation type="unfinished">Angle of tag plunge and ascent.</translation>
+      <translation>Kut spusta i uspona kod držećih šipki</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="967"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="964"/>
       <source>Radius of the fillet for the tag.</source>
       <translation>Polumjer obruba za oznaku.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="973"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="970"/>
       <source>Locations of inserted holding tags</source>
-      <translation type="unfinished">Locations of inserted holding tags</translation>
+      <translation>Lokacije umetnutih šipki držača</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="979"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="976"/>
       <source>IDs of disabled holding tags</source>
       <translation type="unfinished">IDs of disabled holding tags</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="988"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="985"/>
       <source>Factor determining the # of segments used to approximate rounded tags.</source>
       <translation type="unfinished">Factor determining the # of segments used to approximate rounded tags.</translation>
     </message>
@@ -4792,57 +4788,57 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
       <translation>Visina podizanja kod akcije kuta</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="69"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="67"/>
       <source>Calculate roll-on to path</source>
       <translation>Izračunaj prilaženje do staze</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="75"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="73"/>
       <source>Calculate roll-off from path</source>
       <translation>Izračunaj odlaženje od staze</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="81"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="79"/>
       <source>Keep the Tool Down in Path</source>
       <translation>Zadrži alat dolje na stazi</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="87"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="85"/>
       <source>Length or Radius of the approach</source>
       <translation>Dužina ili polumjer kod približavanja</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="93"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="91"/>
       <source>Length or Radius of the exit</source>
       <translation>Dužina ili polumjer kod udaljavanja</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="99"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="97"/>
       <source>The Style of motion into the Path</source>
       <translation>Stil vođenja do konture staze</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="106"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="104"/>
       <source>The Style of motion out of the Path</source>
       <translation>Stil vođenja od konture staze</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="113"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="111"/>
       <source>Extends LeadIn distance</source>
       <translation>Produljuje udaljenost do konture (LeadIn)</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="119"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="117"/>
       <source>Extends LeadOut distance</source>
       <translation>Produljuje udaljenost od konture (LeadOut)</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="125"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="123"/>
       <source>Perform plunges with G0</source>
       <translation>Brzo upuštanje sa GO</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="133"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="131"/>
       <source>Apply LeadInOut to layers within an operation</source>
       <translation>Primijenite udaljenost do/od (LeadInOut) na slojeve unutar operacije</translation>
     </message>
@@ -4952,7 +4948,7 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
       <location filename="../../../Path/Main/Job.py" line="208"/>
       <location filename="../../../Path/Main/Job.py" line="523"/>
       <source>If multiple WCS, order the output this way</source>
-      <translation type="unfinished">If multiple WCS, order the output this way</translation>
+      <translation>Ako je više WCS-a, naručite izlaz na ovaj način</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="216"/>
@@ -5015,12 +5011,12 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Main/Stock.py" line="155"/>
       <source>Extra allowance from part bound box in negative Z direction</source>
-      <translation type="unfinished">Extra allowance from part bound box in negative Z direction</translation>
+      <translation>Dodatno povećanje okvira granica prostora u negativnom Z smjeru</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Stock.py" line="164"/>
       <source>Extra allowance from part bound box in positive Z direction</source>
-      <translation type="unfinished">Extra allowance from part bound box in positive Z direction</translation>
+      <translation>Dodatno povećanje okvira granica prostora u pozitivnom Z smjeru</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Stock.py" line="170"/>
@@ -5030,7 +5026,7 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Main/Stock.py" line="242"/>
       <source>Length of this stock box</source>
-      <translation type="unfinished">Length of this stock box</translation>
+      <translation>Dužina bloka obradnog materijala</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Stock.py" line="248"/>
@@ -5060,7 +5056,7 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Main/Gui/Fixture.py" line="38"/>
       <source>Fixture Offset Number</source>
-      <translation type="unfinished">Fixture Offset Number</translation>
+      <translation>Broj pomaka pričvršćenja</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Fixture.py" line="63"/>
@@ -5093,7 +5089,7 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="992"/>
       <source>Lift distance for rapid moves</source>
-      <translation type="unfinished">Lift distance for rapid moves</translation>
+      <translation>Visina podizanja za brze pomake</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1001"/>
@@ -5108,12 +5104,12 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1019"/>
       <source>Force plunging into material inside and clearing towards the edges</source>
-      <translation type="unfinished">Force plunging into material inside and clearing towards the edges</translation>
+      <translation>Prisili uranjanje u materijal iznutra i čišćenje prema rubovima</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1028"/>
       <source>To take a finishing profile path at the end</source>
-      <translation type="unfinished">To take a finishing profile path at the end</translation>
+      <translation>Da bi se uzela završna profilna putanja na kraju</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1034"/>
@@ -5124,38 +5120,38 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1056"/>
       <source>Use Arcs (G2) for helix ramp</source>
-      <translation type="unfinished">Use Arcs (G2) for helix ramp</translation>
+      <translation>Koristi lukove (G2) za rampu spirale</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1066"/>
       <source>Internal input state</source>
-      <translation type="unfinished">Internal input state</translation>
+      <translation>Unutarnji status ulaza</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1075"/>
       <source>Internal output state</source>
-      <translation type="unfinished">Internal output state</translation>
+      <translation>Unutarnji status izlaza</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1086"/>
       <source>Helix ramp entry angle (degrees)</source>
-      <translation type="unfinished">Helix ramp entry angle (degrees)</translation>
+      <translation>Ulazni ugao rampe spirale (stupnjeva)</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1095"/>
       <source>Helix cone angle (degrees)</source>
-      <translation type="unfinished">Helix cone angle (degrees)</translation>
+      <translation>Kut stožca spirale (stupnjeva)</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1104"/>
       <source>Limit helix entry diameter, if limit larger than tool diameter or 0, tool diameter is used</source>
-      <translation type="unfinished">Limit helix entry diameter, if limit larger than tool diameter or 0, tool diameter is used</translation>
+      <translation>Ograničite promjer ulaza spirale, ako je ograničenje veće od promjera alata ili 0, koristi se promjer alata</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1114"/>
       <location filename="../../../Path/Op/PocketShape.py" line="70"/>
       <source>Uses the outline of the base geometry.</source>
-      <translation type="unfinished">Uses the outline of the base geometry.</translation>
+      <translation>Koristi konturu geometrije baze.</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Area.py" line="97"/>
@@ -5255,7 +5251,7 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Op/Base.py" line="298"/>
       <source>Rapid Safety Height between locations.</source>
-      <translation>Sigurna visina brzog hoda između lokacija.</translation>
+      <translation>Sigurna visina brzog pomaka između lokacija.</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="306"/>
@@ -5273,19 +5269,19 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Op/Base.py" line="324"/>
       <source>Lower limit of the turning diameter</source>
-      <translation type="unfinished">Lower limit of the turning diameter</translation>
+      <translation>Donja granica okretnog promjera 
+</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="332"/>
       <source>Upper limit of the turning diameter.</source>
-      <translation type="unfinished">Upper limit of the turning diameter.</translation>
+      <translation>Gornja granica okretnog promjera .
+</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="443"/>
       <source>Coolant option for this operation</source>
-      <translation>Opcija hlađenja za ovu operaciju
-
-</translation>
+      <translation>Opcija hlađenja za ovu operaciju</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/CircularHoleBase.py" line="80"/>
@@ -5362,12 +5358,12 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
       <location filename="../../../Path/Op/Drilling.py" line="158"/>
       <location filename="../../../Path/Op/Drilling.py" line="222"/>
       <source>Controls tool retract height between holes in same op, Default=G98: safety height</source>
-      <translation type="unfinished">Controls tool retract height between holes in same op, Default=G98: safety height</translation>
+      <translation>Kontrolira visinu povlačenja alata između rupa u istoj operaciji , Zadano = G98: sigurnosna visina</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Drilling.py" line="167"/>
       <source>The height where cutting feed rate starts and retract height for peck operation</source>
-      <translation type="unfinished">The height where cutting feed rate starts and retract height for peck operation</translation>
+      <translation>Visina na kojoj započinje brzina rezanja i povlačna visina za operaciju peckanja</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Drilling.py" line="173"/>
@@ -5379,7 +5375,7 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
       <location filename="../../../Path/Op/Drilling.py" line="212"/>
       <location filename="../../../Path/Op/Gui/Drilling.py" line="134"/>
       <source>Apply G99 retraction: only retract to RetractHeight between holes in this operation</source>
-      <translation type="unfinished">Apply G99 retraction: only retract to RetractHeight between holes in this operation</translation>
+      <translation>Primijenite povlačenje G99: samo povucite do Povlačne visine između rupa u ovoj operaciji</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Engrave.py" line="71"/>
@@ -5493,7 +5489,7 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Op/PocketBase.py" line="163"/>
       <source>Clearing pattern to use</source>
-      <translation type="unfinished">Clearing pattern to use</translation>
+      <translation>Uzorak čišćenja za korištenje</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/PocketBase.py" line="169"/>
@@ -5509,24 +5505,24 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
       <location filename="../../../Path/Op/PocketBase.py" line="186"/>
       <location filename="../../../Path/Op/PocketBase.py" line="265"/>
       <source>Last Stepover Radius.  If 0, 50% of cutter is used. Tuning this can be used to improve stepover for some shapes</source>
-      <translation type="unfinished">Last Stepover Radius.  If 0, 50% of cutter is used. Tuning this can be used to improve stepover for some shapes</translation>
+      <translation>Zadnji polu-mjerni  prijelaz preklapanja. Ako je 0, koristi se 50% rezača. Podešavanjem ovog može se poboljšati prijelaz preklapanja za neke oblike</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/PocketBase.py" line="195"/>
       <location filename="../../../Path/Op/PocketBase.py" line="277"/>
       <source>Skips machining regions that have already been cleared by previous operations.</source>
-      <translation type="unfinished">Skips machining regions that have already been cleared by previous operations.</translation>
+      <translation>Preskače obrađene regije koje su već očišćene prethodnim operacijama.</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/PocketBase.py" line="204"/>
       <location filename="../../../Path/Op/PocketBase.py" line="288"/>
       <source>The areas cleared by this operation, one area per height, stored as a compound part. Used internally for rest machining.</source>
-      <translation type="unfinished">The areas cleared by this operation, one area per height, stored as a compound part. Used internally for rest machining.</translation>
+      <translation>Područja očišćena ovom operacijom, jedno područje po visini, pohranjeno kao složeni spoj. Koristi se interno za ostatak obrade.</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/PocketBase.py" line="299"/>
       <source>Flag to indicate that the rest machining regions have never been computed, and must be recomputed before being used.</source>
-      <translation type="unfinished">Flag to indicate that the rest machining regions have never been computed, and must be recomputed before being used.</translation>
+      <translation>Oznaka koja označava da regije ostatka obrade nikada nisu izračunate i da ih je potrebno ponovno izračunati prije korištenja.</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Probe.py" line="55"/>
@@ -5868,7 +5864,7 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
     <message>
       <location filename="../../../Path/Op/ThreadMilling.py" line="381"/>
       <source>Override to control how loose or tight the threads are milled</source>
-      <translation type="unfinished">Override to control how loose or tight the threads are milled</translation>
+      <translation>Nadjačaj za kontrolu koliko labavo ili čvrsto su glodani navoji</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/ThreadMilling.py" line="389"/>
@@ -5992,7 +5988,7 @@ mjerna jedinica/minuta. Da biste osigurali ispravan G-kod:
       <location filename="../../../Path/Op/Gui/Array.py" line="125"/>
       <location filename="../../../Path/Op/Gui/Array.py" line="175"/>
       <source>Seed value for jitter randomness</source>
-      <translation type="unfinished">Seed value for jitter randomness</translation>
+      <translation>Vrijednost seed za slučajnost jitter</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/Comment.py" line="41"/>
@@ -6044,7 +6040,7 @@ Staza koju treba kopirati</translation>
       <location filename="../../../Path/Tool/Bit.py" line="172"/>
       <location filename="../../../Path/Tool/Bit.py" line="210"/>
       <source>List of all properties inherited from the bit</source>
-      <translation type="unfinished">List of all properties inherited from the bit</translation>
+      <translation>Lista od svih svojstava naslijeđenih od vrha alata</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/Controller.py" line="68"/>
@@ -6074,12 +6070,12 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Tool/Controller.py" line="101"/>
       <source>Rapid rate for vertical moves in Z</source>
-      <translation>Pomak brzog hoda za okomito Z kretanje</translation>
+      <translation>Stopa brzog pomaka za okomita (Z) pomicanja</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/Controller.py" line="107"/>
       <source>Rapid rate for horizontal moves</source>
-      <translation>Pomak brzog hoda za vodoravno kretanje</translation>
+      <translation>Pomak brzog hoda za vodoravna pomicanja</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/Controller.py" line="304"/>
@@ -6097,7 +6093,7 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Base/Gui/PropertyBag.py" line="443"/>
       <source>Creates an object which can be used to store reference properties.</source>
-      <translation type="unfinished">Creates an object which can be used to store reference properties.</translation>
+      <translation>Stvara objekt koji se može koristiti za spremanje referenci svojstva.</translation>
     </message>
   </context>
   <context>
@@ -6126,17 +6122,17 @@ Staza koju treba kopirati</translation>
   <context>
     <name>Path_DressupTag</name>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1310"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1307"/>
       <source>Cannot insert holding tags for this path - please select a Profile path</source>
-      <translation type="unfinished">Cannot insert holding tags for this path - please select a Profile path</translation>
+      <translation>Ne mogu umetnuti držaće za ovu stazu - odaberite stazu profila</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1360"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1357"/>
       <source>The selected object is not a path</source>
       <translation>Odabrani objekt nije putanja staze</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1365"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1362"/>
       <source>Please select a Profile object</source>
       <translation>Odaberite jedan objekt profila</translation>
     </message>
@@ -6166,7 +6162,7 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="263"/>
       <source>Axis Map</source>
-      <translation type="unfinished">Axis Map</translation>
+      <translation>Mapiranje osi</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="267"/>
@@ -6178,21 +6174,21 @@ Staza koju treba kopirati</translation>
     <name>Path_Dressup</name>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="284"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="368"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="366"/>
       <source>Please select one path object
 </source>
       <translation>Odaberite samo jedan objekt staze</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="289"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="373"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="371"/>
       <source>The selected object is not a path
 </source>
       <translation>Odabrani objekt nije putanja staze</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="294"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="378"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="376"/>
       <source>Please select a Path object</source>
       <translation>Odaberite objekt staze</translation>
     </message>
@@ -6278,17 +6274,17 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="131"/>
       <source>RampMethod1</source>
-      <translation type="unfinished">RampMethod1</translation>
+      <translation>RampaMod1</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="132"/>
       <source>RampMethod2</source>
-      <translation type="unfinished">RampMethod2</translation>
+      <translation>RampaMod2</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="133"/>
       <source>RampMethod3</source>
-      <translation type="unfinished">RampMethod3</translation>
+      <translation>RampaMod3</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="134"/>
@@ -6298,17 +6294,17 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="138"/>
       <source>Horizontal Feed Rate</source>
-      <translation type="unfinished">Horizontal Feed Rate</translation>
+      <translation>Vodoravna brzina pomaka</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="142"/>
       <source>Vertical Feed Rate</source>
-      <translation type="unfinished">Vertical Feed Rate</translation>
+      <translation>Okomita brzina pomaka</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="146"/>
       <source>Ramp Feed Rate</source>
-      <translation type="unfinished">Ramp Feed Rate</translation>
+      <translation>Rampa Brzina pomaka</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="149"/>
@@ -6344,12 +6340,12 @@ Staza koju treba kopirati</translation>
   <context>
     <name>Path_Probe</name>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="293"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="292"/>
       <source>Select Probe Point File</source>
-      <translation type="unfinished">Select Probe Point File</translation>
+      <translation>Odaberi datoteku mjernih točaka</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="295"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="294"/>
       <location filename="../../../Path/Op/Gui/Probe.py" line="95"/>
       <source>All Files (*.*)</source>
       <translation>Sve datoteke (*.*)</translation>
@@ -6357,7 +6353,7 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Op/Gui/Probe.py" line="93"/>
       <source>Select Output File</source>
-      <translation type="unfinished">Select Output File</translation>
+      <translation>Odaberite izlaznu datoteku</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/Probe.py" line="107"/>
@@ -6373,12 +6369,12 @@ Staza koju treba kopirati</translation>
   <context>
     <name>Path_DressupZCorrect</name>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="347"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="346"/>
       <source>Z Depth Correction</source>
       <translation>Korekcija dubine Z</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="351"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="350"/>
       <source>Use Probe Map to correct Z depth</source>
       <translation>Koristite kartu sonde za ispravljanje Z dubine</translation>
     </message>
@@ -6402,7 +6398,7 @@ Staza koju treba kopirati</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="260"/>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="61"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="89"/>
       <source>2D</source>
       <translation>2D</translation>
     </message>
@@ -6419,7 +6415,7 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Main/Job.py" line="263"/>
       <source>Multiaxis</source>
-      <translation type="unfinished">Multiaxis</translation>
+      <translation>Višeosni</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Job.py" line="283"/>
@@ -6497,27 +6493,27 @@ Staza koju treba kopirati</translation>
       <translation>Kreira posao za putanju</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="60"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="88"/>
       <source>Solids</source>
       <translation>Tijela</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="62"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="90"/>
       <source>Jobs</source>
       <translation>Poslovi</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="330"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="358"/>
       <source>Base -/+ %.2f/%.2f %.2f/%.2f %.2f/%.2f</source>
       <translation>Baza-/ + %.2f/%.2f %.2f/%.2f %.2f/%.2f</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="340"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="368"/>
       <source>Box: %.2f x %.2f x %.2f</source>
       <translation>Kvadar: %.2f x %.2f x %.2f</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="355"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="383"/>
       <source>Unsupported stock type</source>
       <translation>Nije podržan tip materijala obrade</translation>
     </message>
@@ -6607,7 +6603,7 @@ Staza koju treba kopirati</translation>
   <context>
     <name>Path_Job:</name>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="346"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="374"/>
       <source>Cylinder: %.2f x %.2f</source>
       <translation>Cilindar: %.2f x %.2f</translation>
     </message>
@@ -6623,32 +6619,32 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="215"/>
       <source>Setup Report for FreeCAD Job</source>
-      <translation type="unfinished">Setup Report for FreeCAD Job</translation>
+      <translation>Izvještaj o podešenju za posao FreeCAD-a</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="216"/>
       <source>Table of Contents</source>
-      <translation type="unfinished">Table of Contents</translation>
+      <translation>Tablica sadržaja</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="217"/>
       <source>Part Information</source>
-      <translation type="unfinished">Part Information</translation>
+      <translation>Informacije o dijelu</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="218"/>
       <source>Run Summary</source>
-      <translation type="unfinished">Run Summary</translation>
+      <translation>Izvještaj o pokretanju</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="219"/>
       <source>Rough Stock</source>
-      <translation type="unfinished">Rough Stock</translation>
+      <translation>Grubi materijal za izradu</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="220"/>
       <source>Tool Data</source>
-      <translation type="unfinished">Tool Data</translation>
+      <translation>Podaci alata</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="221"/>
@@ -6729,7 +6725,7 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="243"/>
       <source>Coolant</source>
-      <translation>Hlađenje</translation>
+      <translation>Rashladno sredstvo</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="244"/>
@@ -6779,7 +6775,7 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="517"/>
       <source>Spindle Speed</source>
-      <translation>Brzina Glodala</translation>
+      <translation>Brzina Vretena</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="518"/>
@@ -6890,33 +6886,35 @@ Staza koju treba kopirati</translation>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1332"/>
       <source>Tool number {} is a legacy tool. Legacy tools not 
                         supported by Path-Sanity</source>
-      <translation type="unfinished">Tool number {} is a legacy tool. Legacy tools not 
-                        supported by Path-Sanity</translation>
+      <translation>Alati broj {} su zastarijeli alati. Zastarijeli alati nisu 
+podržani od Path-Sanity</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1343"/>
       <source>Tool number {} used by multiple tools</source>
-      <translation type="unfinished">Tool number {} used by multiple tools</translation>
+      <translation>Alati broj {} korišten kod više alata</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1371"/>
       <source>Tool Controller '{}' has no spindlespeed</source>
-      <translation type="unfinished">Tool Controller '{}' has no spindlespeed</translation>
+      <translation>Kontroler alata '{}' nema brzinu vretena</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1399"/>
       <source>Tool Controller '{}' is not used</source>
-      <translation type="unfinished">Tool Controller '{}' is not used</translation>
+      <translation>Kontroler alata '{}' nije korišten</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1494"/>
       <source>Consider Specifying the Stock Material</source>
-      <translation type="unfinished">Consider Specifying the Stock Material</translation>
+      <translation>Sure, here is the translation of "Consider Specifying the StockMaterial" in Croatian:
+
+Razmotrite specificiranje Materijala obrade</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1585"/>
       <source>The Job has not been post-processed</source>
-      <translation type="unfinished">The Job has not been post-processed</translation>
+      <translation>Posao nije dorađen</translation>
     </message>
   </context>
   <context>
@@ -6980,7 +6978,7 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Op/Area.py" line="259"/>
       <source>Previous operation %s is required for rest machining, but it has no stored rest machining metadata. Recomputing to generate this metadata...</source>
-      <translation type="unfinished">Previous operation %s is required for rest machining, but it has no stored rest machining metadata. Recomputing to generate this metadata...</translation>
+      <translation>Prethodni postupak %s potreban je za ostatak obrade, ali nema pohranjenih metapodataka za ostatak obrade. Preračunavamo kako bismo generirali ove metapodatke...</translation>
     </message>
   </context>
   <context>
@@ -7783,12 +7781,12 @@ Staza koju treba kopirati</translation>
     <message>
       <location filename="../../../Path/Op/ThreadMilling.py" line="283"/>
       <source>LeftHand</source>
-      <translation type="unfinished">LeftHand</translation>
+      <translation>Lijevom stranom</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/ThreadMilling.py" line="287"/>
       <source>RightHand</source>
-      <translation type="unfinished">RightHand</translation>
+      <translation>Desnom stranom</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/ThreadMilling.py" line="293"/>

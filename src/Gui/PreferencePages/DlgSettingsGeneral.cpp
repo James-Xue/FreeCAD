@@ -35,8 +35,11 @@
 # include <boost/filesystem.hpp>
 #endif
 
+#include <App/Document.h>
 #include <Base/Parameter.h>
 #include <Base/UnitsApi.h>
+
+#include <Gui/Document.h>
 
 #include <Gui/Action.h>
 #include <Gui/Application.h>
@@ -45,12 +48,15 @@
 #include <Gui/DlgPreferencePackManagementImp.h>
 #include <Gui/DlgRevertToBackupConfigImp.h>
 #include <Gui/MainWindow.h>
+#include <Gui/OverlayManager.h>
+#include <Gui/ParamHandler.h>
 #include <Gui/PreferencePackManager.h>
 #include <Gui/Language/Translator.h>
 
 #include "DlgSettingsGeneral.h"
 #include "ui_DlgSettingsGeneral.h"
 
+using namespace Gui;
 using namespace Gui::Dialog;
 namespace fs = boost::filesystem;
 using namespace Base;
@@ -185,6 +191,7 @@ void DlgSettingsGeneral::saveSettings()
     ("User parameter:BaseApp/Preferences/Units");
     hGrpu->SetInt("UserSchema", ui->comboBox_UnitSystem->currentIndex());
     hGrpu->SetInt("Decimals", ui->spinBoxDecimals->value());
+    hGrpu->SetBool("IgnoreProjectSchema", ui->checkBox_projectUnitSystemIgnore->isChecked());
 
     // Set actual value
     Base::UnitsApi::setDecimals(ui->spinBoxDecimals->value());
@@ -202,14 +209,25 @@ void DlgSettingsGeneral::saveSettings()
     Base::QuantityFormat::setDefaultDenominator(FracInch);
 
     // Set and save the Unit System
-    viewSystemIndex = ui->comboBox_UnitSystem->currentIndex();
-    UnitsApi::setSchema(static_cast<UnitSystem>(viewSystemIndex));
+    if ( ui->checkBox_projectUnitSystemIgnore->isChecked() ) {
+        viewSystemIndex = ui->comboBox_UnitSystem->currentIndex();
+        UnitsApi::setSchema(static_cast<UnitSystem>(viewSystemIndex));
+    } else {
+        App::Document* doc = App::GetApplication().getActiveDocument();
+        if ( doc != nullptr ) {
+            UnitsApi::setSchema(static_cast<UnitSystem>(doc->UnitSystem.getValue()));
+        }
+    }
 
     ui->SubstituteDecimal->onSave();
     ui->UseLocaleFormatting->onSave();
     ui->RecentFiles->onSave();
     ui->EnableCursorBlinking->onSave();
     ui->SplashScreen->onSave();
+    ui->ActivateOverlay->onSave();
+    if (property("ActivateOverlay").toBool() != ui->ActivateOverlay->isChecked()) {
+        requireRestart();
+    }
 
     setRecentFileSize();
     bool force = setLanguage();
@@ -244,6 +262,7 @@ void DlgSettingsGeneral::loadSettings()
     ("User parameter:BaseApp/Preferences/Units");
     ui->comboBox_UnitSystem->setCurrentIndex(hGrpu->GetInt("UserSchema", 0));
     ui->spinBoxDecimals->setValue(hGrpu->GetInt("Decimals", Base::UnitsApi::getDecimals()));
+    ui->checkBox_projectUnitSystemIgnore->setChecked(hGrpu->GetBool("IgnoreProjectSchema", false));
 
     // Get the current user setting for the minimum fractional inch
     FracInch = hGrpu->GetInt("FracInch", Base::QuantityFormat::getDefaultDenominator());
@@ -252,13 +271,13 @@ void DlgSettingsGeneral::loadSettings()
     // handy little equation.
     cbIndex = std::log2(FracInch) - 1;
     ui->comboBox_FracInch->setCurrentIndex(cbIndex);
-
-
     ui->SubstituteDecimal->onRestore();
     ui->UseLocaleFormatting->onRestore();
     ui->RecentFiles->onRestore();
     ui->EnableCursorBlinking->onRestore();
     ui->SplashScreen->onRestore();
+    ui->ActivateOverlay->onRestore();
+    setProperty("ActivateOverlay", ui->ActivateOverlay->isChecked());
 
     // search for the language files
     ParameterGrp::handle hGrp = WindowParameter::getDefaultParameter()->GetGroup("General");
@@ -320,6 +339,44 @@ void DlgSettingsGeneral::loadSettings()
     ui->tiledBackground->setChecked(hGrp->GetBool("TiledBackground", false));
 
     loadThemes();
+}
+
+void DlgSettingsGeneral::resetSettingsToDefaults()
+{
+    ParameterGrp::handle hGrp;
+    hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/Units");
+    //reset "UserSchema" parameter
+    hGrp->RemoveInt("UserSchema");
+    //reset "Decimals" parameter
+    hGrp->RemoveInt("Decimals");
+    //reset "IgnoreProjectSchema" parameter
+    hGrp->RemoveBool("IgnoreProjectSchema");
+    //reset "FracInch" parameter
+    hGrp->RemoveInt("FracInch");
+
+    hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/MainWindow");
+    //reset "Theme" parameter
+    hGrp->RemoveASCII("Theme");
+    //reset "TiledBackground" parameter
+    hGrp->RemoveBool("TiledBackground");
+
+
+    hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/DockWindows");
+    //reset "ComboView" parameters
+    hGrp->GetGroup("ComboView")->RemoveBool("Enabled");
+    //reset "TreeView" parameters
+    hGrp->GetGroup("TreeView")->RemoveBool("Enabled");
+    //reset "PropertyView" parameters
+    hGrp->GetGroup("PropertyView")->RemoveBool("Enabled");
+
+    hGrp = WindowParameter::getDefaultParameter()->GetGroup("General");
+    //reset "Language" parameter
+    hGrp->RemoveASCII("Language");
+    //reset "ToolbarIconSize" parameter
+    hGrp->RemoveInt("ToolbarIconSize");
+
+    //finally reset all the parameters associated to Gui::Pref* widgets
+    PreferencePage::resetSettingsToDefaults();
 }
 
 void DlgSettingsGeneral::saveThemes()
@@ -401,9 +458,9 @@ void DlgSettingsGeneral::changeEvent(QEvent *event)
 void DlgSettingsGeneral::saveDockWindowVisibility()
 {
     auto hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/DockWindows");
-    bool treeView = hGrp->GetGroup("TreeView")->GetBool("Enabled", true);
-    bool propertyView = hGrp->GetGroup("PropertyView")->GetBool("Enabled", true);
-    bool comboView = hGrp->GetGroup("ComboView")->GetBool("Enabled", false);
+    bool treeView = hGrp->GetGroup("TreeView")->GetBool("Enabled", false);
+    bool propertyView = hGrp->GetGroup("PropertyView")->GetBool("Enabled", false);
+    bool comboView = hGrp->GetGroup("ComboView")->GetBool("Enabled", true);
     switch (ui->treeMode->currentIndex()) {
     case 0:
         comboView = true;
@@ -427,9 +484,9 @@ void DlgSettingsGeneral::loadDockWindowVisibility()
     ui->treeMode->addItem(tr("TreeView and PropertyView"));
 
     auto hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/DockWindows");
-    bool propertyView = hGrp->GetGroup("PropertyView")->GetBool("Enabled", true);
-    bool treeView = hGrp->GetGroup("TreeView")->GetBool("Enabled", true);
-    bool comboView = hGrp->GetGroup("ComboView")->GetBool("Enabled", false);
+    bool propertyView = hGrp->GetGroup("PropertyView")->GetBool("Enabled", false);
+    bool treeView = hGrp->GetGroup("TreeView")->GetBool("Enabled", false);
+    bool comboView = hGrp->GetGroup("ComboView")->GetBool("Enabled", true);
     int index = -1;
     if (propertyView || treeView) {
         index = 1;
@@ -603,6 +660,36 @@ void DlgSettingsGeneral::onUnitSystemIndexChanged(int index)
 void DlgSettingsGeneral::onThemeChanged(int index) {
     Q_UNUSED(index);
     themeChanged = true;
+}
+
+///////////////////////////////////////////////////////////
+namespace {
+
+class ApplyDockWidget: public ParamHandler {
+public:
+    bool onChange(const ParamKey *) override {
+        OverlayManager::instance()->reload(OverlayManager::ReloadMode::ReloadPause);
+        return true;
+    }
+
+    void onTimer() override {
+        getMainWindow()->initDockWindows(true);
+        OverlayManager::instance()->reload(OverlayManager::ReloadMode::ReloadResume);
+    }
+};
+
+} // anonymous namespace
+
+void DlgSettingsGeneral::attachObserver()
+{
+    static ParamHandlers handlers;
+
+    auto hDockWindows = App::GetApplication().GetUserParameter().GetGroup("BaseApp/Preferences/DockWindows");
+    auto applyDockWidget = std::shared_ptr<ParamHandler>(new ApplyDockWidget);
+    handlers.addHandler(ParamKey(hDockWindows->GetGroup("ComboView"), "Enabled"), applyDockWidget);
+    handlers.addHandler(ParamKey(hDockWindows->GetGroup("TreeView"), "Enabled"), applyDockWidget);
+    handlers.addHandler(ParamKey(hDockWindows->GetGroup("PropertyView"), "Enabled"), applyDockWidget);
+    handlers.addHandler(ParamKey(hDockWindows->GetGroup("DAGView"), "Enabled"), applyDockWidget);
 }
 
 #include "moc_DlgSettingsGeneral.cpp"

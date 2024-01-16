@@ -23,6 +23,12 @@
 
 #include <FCConfig.h>
 
+#if defined(_MSC_VER)
+#include <windows.h>
+#include <dbghelp.h>
+#endif
+
+
 #ifdef _PreComp_
 #   undef _PreComp_
 #endif
@@ -151,7 +157,7 @@ int main( int argc, char ** argv )
     App::Application::Config()["ExeName"] = "FreeCAD";
     App::Application::Config()["ExeVendor"] = "FreeCAD";
     App::Application::Config()["AppDataSkipVendor"] = "true";
-    App::Application::Config()["MaintainerUrl"] = "http://www.freecad.org/wiki/Main_Page";
+    App::Application::Config()["MaintainerUrl"] = "https://www.freecad.org/wiki/Main_Page";
 
     // set the banner (for logging and console)
     App::Application::Config()["CopyrightInfo"] = sBanner;
@@ -268,9 +274,9 @@ int main( int argc, char ** argv )
         if (App::Application::Config()["Console"] == "1")
             App::Application::runApplication();
         if (App::Application::Config()["RunMode"] == "Gui" ||
-            App::Application::Config()["RunMode"] == "Internal")
+            App::Application::Config()["RunMode"] == "Internal") {
             Gui::Application::runApplication();
-        else
+        } else
             App::Application::runApplication();
     }
     catch (const Base::SystemExitException& e) {
@@ -305,8 +311,6 @@ int main( int argc, char ** argv )
 }
 
 #if defined(_MSC_VER)
-#include <windows.h>
-#include <dbghelp.h>
 
 typedef BOOL (__stdcall *tMDWD)(
   IN HANDLE hProcess,

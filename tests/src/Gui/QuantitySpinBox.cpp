@@ -6,6 +6,7 @@
 #include <App/Application.h>
 
 #include "Gui/QuantitySpinBox.h"
+#include <src/App/InitApplication.h>
 
 // NOLINTBEGIN(readability-magic-numbers)
 
@@ -16,12 +17,7 @@ class testQuantitySpinBox: public QObject
 public:
     testQuantitySpinBox()
     {
-        if (App::Application::GetARGC() == 0) {
-            constexpr int argc = 1;
-            std::array<char*, argc> argv {"FreeCAD"};
-            App::Application::Config()["ExeName"] = "FreeCAD";
-            App::Application::init(argc, argv.data());
-        }
+        tests::initApplication();
         qsb = std::make_unique<Gui::QuantitySpinBox>();
     }
 
@@ -49,6 +45,24 @@ private Q_SLOTS:
     {
         auto result = qsb->valueFromText("1/10mm");
         QCOMPARE(result, Base::Quantity(0.1, QLatin1String("mm")));
+    }
+
+    void test_KeepFormat()  // NOLINT
+    {
+        auto quant = qsb->value();
+        auto format = quant.getFormat();
+        format.precision = 7;
+        quant.setFormat(format);
+
+        qsb->setValue(quant);
+
+        auto val1 = qsb->value();
+        QCOMPARE(val1.getFormat().precision, 7);
+
+        // format shouldn't change after setting a double
+        qsb->setValue(3.5);
+        auto val2 = qsb->value();
+        QCOMPARE(val2.getFormat().precision, 7);
     }
 
 private:

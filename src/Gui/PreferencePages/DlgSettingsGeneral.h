@@ -53,9 +53,12 @@ public:
 
     void saveSettings() override;
     void loadSettings() override;
+    void resetSettingsToDefaults() override;
 
     void saveThemes();
     void loadThemes();
+
+    static void attachObserver();
 
 protected:
     void changeEvent(QEvent *event) override;

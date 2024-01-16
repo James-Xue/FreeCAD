@@ -28,6 +28,7 @@
 #include <Inventor/SbBox2s.h>
 #include <Inventor/SbPlane.h>
 #include <Inventor/SbRotation.h>
+#include <Inventor/SbSphere.h>
 #include <Inventor/SbTime.h>
 #include <Inventor/SbVec2f.h>
 #include <Inventor/SbVec2s.h>
@@ -38,7 +39,7 @@
 #include <Base/BaseClass.h>
 #include <Gui/Namespace.h>
 #include <FCGlobal.h>
-
+#include <memory>
 
 // forward declarations
 class SoEvent;
@@ -52,7 +53,9 @@ class SbSphereSheetProjector;
 namespace Gui {
 
 class View3DInventorViewer;
+class NavigationAnimator;
 class AbstractMouseSelection;
+class NavigationAnimation;
 
 /**
  * @author Werner Mayer
@@ -120,11 +123,13 @@ public:
     void setViewer(View3DInventorViewer*);
 
     void setAnimationEnabled(const SbBool enable);
+    void setSpinningAnimationEnabled(const SbBool enable);
     SbBool isAnimationEnabled() const;
-
-    void startAnimating(const SbVec3f& axis, float velocity);
-    void stopAnimating();
+    SbBool isSpinningAnimationEnabled() const;
     SbBool isAnimating() const;
+    SbBool isSpinning() const;
+    void startAnimating(const std::shared_ptr<NavigationAnimation>& animation, bool wait = false) const;
+    void stopAnimating() const;
 
     void setSensitivity(float);
     float getSensitivity() const;
@@ -144,11 +149,15 @@ public:
     void setRotationCenter(const SbVec3f& cnt);
     SbVec3f getFocalPoint() const;
 
-    void updateAnimation();
     void redraw();
 
-    void setCameraOrientation(const SbRotation& rot, SbBool moveTocenter=false);
-    void lookAtPoint(const SbVec3f&);
+    SoCamera* getCamera() const;
+    void setCameraOrientation(const SbRotation& orientation, SbBool moveToCenter = false);
+    void translateCamera(const SbVec3f& translation);
+    void findBoundingSphere();
+    void reorientCamera(SoCamera* camera, const SbRotation& rotation);
+    void reorientCamera(SoCamera* camera, const SbRotation& rotation, const SbVec3f& rotationCenter);
+
     void boxZoom(const SbBox2s& box);
     virtual void viewAll();
 
@@ -173,6 +182,9 @@ public:
     void setOrbitStyle(OrbitStyle style);
     OrbitStyle getOrbitStyle() const;
 
+    SbBool isViewing() const;
+    void setViewing(SbBool);
+
     SbVec3f getRotationCenter(SbBool&) const;
 
 protected:
@@ -183,15 +195,13 @@ protected:
     void interactiveCountDec();
     int getInteractiveCount() const;
 
-    SbBool isViewing() const;
-    void setViewing(SbBool);
     SbBool isSeekMode() const;
     void setSeekMode(SbBool enable);
     SbBool seekToPoint(const SbVec2s screenpos);
     void seekToPoint(const SbVec3f& scenepos);
     SbBool lookAtPoint(const SbVec2s screenpos);
+    void lookAtPoint(const SbVec3f& position);
 
-    void reorientCamera(SoCamera * camera, const SbRotation & rot);
     void panCamera(SoCamera * camera,
                    float vpaspect,
                    const SbPlane & panplane,
@@ -233,13 +243,14 @@ protected:
     } log;
 
     View3DInventorViewer* viewer{nullptr};
+    NavigationAnimator* animator;
+    SbBool animationEnabled;
     ViewerMode currentmode;
     SoMouseButtonEvent mouseDownConsumedEvent;
     SbVec2f lastmouseposition;
     SbVec2s globalPos;
     SbVec2s localPos;
     SbPlane panningplane;
-    SbTime prevRedrawTime;
     SbTime centerTime;
     SbBool lockrecenter;
     SbBool menuenabled;
@@ -248,6 +259,8 @@ protected:
     SbBool invertZoom;
     SbBool zoomAtCursor;
     float zoomStep;
+    SbBool hasDragged;
+    SbBool hasPanned;
 
     /** @name Mouse model */
     //@{
@@ -258,16 +271,22 @@ protected:
 
     /** @name Spinning data */
     //@{
-    SbBool spinanimatingallowed;
+    SbBool spinningAnimationEnabled;
     int spinsamplecounter;
     SbRotation spinincrement;
-    SbRotation spinRotation;
     SbSphereSheetProjector * spinprojector;
     //@}
 
 private:
-    struct NavigationStyleP* pimpl;
-    friend struct NavigationStyleP;
+    friend class NavigationAnimator;
+
+    SbVec3f rotationCenter;
+    SbBool rotationCenterFound;
+    NavigationStyle::RotationCenterModes rotationCenterMode;
+    float sensitivity;
+    SbBool resetcursorpos;
+
+    SbSphere boundingSphere;
 };
 
 /** Sub-classes of this class appear in the preference dialog where users can

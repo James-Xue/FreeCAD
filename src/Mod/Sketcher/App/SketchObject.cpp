@@ -445,8 +445,11 @@ int SketchObject::setDatum(int ConstrId, double Datum)
     if (!vals[ConstrId]->isDimensional() && type != Tangent && type != Perpendicular)
         return -1;
 
-    if ((type == Distance || type == Radius || type == Diameter || type == Weight) && Datum <= 0)
+    if ((type == Radius || type == Diameter || type == Weight) && Datum <= 0)
         return (Datum == 0) ? -5 : -4;
+
+    if (type == Distance && Datum == 0)
+            return -5;
 
     // copy the list
     std::vector<Constraint*> newVals(vals);
@@ -664,7 +667,12 @@ void SketchObject::reverseAngleConstraintToSupplementary(Constraint* constr, int
 {
     std::swap(constr->First, constr->Second);
     std::swap(constr->FirstPos, constr->SecondPos);
-    constr->FirstPos = (constr->FirstPos == Sketcher::PointPos::start) ? Sketcher::PointPos::end : Sketcher::PointPos::start;
+    if (constr->FirstPos == constr->SecondPos) {
+        constr->FirstPos = (constr->FirstPos == Sketcher::PointPos::start) ? Sketcher::PointPos::end : Sketcher::PointPos::start;
+    }
+    else {
+        constr->SecondPos = (constr->SecondPos == Sketcher::PointPos::start) ? Sketcher::PointPos::end : Sketcher::PointPos::start;
+    }
 
     // Edit the expression if any, else modify constraint value directly
     if (constraintHasExpression(constNum)) {
@@ -675,6 +683,12 @@ void SketchObject::reverseAngleConstraintToSupplementary(Constraint* constr, int
         double actAngle = constr->getValue();
         constr->setValue(M_PI - actAngle);
     }
+}
+
+void SketchObject::inverseAngleConstraint(Constraint* constr)
+{
+    constr->FirstPos = (constr->FirstPos == Sketcher::PointPos::start) ? Sketcher::PointPos::end : Sketcher::PointPos::start;
+    constr->SecondPos = (constr->SecondPos == Sketcher::PointPos::start) ? Sketcher::PointPos::end : Sketcher::PointPos::start;
 }
 
 bool SketchObject::constraintHasExpression(int constNum) const
@@ -914,29 +928,29 @@ int SketchObject::movePoint(int GeoId, PointPos PosId, const Base::Vector3d& toP
 
 Base::Vector3d SketchObject::getPoint(const Part::Geometry *geo, PointPos PosId)
 {
-    if (geo->getTypeId() == Part::GeomPoint::getClassTypeId()) {
+    if (geo->is<Part::GeomPoint>()) {
         const Part::GeomPoint *p = static_cast<const Part::GeomPoint*>(geo);
         if (PosId == PointPos::start || PosId == PointPos::mid || PosId == PointPos::end)
             return p->getPoint();
-    } else if (geo->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+    } else if (geo->is<Part::GeomLineSegment>()) {
         const Part::GeomLineSegment *lineSeg = static_cast<const Part::GeomLineSegment*>(geo);
         if (PosId == PointPos::start)
             return lineSeg->getStartPoint();
         else if (PosId == PointPos::end)
             return lineSeg->getEndPoint();
-    } else if (geo->getTypeId() == Part::GeomCircle::getClassTypeId()) {
+    } else if (geo->is<Part::GeomCircle>()) {
         const Part::GeomCircle *circle = static_cast<const Part::GeomCircle*>(geo);
         auto pt = circle->getCenter();
         if(PosId != PointPos::mid)
              pt.x += circle->getRadius();
         return pt;
-    } else if (geo->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
+    } else if (geo->is<Part::GeomEllipse>()) {
         const Part::GeomEllipse *ellipse = static_cast<const Part::GeomEllipse*>(geo);
         auto pt = ellipse->getCenter();
         if(PosId != PointPos::mid)
             pt += ellipse->getMajorAxisDir()*ellipse->getMajorRadius();
         return pt;
-    } else if (geo->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+    } else if (geo->is<Part::GeomArcOfCircle>()) {
         const Part::GeomArcOfCircle *aoc = static_cast<const Part::GeomArcOfCircle*>(geo);
         if (PosId == PointPos::start)
             return aoc->getStartPoint(/*emulateCCW=*/true);
@@ -944,7 +958,7 @@ Base::Vector3d SketchObject::getPoint(const Part::Geometry *geo, PointPos PosId)
             return aoc->getEndPoint(/*emulateCCW=*/true);
         else if (PosId == PointPos::mid)
             return aoc->getCenter();
-    } else if (geo->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+    } else if (geo->is<Part::GeomArcOfEllipse>()) {
         const Part::GeomArcOfEllipse *aoc = static_cast<const Part::GeomArcOfEllipse*>(geo);
         if (PosId == PointPos::start)
             return aoc->getStartPoint(/*emulateCCW=*/true);
@@ -952,7 +966,7 @@ Base::Vector3d SketchObject::getPoint(const Part::Geometry *geo, PointPos PosId)
             return aoc->getEndPoint(/*emulateCCW=*/true);
         else if (PosId == PointPos::mid)
             return aoc->getCenter();
-    } else if (geo->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+    } else if (geo->is<Part::GeomArcOfHyperbola>()) {
         const Part::GeomArcOfHyperbola *aoh = static_cast<const Part::GeomArcOfHyperbola*>(geo);
         if (PosId == PointPos::start)
             return aoh->getStartPoint();
@@ -960,7 +974,7 @@ Base::Vector3d SketchObject::getPoint(const Part::Geometry *geo, PointPos PosId)
             return aoh->getEndPoint();
         else if (PosId == PointPos::mid)
             return aoh->getCenter();
-    } else if (geo->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+    } else if (geo->is<Part::GeomArcOfParabola>()) {
         const Part::GeomArcOfParabola *aop = static_cast<const Part::GeomArcOfParabola*>(geo);
         if (PosId == PointPos::start)
             return aop->getStartPoint();
@@ -968,7 +982,7 @@ Base::Vector3d SketchObject::getPoint(const Part::Geometry *geo, PointPos PosId)
             return aop->getEndPoint();
         else if (PosId == PointPos::mid)
             return aop->getCenter();
-    } else if (geo->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+    } else if (geo->is<Part::GeomBSplineCurve>()) {
         const Part::GeomBSplineCurve *bsp = static_cast<const Part::GeomBSplineCurve*>(geo);
         if (PosId == PointPos::start)
             return bsp->getStartPoint();
@@ -994,7 +1008,7 @@ int SketchObject::getAxisCount() const
     int count = 0;
     for (std::vector<Part::Geometry*>::const_iterator geo = vals.begin(); geo != vals.end(); geo++)
         if ((*geo) && GeometryFacade::getConstruction(*geo)
-            && (*geo)->getTypeId() == Part::GeomLineSegment::getClassTypeId())
+            && (*geo)->is<Part::GeomLineSegment>())
             count++;
 
     return count;
@@ -1009,7 +1023,7 @@ Base::Axis SketchObject::getAxis(int axId) const
     int count = 0;
     for (std::vector<Part::Geometry*>::const_iterator geo = vals.begin(); geo != vals.end(); geo++)
         if ((*geo) && GeometryFacade::getConstruction(*geo)
-            && (*geo)->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+            && (*geo)->is<Part::GeomLineSegment>()) {
             if (count == axId) {
                 Part::GeomLineSegment* lineSeg = static_cast<Part::GeomLineSegment*>(*geo);
                 Base::Vector3d start = lineSeg->getStartPoint();
@@ -1030,18 +1044,18 @@ void SketchObject::acceptGeometry()
 
 bool SketchObject::isSupportedGeometry(const Part::Geometry* geo) const
 {
-    if (geo->getTypeId() == Part::GeomPoint::getClassTypeId()
-        || geo->getTypeId() == Part::GeomCircle::getClassTypeId()
-        || geo->getTypeId() == Part::GeomEllipse::getClassTypeId()
-        || geo->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()
-        || geo->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()
-        || geo->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()
-        || geo->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()
-        || geo->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()
-        || geo->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+    if (geo->is<Part::GeomPoint>()
+        || geo->is<Part::GeomCircle>()
+        || geo->is<Part::GeomEllipse>()
+        || geo->is<Part::GeomArcOfCircle>()
+        || geo->is<Part::GeomArcOfEllipse>()
+        || geo->is<Part::GeomArcOfHyperbola>()
+        || geo->is<Part::GeomArcOfParabola>()
+        || geo->is<Part::GeomBSplineCurve>()
+        || geo->is<Part::GeomLineSegment>()) {
         return true;
     }
-    if (geo->getTypeId() == Part::GeomTrimmedCurve::getClassTypeId()) {
+    if (geo->is<Part::GeomTrimmedCurve>()) {
         Handle(Geom_TrimmedCurve) trim = Handle(Geom_TrimmedCurve)::DownCast(geo->handle());
         Handle(Geom_Circle) circle = Handle(Geom_Circle)::DownCast(trim->BasisCurve());
         Handle(Geom_Ellipse) ellipse = Handle(Geom_Ellipse)::DownCast(trim->BasisCurve());
@@ -1081,7 +1095,7 @@ int SketchObject::addGeometry(const std::vector<Part::Geometry*>& geoList,
     for (auto& v : geoList) {
         Part::Geometry* copy = v->copy();
 
-        if (copy->getTypeId() == Part::GeomPoint::getClassTypeId()) {
+        if (copy->is<Part::GeomPoint>()) {
             // creation mode for points is always construction not to
             // break legacy code
             GeometryFacade::setConstruction(copy, true);
@@ -1119,7 +1133,7 @@ int SketchObject::addGeometry(std::unique_ptr<Part::Geometry> newgeo, bool const
 
     auto* geoNew = newgeo.release();
 
-    if (geoNew->getTypeId() == Part::GeomPoint::getClassTypeId()) {
+    if (geoNew->is<Part::GeomPoint>()) {
         // creation mode for points is always construction not to
         // break legacy code
         GeometryFacade::setConstruction(geoNew, true);
@@ -1149,11 +1163,11 @@ int SketchObject::delGeometry(int GeoId, bool deleteinternalgeo)
     if (deleteinternalgeo) {
         const Part::Geometry* geo = getGeometry(GeoId);
         // Only for supported types
-        if ((geo->getTypeId() == Part::GeomEllipse::getClassTypeId()
-             || geo->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()
-             || geo->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()
-             || geo->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()
-             || geo->getTypeId() == Part::GeomBSplineCurve::getClassTypeId())) {
+        if ((geo->is<Part::GeomEllipse>()
+             || geo->is<Part::GeomArcOfEllipse>()
+             || geo->is<Part::GeomArcOfHyperbola>()
+             || geo->is<Part::GeomArcOfParabola>()
+             || geo->is<Part::GeomBSplineCurve>())) {
 
             this->deleteUnusedInternalGeometry(GeoId, true);
 
@@ -1997,8 +2011,8 @@ int SketchObject::fillet(int GeoId, PointPos PosId, double radius, bool trim, bo
     if (GeoIdList.size() == 2 && GeoIdList[0] >= 0 && GeoIdList[1] >= 0) {
         const Part::Geometry* geo1 = getGeometry(GeoIdList[0]);
         const Part::Geometry* geo2 = getGeometry(GeoIdList[1]);
-        if (geo1->getTypeId() == Part::GeomLineSegment::getClassTypeId()
-            && geo2->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+        if (geo1->is<Part::GeomLineSegment>()
+            && geo2->is<Part::GeomLineSegment>()) {
             const Part::GeomLineSegment* lineSeg1 = static_cast<const Part::GeomLineSegment*>(geo1);
             const Part::GeomLineSegment* lineSeg2 = static_cast<const Part::GeomLineSegment*>(geo2);
 
@@ -2025,8 +2039,8 @@ int SketchObject::fillet(int GeoId1, int GeoId2, const Base::Vector3d& refPnt1,
         trim = false;
     }
 
-    if (geo1->getTypeId() == Part::GeomLineSegment::getClassTypeId()
-        && geo2->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+    if (geo1->is<Part::GeomLineSegment>()
+        && geo2->is<Part::GeomLineSegment>()) {
         const Part::GeomLineSegment* lineSeg1 = static_cast<const Part::GeomLineSegment*>(geo1);
         const Part::GeomLineSegment* lineSeg2 = static_cast<const Part::GeomLineSegment*>(geo2);
 
@@ -2108,8 +2122,8 @@ int SketchObject::fillet(int GeoId1, int GeoId2, const Base::Vector3d& refPnt1,
 
         return 0;
     }
-    else if (geo1->isDerivedFrom(Part::GeomBoundedCurve::getClassTypeId())
-             && geo2->isDerivedFrom(Part::GeomBoundedCurve::getClassTypeId())) {
+    else if (geo1->isDerivedFrom<Part::GeomBoundedCurve>()
+             && geo2->isDerivedFrom<Part::GeomBoundedCurve>()) {
 
         auto distancetorefpoints =
             [](Base::Vector3d ip1, Base::Vector3d ip2, Base::Vector3d ref1, Base::Vector3d ref2) {
@@ -2629,7 +2643,7 @@ int SketchObject::extend(int GeoId, double increment, PointPos endpoint)
     const std::vector<Part::Geometry*>& geomList = getInternalGeometry();
     Part::Geometry* geom = geomList[GeoId];
     int retcode = -1;
-    if (geom->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+    if (geom->is<Part::GeomLineSegment>()) {
         Part::GeomLineSegment* seg = static_cast<Part::GeomLineSegment*>(geom);
         Base::Vector3d startVec = seg->getStartPoint();
         Base::Vector3d endVec = seg->getEndPoint();
@@ -2650,7 +2664,7 @@ int SketchObject::extend(int GeoId, double increment, PointPos endpoint)
             retcode = movePoint(GeoId, Sketcher::PointPos::end, newPoint, false, true);
         }
     }
-    else if (geom->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+    else if (geom->is<Part::GeomArcOfCircle>()) {
         Part::GeomArcOfCircle* arc = static_cast<Part::GeomArcOfCircle*>(geom);
         double startArc, endArc;
         arc->getRange(startArc, endArc, true);
@@ -2867,7 +2881,7 @@ int SketchObject::trim(int GeoId, const Base::Vector3d& point)
     // Removes all internal geometry of a BSplineCurve and updates the GeoId index after removal
     auto ifBSplineRemoveInternalAlignmentGeometry = [this](int& GeoId) {
         const Part::Geometry* geo = getGeometry(GeoId);
-        if (geo->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+        if (geo->is<Part::GeomBSplineCurve>()) {
             // We need to remove the internal geometry of the BSpline, as BSplines change in number
             // of poles and knots We save the tags of the relevant geometry to retrieve the new
             // GeoIds later on.
@@ -2936,15 +2950,15 @@ int SketchObject::trim(int GeoId, const Base::Vector3d& point)
     // Trimmed B-Spline internal geometry cannot be reused
     geo = getGeometry(GeoId);
 
-    auto isBSpline = geo->getTypeId() == Part::GeomBSplineCurve::getClassTypeId();
+    auto isBSpline = geo->is<Part::GeomBSplineCurve>();
     auto isPeriodicBSpline =
         isBSpline && static_cast<const Part::GeomBSplineCurve*>(geo)->isPeriodic();
     auto isNonPeriodicBSpline =
         isBSpline && !static_cast<const Part::GeomBSplineCurve*>(geo)->isPeriodic();
-    auto isLineSegment = geo->getTypeId() == Part::GeomLineSegment::getClassTypeId();
+    auto isLineSegment = geo->is<Part::GeomLineSegment>();
     auto isDerivedFromTrimmedCurve = geo->isDerivedFrom(Part::GeomTrimmedCurve::getClassTypeId());
-    auto isCircle = geo->getTypeId() == Part::GeomCircle::getClassTypeId();
-    auto isEllipse = geo->getTypeId() == Part::GeomEllipse::getClassTypeId();
+    auto isCircle = geo->is<Part::GeomCircle>();
+    auto isEllipse = geo->is<Part::GeomEllipse>();
 
     if (isBSpline) {
 
@@ -3459,7 +3473,7 @@ int SketchObject::split(int GeoId, const Base::Vector3d& point)
     };
 
     bool ok = false;
-    if (geo->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+    if (geo->is<Part::GeomLineSegment>()) {
         ok = createGeosFromNonPeriodic(
             static_cast<const Part::GeomBoundedCurve*>(geo),
             [](const Part::GeomCurve* curve, double startParam, double endParam) {
@@ -3481,7 +3495,7 @@ int SketchObject::split(int GeoId, const Base::Vector3d& point)
                 transferConstraints(GeoId, PointPos::end, newId1, PointPos::end);
             });
     }
-    else if (geo->getTypeId() == Part::GeomCircle::getClassTypeId()) {
+    else if (geo->is<Part::GeomCircle>()) {
         ok = createGeosFromPeriodic(
             static_cast<const Part::GeomCurve*>(geo),
             [](const Part::GeomCurve* curve, double startParam, double endParam) {
@@ -3494,7 +3508,7 @@ int SketchObject::split(int GeoId, const Base::Vector3d& point)
                 transferConstraints(GeoId, PointPos::mid, newId, PointPos::mid);
             });
     }
-    else if (geo->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
+    else if (geo->is<Part::GeomEllipse>()) {
         ok = createGeosFromPeriodic(
             static_cast<const Part::GeomCurve*>(geo),
             [](const Part::GeomCurve* curve, double startParam, double endParam) {
@@ -3507,7 +3521,7 @@ int SketchObject::split(int GeoId, const Base::Vector3d& point)
                 transferConstraints(GeoId, PointPos::mid, newId, PointPos::mid);
             });
     }
-    else if (geo->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+    else if (geo->is<Part::GeomArcOfCircle>()) {
         ok = createGeosFromNonPeriodic(
             static_cast<const Part::GeomBoundedCurve*>(geo),
             [](const Part::GeomCurve* curve, double startParam, double endParam) {
@@ -3564,7 +3578,7 @@ int SketchObject::split(int GeoId, const Base::Vector3d& point)
                 transferConstraints(GeoId, PointPos::end, newId1, PointPos::end, true);
             });
     }
-    else if (geo->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+    else if (geo->is<Part::GeomBSplineCurve>()) {
         const Part::GeomBSplineCurve* bsp = static_cast<const Part::GeomBSplineCurve*>(geo);
 
         // what to do for periodic b-splines?
@@ -3638,7 +3652,7 @@ int SketchObject::split(int GeoId, const Base::Vector3d& point)
                 case Horizontal:
                 case Vertical:
                 case Parallel: {
-                    transferToAll = geo->getTypeId() == Part::GeomLineSegment::getClassTypeId();
+                    transferToAll = geo->is<Part::GeomLineSegment>();
                     break;
                 }
                 case Tangent:
@@ -3697,7 +3711,7 @@ int SketchObject::split(int GeoId, const Base::Vector3d& point)
                         int targetId = newIds[0];
 
                         // for non-periodic curves, see if second curve is more appropriate
-                        if (geo->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+                        if (geo->is<Part::GeomLineSegment>()) {
                             Base::Vector3d projPoint(
                                 conPoint.Perpendicular(startPoint, endPoint - startPoint));
                             Base::Vector3d splitDir = splitPoint - startPoint;
@@ -3721,8 +3735,8 @@ int SketchObject::split(int GeoId, const Base::Vector3d& point)
                 case Radius:
                 case Diameter:
                 case Equal: {
-                    transferToAll = geo->getTypeId() == Part::GeomCircle::getClassTypeId()
-                        || geo->getTypeId() == Part::GeomArcOfCircle::getClassTypeId();
+                    transferToAll = geo->is<Part::GeomCircle>()
+                        || geo->is<Part::GeomArcOfCircle>();
                     break;
                 }
                 default:
@@ -4156,7 +4170,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
             }
 
             // Handle Geometry
-            if (geosym->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+            if (geosym->is<Part::GeomLineSegment>()) {
                 Part::GeomLineSegment* geosymline = static_cast<Part::GeomLineSegment*>(geosym);
                 Base::Vector3d sp = geosymline->getStartPoint();
                 Base::Vector3d ep = geosymline->getEndPoint();
@@ -4166,7 +4180,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                     ep + 2.0 * (ep.Perpendicular(refGeoLine->getStartPoint(), vectline) - ep));
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomCircle::getClassTypeId()) {
+            else if (geosym->is<Part::GeomCircle>()) {
                 Part::GeomCircle* geosymcircle = static_cast<Part::GeomCircle*>(geosym);
                 Base::Vector3d cp = geosymcircle->getCenter();
 
@@ -4174,7 +4188,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                     cp + 2.0 * (cp.Perpendicular(refGeoLine->getStartPoint(), vectline) - cp));
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+            else if (geosym->is<Part::GeomArcOfCircle>()) {
                 Part::GeomArcOfCircle* geoaoc = static_cast<Part::GeomArcOfCircle*>(geosym);
                 Base::Vector3d sp = geoaoc->getStartPoint(true);
                 Base::Vector3d ep = geoaoc->getEndPoint(true);
@@ -4194,7 +4208,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geoaoc->setRange(theta1, theta2, true);
                 isStartEndInverted.insert(std::make_pair(*it, true));
             }
-            else if (geosym->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
+            else if (geosym->is<Part::GeomEllipse>()) {
                 Part::GeomEllipse* geosymellipse = static_cast<Part::GeomEllipse*>(geosym);
                 Base::Vector3d cp = geosymellipse->getCenter();
 
@@ -4214,7 +4228,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geosymellipse->setCenter(scp);
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+            else if (geosym->is<Part::GeomArcOfEllipse>()) {
                 Part::GeomArcOfEllipse* geosymaoe = static_cast<Part::GeomArcOfEllipse*>(geosym);
                 Base::Vector3d cp = geosymaoe->getCenter();
 
@@ -4246,7 +4260,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geosymaoe->setRange(theta1, theta2, true);
                 isStartEndInverted.insert(std::make_pair(*it, true));
             }
-            else if (geosym->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+            else if (geosym->is<Part::GeomArcOfHyperbola>()) {
                 Part::GeomArcOfHyperbola* geosymaoe =
                     static_cast<Part::GeomArcOfHyperbola*>(geosym);
                 Base::Vector3d cp = geosymaoe->getCenter();
@@ -4275,7 +4289,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geosymaoe->setRange(theta1, theta2, true);
                 isStartEndInverted.insert(std::make_pair(*it, true));
             }
-            else if (geosym->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+            else if (geosym->is<Part::GeomArcOfParabola>()) {
                 Part::GeomArcOfParabola* geosymaoe = static_cast<Part::GeomArcOfParabola*>(geosym);
                 Base::Vector3d cp = geosymaoe->getCenter();
 
@@ -4299,7 +4313,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geosymaoe->setRange(theta1, theta2, true);
                 isStartEndInverted.insert(std::make_pair(*it, true));
             }
-            else if (geosym->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+            else if (geosym->is<Part::GeomBSplineCurve>()) {
                 Part::GeomBSplineCurve* geosymbsp = static_cast<Part::GeomBSplineCurve*>(geosym);
 
                 std::vector<Base::Vector3d> poles = geosymbsp->getPoles();
@@ -4316,7 +4330,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
 
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomPoint::getClassTypeId()) {
+            else if (geosym->is<Part::GeomPoint>()) {
                 Part::GeomPoint* geosympoint = static_cast<Part::GeomPoint*>(geosym);
                 Base::Vector3d cp = geosympoint->getPoint();
 
@@ -4339,7 +4353,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
         Vector3d refpoint;
         const Part::Geometry* georef = getGeometry(refGeoId);
 
-        if (georef->getTypeId() == Part::GeomPoint::getClassTypeId()) {
+        if (georef->is<Part::GeomPoint>()) {
             refpoint = static_cast<const Part::GeomPoint*>(georef)->getPoint();
         }
         else if (refGeoId == -1 && refPosId == Sketcher::PointPos::start) {
@@ -4348,96 +4362,96 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
         else {
             switch (refPosId) {
                 case Sketcher::PointPos::start:
-                    if (georef->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+                    if (georef->is<Part::GeomLineSegment>()) {
                         const Part::GeomLineSegment* geosymline =
                             static_cast<const Part::GeomLineSegment*>(georef);
                         refpoint = geosymline->getStartPoint();
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfCircle>()) {
                         const Part::GeomArcOfCircle* geoaoc =
                             static_cast<const Part::GeomArcOfCircle*>(georef);
                         refpoint = geoaoc->getStartPoint(true);
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfEllipse>()) {
                         const Part::GeomArcOfEllipse* geosymaoe =
                             static_cast<const Part::GeomArcOfEllipse*>(georef);
                         refpoint = geosymaoe->getStartPoint(true);
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfHyperbola>()) {
                         const Part::GeomArcOfHyperbola* geosymaoe =
                             static_cast<const Part::GeomArcOfHyperbola*>(georef);
                         refpoint = geosymaoe->getStartPoint(true);
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfParabola>()) {
                         const Part::GeomArcOfParabola* geosymaoe =
                             static_cast<const Part::GeomArcOfParabola*>(georef);
                         refpoint = geosymaoe->getStartPoint(true);
                     }
-                    else if (georef->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+                    else if (georef->is<Part::GeomBSplineCurve>()) {
                         const Part::GeomBSplineCurve* geosymbsp =
                             static_cast<const Part::GeomBSplineCurve*>(georef);
                         refpoint = geosymbsp->getStartPoint();
                     }
                     break;
                 case Sketcher::PointPos::end:
-                    if (georef->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+                    if (georef->is<Part::GeomLineSegment>()) {
                         const Part::GeomLineSegment* geosymline =
                             static_cast<const Part::GeomLineSegment*>(georef);
                         refpoint = geosymline->getEndPoint();
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfCircle>()) {
                         const Part::GeomArcOfCircle* geoaoc =
                             static_cast<const Part::GeomArcOfCircle*>(georef);
                         refpoint = geoaoc->getEndPoint(true);
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfEllipse>()) {
                         const Part::GeomArcOfEllipse* geosymaoe =
                             static_cast<const Part::GeomArcOfEllipse*>(georef);
                         refpoint = geosymaoe->getEndPoint(true);
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfHyperbola>()) {
                         const Part::GeomArcOfHyperbola* geosymaoe =
                             static_cast<const Part::GeomArcOfHyperbola*>(georef);
                         refpoint = geosymaoe->getEndPoint(true);
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfParabola>()) {
                         const Part::GeomArcOfParabola* geosymaoe =
                             static_cast<const Part::GeomArcOfParabola*>(georef);
                         refpoint = geosymaoe->getEndPoint(true);
                     }
-                    else if (georef->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+                    else if (georef->is<Part::GeomBSplineCurve>()) {
                         const Part::GeomBSplineCurve* geosymbsp =
                             static_cast<const Part::GeomBSplineCurve*>(georef);
                         refpoint = geosymbsp->getEndPoint();
                     }
                     break;
                 case Sketcher::PointPos::mid:
-                    if (georef->getTypeId() == Part::GeomCircle::getClassTypeId()) {
+                    if (georef->is<Part::GeomCircle>()) {
                         const Part::GeomCircle* geosymcircle =
                             static_cast<const Part::GeomCircle*>(georef);
                         refpoint = geosymcircle->getCenter();
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfCircle>()) {
                         const Part::GeomArcOfCircle* geoaoc =
                             static_cast<const Part::GeomArcOfCircle*>(georef);
                         refpoint = geoaoc->getCenter();
                     }
-                    else if (georef->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
+                    else if (georef->is<Part::GeomEllipse>()) {
                         const Part::GeomEllipse* geosymellipse =
                             static_cast<const Part::GeomEllipse*>(georef);
                         refpoint = geosymellipse->getCenter();
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfEllipse>()) {
                         const Part::GeomArcOfEllipse* geosymaoe =
                             static_cast<const Part::GeomArcOfEllipse*>(georef);
                         refpoint = geosymaoe->getCenter();
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfHyperbola>()) {
                         const Part::GeomArcOfHyperbola* geosymaoe =
                             static_cast<const Part::GeomArcOfHyperbola*>(georef);
                         refpoint = geosymaoe->getCenter();
                     }
-                    else if (georef->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+                    else if (georef->is<Part::GeomArcOfParabola>()) {
                         const Part::GeomArcOfParabola* geosymaoe =
                             static_cast<const Part::GeomArcOfParabola*>(georef);
                         refpoint = geosymaoe->getCenter();
@@ -4481,7 +4495,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
             }
 
             // Handle Geometry
-            if (geosym->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+            if (geosym->is<Part::GeomLineSegment>()) {
                 Part::GeomLineSegment* geosymline = static_cast<Part::GeomLineSegment*>(geosym);
                 Base::Vector3d sp = geosymline->getStartPoint();
                 Base::Vector3d ep = geosymline->getEndPoint();
@@ -4491,14 +4505,14 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geosymline->setPoints(ssp, sep);
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomCircle::getClassTypeId()) {
+            else if (geosym->is<Part::GeomCircle>()) {
                 Part::GeomCircle* geosymcircle = static_cast<Part::GeomCircle*>(geosym);
                 Base::Vector3d cp = geosymcircle->getCenter();
 
                 geosymcircle->setCenter(cp + 2.0 * (refpoint - cp));
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+            else if (geosym->is<Part::GeomArcOfCircle>()) {
                 Part::GeomArcOfCircle* geoaoc = static_cast<Part::GeomArcOfCircle*>(geosym);
                 Base::Vector3d sp = geoaoc->getStartPoint(true);
                 Base::Vector3d ep = geoaoc->getEndPoint(true);
@@ -4515,7 +4529,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geoaoc->setRange(theta1, theta2, true);
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
+            else if (geosym->is<Part::GeomEllipse>()) {
                 Part::GeomEllipse* geosymellipse = static_cast<Part::GeomEllipse*>(geosym);
                 Base::Vector3d cp = geosymellipse->getCenter();
 
@@ -4533,7 +4547,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geosymellipse->setCenter(scp);
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+            else if (geosym->is<Part::GeomArcOfEllipse>()) {
                 Part::GeomArcOfEllipse* geosymaoe = static_cast<Part::GeomArcOfEllipse*>(geosym);
                 Base::Vector3d cp = geosymaoe->getCenter();
 
@@ -4551,7 +4565,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geosymaoe->setCenter(scp);
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+            else if (geosym->is<Part::GeomArcOfHyperbola>()) {
                 Part::GeomArcOfHyperbola* geosymaoe =
                     static_cast<Part::GeomArcOfHyperbola*>(geosym);
                 Base::Vector3d cp = geosymaoe->getCenter();
@@ -4570,7 +4584,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
                 geosymaoe->setCenter(scp);
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+            else if (geosym->is<Part::GeomArcOfParabola>()) {
                 Part::GeomArcOfParabola* geosymaoe = static_cast<Part::GeomArcOfParabola*>(geosym);
                 Base::Vector3d cp = geosymaoe->getCenter();
 
@@ -4585,7 +4599,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
 
                 isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+            else if (geosym->is<Part::GeomBSplineCurve>()) {
                 Part::GeomBSplineCurve* geosymbsp = static_cast<Part::GeomBSplineCurve*>(geosym);
 
                 std::vector<Base::Vector3d> poles = geosymbsp->getPoles();
@@ -4599,7 +4613,7 @@ int SketchObject::addSymmetric(const std::vector<int>& geoIdList, int refGeoId,
 
                 // isStartEndInverted.insert(std::make_pair(*it, false));
             }
-            else if (geosym->getTypeId() == Part::GeomPoint::getClassTypeId()) {
+            else if (geosym->is<Part::GeomPoint>()) {
                 Part::GeomPoint* geosympoint = static_cast<Part::GeomPoint*>(geosym);
                 Base::Vector3d cp = geosympoint->getPoint();
 
@@ -4828,8 +4842,8 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                 refgeoid = *(newgeoIdList.begin());
                 currentrowfirstgeoid = refgeoid;
                 iterfirstgeoid = refgeoid;
-                if (geo->getTypeId() == Part::GeomCircle::getClassTypeId()
-                    || geo->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
+                if (geo->is<Part::GeomCircle>()
+                    || geo->is<Part::GeomEllipse>()) {
                     refposId = Sketcher::PointPos::mid;
                 }
                 else
@@ -4886,7 +4900,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                     geocopy = newgeoVals[*it];
 
                 // Handle Geometry
-                if (geocopy->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+                if (geocopy->is<Part::GeomLineSegment>()) {
                     Part::GeomLineSegment* geosymline =
                         static_cast<Part::GeomLineSegment*>(geocopy);
                     Base::Vector3d ep = geosymline->getEndPoint();
@@ -4899,7 +4913,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                     if (it == newgeoIdList.begin())
                         iterfirstpoint = ssp;
                 }
-                else if (geocopy->getTypeId() == Part::GeomCircle::getClassTypeId()) {
+                else if (geocopy->is<Part::GeomCircle>()) {
                     Part::GeomCircle* geosymcircle = static_cast<Part::GeomCircle*>(geocopy);
                     Base::Vector3d cp = geosymcircle->getCenter();
                     Base::Vector3d scp =
@@ -4910,7 +4924,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                     if (it == newgeoIdList.begin())
                         iterfirstpoint = scp;
                 }
-                else if (geocopy->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+                else if (geocopy->is<Part::GeomArcOfCircle>()) {
                     Part::GeomArcOfCircle* geoaoc = static_cast<Part::GeomArcOfCircle*>(geocopy);
                     Base::Vector3d cp = geoaoc->getCenter();
                     Base::Vector3d scp =
@@ -4921,7 +4935,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                     if (it == newgeoIdList.begin())
                         iterfirstpoint = geoaoc->getStartPoint(true);
                 }
-                else if (geocopy->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
+                else if (geocopy->is<Part::GeomEllipse>()) {
                     Part::GeomEllipse* geosymellipse = static_cast<Part::GeomEllipse*>(geocopy);
                     Base::Vector3d cp = geosymellipse->getCenter();
                     Base::Vector3d scp =
@@ -4932,7 +4946,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                     if (it == newgeoIdList.begin())
                         iterfirstpoint = scp;
                 }
-                else if (geocopy->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+                else if (geocopy->is<Part::GeomArcOfEllipse>()) {
                     Part::GeomArcOfEllipse* geoaoe = static_cast<Part::GeomArcOfEllipse*>(geocopy);
                     Base::Vector3d cp = geoaoe->getCenter();
                     Base::Vector3d scp =
@@ -4943,7 +4957,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                     if (it == newgeoIdList.begin())
                         iterfirstpoint = geoaoe->getStartPoint(true);
                 }
-                else if (geocopy->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+                else if (geocopy->is<Part::GeomArcOfHyperbola>()) {
                     Part::GeomArcOfHyperbola* geoaoe =
                         static_cast<Part::GeomArcOfHyperbola*>(geocopy);
                     Base::Vector3d cp = geoaoe->getCenter();
@@ -4955,7 +4969,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                     if (it == newgeoIdList.begin())
                         iterfirstpoint = geoaoe->getStartPoint(true);
                 }
-                else if (geocopy->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+                else if (geocopy->is<Part::GeomArcOfParabola>()) {
                     Part::GeomArcOfParabola* geoaoe =
                         static_cast<Part::GeomArcOfParabola*>(geocopy);
                     Base::Vector3d cp = geoaoe->getCenter();
@@ -4967,7 +4981,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                     if (it == newgeoIdList.begin())
                         iterfirstpoint = geoaoe->getStartPoint(true);
                 }
-                else if (geocopy->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+                else if (geocopy->is<Part::GeomBSplineCurve>()) {
                     Part::GeomBSplineCurve* geobsp = static_cast<Part::GeomBSplineCurve*>(geocopy);
 
                     std::vector<Base::Vector3d> poles = geobsp->getPoles();
@@ -4985,7 +4999,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                     if (it == newgeoIdList.begin())
                         iterfirstpoint = geobsp->getStartPoint();
                 }
-                else if (geocopy->getTypeId() == Part::GeomPoint::getClassTypeId()) {
+                else if (geocopy->is<Part::GeomPoint>()) {
                     Part::GeomPoint* geopoint = static_cast<Part::GeomPoint*>(geocopy);
                     Base::Vector3d cp = geopoint->getPoint();
                     Base::Vector3d scp =
@@ -5040,8 +5054,7 @@ int SketchObject::addCopy(const std::vector<int>& geoIdList, const Base::Vector3
                                     newconstrVals.push_back(constNew);
                                 }
                                 else if ((*it)->Type == Sketcher::Angle && clone) {
-                                    if (getGeometry((*it)->First)->getTypeId()
-                                        == Part::GeomLineSegment::getClassTypeId()) {
+                                    if (getGeometry((*it)->First)->is<Part::GeomLineSegment>()) {
                                         // Angles on a single Element are mapped to parallel
                                         // constraints in clone mode
                                         Constraint* constNew = (*it)->copy();
@@ -5426,8 +5439,8 @@ int SketchObject::exposeInternalGeometry(int GeoId)
 
     const Part::Geometry* geo = getGeometry(GeoId);
     // Only for supported types
-    if (geo->getTypeId() == Part::GeomEllipse::getClassTypeId()
-        || geo->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+    if (geo->is<Part::GeomEllipse>()
+        || geo->is<Part::GeomArcOfEllipse>()) {
         // First we search what has to be restored
         bool major = false;
         bool minor = false;
@@ -5469,7 +5482,7 @@ int SketchObject::exposeInternalGeometry(int GeoId)
         std::vector<Part::Geometry*> igeo;
         std::vector<Constraint*> icon;
 
-        if (geo->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
+        if (geo->is<Part::GeomEllipse>()) {
             const Part::GeomEllipse* ellipse = static_cast<const Part::GeomEllipse*>(geo);
 
             center = ellipse->getCenter();
@@ -5577,7 +5590,7 @@ int SketchObject::exposeInternalGeometry(int GeoId)
 
         return incrgeo;// number of added elements
     }
-    else if (geo->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+    else if (geo->is<Part::GeomArcOfHyperbola>()) {
         // First we search what has to be restored
         bool major = false;
         bool minor = false;
@@ -5692,7 +5705,7 @@ int SketchObject::exposeInternalGeometry(int GeoId)
 
         return incrgeo;// number of added elements
     }
-    else if (geo->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+    else if (geo->is<Part::GeomArcOfParabola>()) {
         // First we search what has to be restored
         bool focus = false;
         bool focus_to_vertex = false;
@@ -5779,7 +5792,7 @@ int SketchObject::exposeInternalGeometry(int GeoId)
 
         return incrgeo;// number of added elements
     }
-    else if (geo->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+    else if (geo->is<Part::GeomBSplineCurve>()) {
 
         const Part::GeomBSplineCurve* bsp = static_cast<const Part::GeomBSplineCurve*>(geo);
         // First we search what has to be restored
@@ -5965,9 +5978,9 @@ int SketchObject::deleteUnusedInternalGeometry(int GeoId, bool delgeoid)
 
     const Part::Geometry* geo = getGeometry(GeoId);
     // Only for supported types
-    if (geo->getTypeId() == Part::GeomEllipse::getClassTypeId()
-        || geo->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()
-        || geo->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+    if (geo->is<Part::GeomEllipse>()
+        || geo->is<Part::GeomArcOfEllipse>()
+        || geo->is<Part::GeomArcOfHyperbola>()) {
 
         int majorelementindex = -1;
         int minorelementindex = -1;
@@ -6059,7 +6072,7 @@ int SketchObject::deleteUnusedInternalGeometry(int GeoId, bool delgeoid)
 
         return ndeleted;// number of deleted elements
     }
-    else if (geo->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+    else if (geo->is<Part::GeomArcOfParabola>()) {
         // if the focus-to-vertex line is constrained, then never delete the focus
         // if the line is unconstrained, then the line may be deleted,
         // in this case the focus may be deleted if unconstrained.
@@ -6130,7 +6143,7 @@ int SketchObject::deleteUnusedInternalGeometry(int GeoId, bool delgeoid)
 
         return ndeleted;// number of deleted elements
     }
-    else if (geo->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+    else if (geo->is<Part::GeomBSplineCurve>()) {
 
         const Part::GeomBSplineCurve* bsp = static_cast<const Part::GeomBSplineCurve*>(geo);
 
@@ -6265,7 +6278,7 @@ bool SketchObject::convertToNURBS(int GeoId)
 
     const Part::Geometry* geo = getGeometry(GeoId);
 
-    if (geo->getTypeId() == Part::GeomPoint::getClassTypeId())
+    if (geo->is<Part::GeomPoint>())
         return false;
 
     const Part::GeomCurve* geo1 = static_cast<const Part::GeomCurve*>(geo);
@@ -7295,7 +7308,7 @@ bool SketchObject::evaluateSupport()
 {
     // returns false if the shape is broken, null or non-planar
     App::DocumentObject* link = Support.getValue();
-    if (!link || !link->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId()))
+    if (!link || !link->isDerivedFrom<Part::Feature>())
         return false;
     return true;
 }
@@ -7316,7 +7329,7 @@ void SketchObject::validateExternalLinks()
 
         TopoDS_Shape refSubShape;
         try {
-            if (Obj->getTypeId().isDerivedFrom(Part::Datum::getClassTypeId())) {
+            if (Obj->isDerivedFrom<Part::Datum>()) {
                 const Part::Datum* datum = static_cast<const Part::Datum*>(Obj);
                 refSubShape = datum->getShape();
             }
@@ -7421,11 +7434,11 @@ void SketchObject::rebuildExternalGeometry()
 
         TopoDS_Shape refSubShape;
 
-        if (Obj->getTypeId().isDerivedFrom(Part::Datum::getClassTypeId())) {
+        if (Obj->isDerivedFrom<Part::Datum>()) {
             const Part::Datum* datum = static_cast<const Part::Datum*>(Obj);
             refSubShape = datum->getShape();
         }
-        else if (Obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId())) {
+        else if (Obj->isDerivedFrom<Part::Feature>()) {
             try {
                 const Part::Feature* refObj = static_cast<const Part::Feature*>(Obj);
                 const Part::TopoShape& refShape = refObj->Shape.getShape();
@@ -7435,7 +7448,7 @@ void SketchObject::rebuildExternalGeometry()
                 throw Base::CADKernelError(e.GetMessageString());
             }
         }
-        else if (Obj->getTypeId().isDerivedFrom(App::Plane::getClassTypeId())) {
+        else if (Obj->isDerivedFrom<App::Plane>()) {
             const App::Plane* pl = static_cast<const App::Plane*>(Obj);
             Base::Placement plm = pl->Placement.getValue();
             Base::Vector3d base = plm.getPosition();
@@ -8039,33 +8052,25 @@ void SketchObject::rebuildVertexIndex()
          ++it, i++) {
         if (i > imax)
             i = -getExternalGeometryCount();
-        if ((*it)->getTypeId() == Part::GeomPoint::getClassTypeId()) {
+        if ((*it)->is<Part::GeomPoint>()) {
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::start);
         }
-        else if ((*it)->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
-            VertexId2GeoId.push_back(i);
-            VertexId2PosId.push_back(PointPos::start);
-            VertexId2GeoId.push_back(i);
-            VertexId2PosId.push_back(PointPos::end);
-        }
-        else if ((*it)->getTypeId() == Part::GeomCircle::getClassTypeId()) {
-            VertexId2GeoId.push_back(i);
-            VertexId2PosId.push_back(PointPos::mid);
-        }
-        else if ((*it)->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
-            VertexId2GeoId.push_back(i);
-            VertexId2PosId.push_back(PointPos::mid);
-        }
-        else if ((*it)->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+        else if ((*it)->is<Part::GeomLineSegment>()) {
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::start);
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::end);
+        }
+        else if ((*it)->is<Part::GeomCircle>()) {
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::mid);
         }
-        else if ((*it)->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+        else if ((*it)->is<Part::GeomEllipse>()) {
+            VertexId2GeoId.push_back(i);
+            VertexId2PosId.push_back(PointPos::mid);
+        }
+        else if ((*it)->is<Part::GeomArcOfCircle>()) {
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::start);
             VertexId2GeoId.push_back(i);
@@ -8073,7 +8078,7 @@ void SketchObject::rebuildVertexIndex()
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::mid);
         }
-        else if ((*it)->getTypeId() == Part::GeomArcOfHyperbola::getClassTypeId()) {
+        else if ((*it)->is<Part::GeomArcOfEllipse>()) {
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::start);
             VertexId2GeoId.push_back(i);
@@ -8081,7 +8086,7 @@ void SketchObject::rebuildVertexIndex()
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::mid);
         }
-        else if ((*it)->getTypeId() == Part::GeomArcOfParabola::getClassTypeId()) {
+        else if ((*it)->is<Part::GeomArcOfHyperbola>()) {
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::start);
             VertexId2GeoId.push_back(i);
@@ -8089,7 +8094,15 @@ void SketchObject::rebuildVertexIndex()
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::mid);
         }
-        else if ((*it)->getTypeId() == Part::GeomBSplineCurve::getClassTypeId()) {
+        else if ((*it)->is<Part::GeomArcOfParabola>()) {
+            VertexId2GeoId.push_back(i);
+            VertexId2PosId.push_back(PointPos::start);
+            VertexId2GeoId.push_back(i);
+            VertexId2PosId.push_back(PointPos::end);
+            VertexId2GeoId.push_back(i);
+            VertexId2PosId.push_back(PointPos::mid);
+        }
+        else if ((*it)->is<Part::GeomBSplineCurve>()) {
             VertexId2GeoId.push_back(i);
             VertexId2PosId.push_back(PointPos::start);
             VertexId2GeoId.push_back(i);
@@ -8970,7 +8983,7 @@ void SketchObject::migrateSketch()
 
                     bool oldconstr = ext->getConstruction();
 
-                    if (g->getTypeId() == Part::GeomPoint::getClassTypeId()
+                    if (g->is<Part::GeomPoint>()
                         && !gf->isInternalAligned())
                         oldconstr = true;
 
@@ -8986,8 +8999,8 @@ void SketchObject::migrateSketch()
     auto constraints = Constraints.getValues();
     auto geometries = getInternalGeometry();
 
-    auto parabolafound = std::find_if(geometries.begin(), geometries.end(), [](auto g) {
-        return g->getTypeId() == Part::GeomArcOfParabola::getClassTypeId();
+    auto parabolafound = std::find_if(geometries.begin(), geometries.end(), [](Part::Geometry* g) {
+        return g->is<Part::GeomArcOfParabola>();
     });
 
     if (parabolafound != geometries.end()) {
@@ -9219,7 +9232,7 @@ int SketchObject::port_reversedExternalArcs(bool justAnalyze)
                 && (posId == Sketcher::PointPos::start || posId == Sketcher::PointPos::end)) {
                 // we are dealing with a link to an endpoint of external geom
                 Part::Geometry* g = this->ExternalGeo[-geoId - 1];
-                if (g->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+                if (g->is<Part::GeomArcOfCircle>()) {
                     const Part::GeomArcOfCircle* segm =
                         static_cast<const Part::GeomArcOfCircle*>(g);
                     if (segm->isReversed()) {

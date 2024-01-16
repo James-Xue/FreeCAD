@@ -127,9 +127,27 @@ void DlgSettings3DViewImp::loadSettings()
     ui->boxMarkerSize->addItem(tr("11px"), QVariant(11));
     ui->boxMarkerSize->addItem(tr("13px"), QVariant(13));
     ui->boxMarkerSize->addItem(tr("15px"), QVariant(15));
+    ui->boxMarkerSize->addItem(tr("20px"), QVariant(20));
+    ui->boxMarkerSize->addItem(tr("25px"), QVariant(25));
+    ui->boxMarkerSize->addItem(tr("30px"), QVariant(30));
     index = ui->boxMarkerSize->findData(QVariant(current));
     if (index < 0) index = 2;
     ui->boxMarkerSize->setCurrentIndex(index);
+}
+
+void DlgSettings3DViewImp::resetSettingsToDefaults()
+{
+    ParameterGrp::handle hGrp;
+    hGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/View");
+    //reset "AntiAliasing" parameter
+    hGrp->RemoveInt("AntiAliasing");
+    //reset "RenderCache" parameter
+    hGrp->RemoveInt("RenderCache");
+    //reset "MarkerSize" parameter
+    hGrp->RemoveInt("MarkerSize");
+
+    //finally reset all the parameters associated to Gui::Pref* widgets
+    PreferencePage::resetSettingsToDefaults();
 }
 
 /**

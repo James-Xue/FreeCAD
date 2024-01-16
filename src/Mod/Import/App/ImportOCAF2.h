@@ -30,7 +30,6 @@
 #include <unordered_map>
 #include <vector>
 
-#include <TDF_LabelMapHasher.hxx>
 #include <TDocStd_Document.hxx>
 #include <TopoDS_Shape.hxx>
 #include <XCAFDoc_ColorTool.hxx>
@@ -41,6 +40,7 @@
 
 #include "ExportOCAF.h"
 #include "ImportOCAF.h"
+#include "Tools.h"
 
 
 class TDF_Label;
@@ -58,22 +58,6 @@ class Feature;
 
 namespace Import
 {
-
-struct ShapeHasher
-{
-    std::size_t operator()(const TopoDS_Shape& s) const
-    {
-        return s.HashCode(INT_MAX);
-    }
-};
-
-struct LabelHasher
-{
-    std::size_t operator()(const TDF_Label& l) const
-    {
-        return TDF_LabelMapHasher::HashCode(l, INT_MAX);
-    }
-};
 
 struct ImportExport ImportOCAFOptions
 {
@@ -226,6 +210,17 @@ private:
     std::unordered_map<App::DocumentObject*, App::PropertyPlacement*> myCollapsedObjects;
 
     Base::SequencerLauncher* sequencer {nullptr};
+};
+
+class ImportExport ImportOCAFExt: public ImportOCAF2
+{
+public:
+    ImportOCAFExt(Handle(TDocStd_Document) hStdDoc, App::Document* doc, const std::string& name);
+
+    std::map<Part::Feature*, std::vector<App::Color>> partColors;
+
+private:
+    void applyFaceColors(Part::Feature* part, const std::vector<App::Color>& colors) override;
 };
 
 struct ImportExport ExportOCAFOptions

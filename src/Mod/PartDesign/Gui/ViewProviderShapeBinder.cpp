@@ -136,7 +136,7 @@ void ViewProviderShapeBinder::highlightReferences(bool on)
         return;
 
     // stop if not a Part feature was found
-    if (!obj || !obj->getTypeId().isDerivedFrom(Part::Feature::getClassTypeId()))
+    if (!obj || !obj->isDerivedFrom<Part::Feature>())
         return;
 
     PartGui::ViewProviderPart* svp = dynamic_cast<PartGui::ViewProviderPart*>(
@@ -324,7 +324,7 @@ bool ViewProviderSubShapeBinder::setEdit(int ModNum) {
         Gui::Selection().clearSelection();
         for (auto& link : self->Support.getSubListValues()) {
             auto obj = link.getValue();
-            if (!obj || !obj->getNameInDocument())
+            if (!obj || !obj->isAttachedToDocument())
                 continue;
             const auto& subs = link.getSubValues();
             if (!subs.empty())

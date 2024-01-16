@@ -26,6 +26,8 @@
 
 #include <QGuiApplication>
 #include <QPainter>
+
+#include <Inventor/events/SoKeyboardEvent.h>
 #endif  // #ifndef _PreComp_
 
 #include <Base/Console.h>
@@ -109,6 +111,11 @@ ViewProviderSketchDrawSketchHandlerAttorney::moveCursorToSketchPoint(ViewProvide
     vp.moveCursorToSketchPoint(point);
 }
 
+inline void ViewProviderSketchDrawSketchHandlerAttorney::ensureFocus(ViewProviderSketch& vp)
+{
+    vp.ensureFocus();
+}
+
 inline void ViewProviderSketchDrawSketchHandlerAttorney::preselectAtPoint(ViewProviderSketch& vp,
                                                                           Base::Vector2d point)
 {
@@ -148,6 +155,12 @@ inline void ViewProviderSketchDrawSketchHandlerAttorney::moveConstraint(ViewProv
     vp.moveConstraint(constNum, toPos);
 }
 
+inline void
+ViewProviderSketchDrawSketchHandlerAttorney::signalToolChanged(const ViewProviderSketch& vp,
+                                                               const std::string& toolname)
+{
+    vp.signalToolChanged(toolname);
+}
 
 /**************************** CurveConverter **********************************************/
 
@@ -270,24 +283,58 @@ DrawSketchHandler::DrawSketchHandler()
 DrawSketchHandler::~DrawSketchHandler()
 {}
 
+std::string DrawSketchHandler::getToolName() const
+{
+    return "DSH_None";
+}
+
 QString DrawSketchHandler::getCrosshairCursorSVGName() const
 {
     return QString::fromLatin1("None");
 }
+
+std::unique_ptr<QWidget> DrawSketchHandler::createWidget() const
+{
+    return nullptr;
+}
+
+bool DrawSketchHandler::isWidgetVisible() const
+{
+    return false;
+};
+
+QPixmap DrawSketchHandler::getToolIcon() const
+{
+    return QPixmap();
+}
+
+QString DrawSketchHandler::getToolWidgetText() const
+{
+    return QString();
+}
+
 
 void DrawSketchHandler::activate(ViewProviderSketch* vp)
 {
     sketchgui = vp;
 
     // save the cursor at the time the DSH is activated
-    Gui::MDIView* view = Gui::getMainWindow()->activeWindow();
-    Gui::View3DInventorViewer* viewer = static_cast<Gui::View3DInventor*>(view)->getViewer();
-    oldCursor = viewer->getWidget()->cursor();
+    auto* view = dynamic_cast<Gui::View3DInventor*>(Gui::getMainWindow()->activeWindow());
 
-    updateCursor();
+    if (view) {
+        Gui::View3DInventorViewer* viewer = dynamic_cast<Gui::View3DInventor*>(view)->getViewer();
+        oldCursor = viewer->getWidget()->cursor();
 
-    this->preActivated();
-    this->activated();
+        updateCursor();
+
+        this->signalToolChanged();
+
+        this->preActivated();
+        this->activated();
+    }
+    else {
+        sketchgui->purgeHandler();
+    }
 }
 
 void DrawSketchHandler::deactivate()
@@ -297,11 +344,13 @@ void DrawSketchHandler::deactivate()
     ViewProviderSketchDrawSketchHandlerAttorney::setConstraintSelectability(*sketchgui, true);
 
     // clear temporary Curve and Markers from the scenograph
-    drawEdit(std::vector<Base::Vector2d>());
-    drawEditMarkers(std::vector<Base::Vector2d>());
+    clearEdit();
+    clearEditMarkers();
     resetPositionText();
     unsetCursor();
     setAngleSnapping(false);
+
+    ViewProviderSketchDrawSketchHandlerAttorney::signalToolChanged(*sketchgui, "DSH_None");
 }
 
 void DrawSketchHandler::preActivated()
@@ -317,6 +366,28 @@ void DrawSketchHandler::quit()
     Gui::Selection().rmvPreselect();
 
     sketchgui->purgeHandler();
+}
+
+void DrawSketchHandler::toolWidgetChanged(QWidget* newwidget)
+{
+    toolwidget = newwidget;
+    onWidgetChanged();
+}
+
+void DrawSketchHandler::registerPressedKey(bool pressed, int key)
+{
+    // the default behaviour is to quit - specific handler categories may
+    // override this behaviour, for example to implement a continuous mode
+    if (key == SoKeyboardEvent::ESCAPE && !pressed) {
+        quit();
+    }
+}
+
+void DrawSketchHandler::pressRightButton(Base::Vector2d /*onSketchPos*/)
+{
+    // the default behaviour is to quit - specific handler categories may
+    // override this behaviour, for example to implement a continuous mode
+    quit();
 }
 
 //**************************************************************************
@@ -396,10 +467,8 @@ void DrawSketchHandler::setSvgCursor(const QString& cursorName,
 
 void DrawSketchHandler::setCursor(const QPixmap& p, int x, int y, bool autoScale)
 {
-    Gui::MDIView* view = Gui::getMainWindow()->activeWindow();
-    if (view && view->isDerivedFrom(Gui::View3DInventor::getClassTypeId())) {
-        Gui::View3DInventorViewer* viewer = static_cast<Gui::View3DInventor*>(view)->getViewer();
-
+    Gui::View3DInventorViewer* viewer = getViewer();
+    if (viewer) {
         QCursor cursor;
         QPixmap p1(p);
         // TODO remove autoScale after all cursors are SVG-based
@@ -502,18 +571,16 @@ void DrawSketchHandler::applyCursor()
 
 void DrawSketchHandler::applyCursor(QCursor& newCursor)
 {
-    Gui::MDIView* view = Gui::getMainWindow()->activeWindow();
-    if (view && view->isDerivedFrom(Gui::View3DInventor::getClassTypeId())) {
-        Gui::View3DInventorViewer* viewer = static_cast<Gui::View3DInventor*>(view)->getViewer();
+    Gui::View3DInventorViewer* viewer = getViewer();
+    if (viewer) {
         viewer->getWidget()->setCursor(newCursor);
     }
 }
 
 void DrawSketchHandler::unsetCursor()
 {
-    Gui::MDIView* view = Gui::getMainWindow()->activeWindow();
-    if (view && view->isDerivedFrom(Gui::View3DInventor::getClassTypeId())) {
-        Gui::View3DInventorViewer* viewer = static_cast<Gui::View3DInventor*>(view)->getViewer();
+    Gui::View3DInventorViewer* viewer = getViewer();
+    if (viewer) {
         viewer->getWidget()->setCursor(oldCursor);
     }
 }
@@ -521,9 +588,8 @@ void DrawSketchHandler::unsetCursor()
 qreal DrawSketchHandler::devicePixelRatio()
 {
     qreal pixelRatio = 1;
-    Gui::MDIView* view = Gui::getMainWindow()->activeWindow();
-    if (view && view->isDerivedFrom(Gui::View3DInventor::getClassTypeId())) {
-        Gui::View3DInventorViewer* viewer = static_cast<Gui::View3DInventor*>(view)->getViewer();
+    Gui::View3DInventorViewer* viewer = getViewer();
+    if (viewer) {
         pixelRatio = viewer->devicePixelRatio();
     }
     return pixelRatio;
@@ -559,10 +625,8 @@ DrawSketchHandler::suggestedConstraintsPixmaps(std::vector<AutoConstraint>& sugg
         }
         if (!iconType.isEmpty()) {
             qreal pixelRatio = 1;
-            Gui::MDIView* view = Gui::getMainWindow()->activeWindow();
-            if (view && view->isDerivedFrom(Gui::View3DInventor::getClassTypeId())) {
-                Gui::View3DInventorViewer* viewer =
-                    static_cast<Gui::View3DInventor*>(view)->getViewer();
+            Gui::View3DInventorViewer* viewer = getViewer();
+            if (viewer) {
                 pixelRatio = viewer->devicePixelRatio();
             }
             int iconWidth = 16 * pixelRatio;
@@ -607,7 +671,7 @@ int DrawSketchHandler::seekAutoConstraint(std::vector<AutoConstraint>& suggested
         // ensure geom exists in case object was called before preselection is updated
         if (geom) {
             GeoId = preSelCrv;
-            if (geom->getTypeId() == Part::GeomLineSegment::getClassTypeId()) {
+            if (geom->is<Part::GeomLineSegment>()) {
                 const Part::GeomLineSegment* line = static_cast<const Part::GeomLineSegment*>(geom);
                 hitShapeDir = line->getEndPoint() - line->getStartPoint();
             }
@@ -727,7 +791,7 @@ int DrawSketchHandler::seekAutoConstraint(std::vector<AutoConstraint>& suggested
     for (std::vector<Part::Geometry*>::const_iterator it = geomlist.begin(); it != geomlist.end();
          ++it, i++) {
 
-        if ((*it)->getTypeId() == Part::GeomCircle::getClassTypeId()) {
+        if ((*it)->is<Part::GeomCircle>()) {
             const Part::GeomCircle* circle = static_cast<const Part::GeomCircle*>((*it));
 
             Base::Vector3d center = circle->getCenter();
@@ -749,7 +813,7 @@ int DrawSketchHandler::seekAutoConstraint(std::vector<AutoConstraint>& suggested
                 tangDeviation = projDist;
             }
         }
-        else if ((*it)->getTypeId() == Part::GeomEllipse::getClassTypeId()) {
+        else if ((*it)->is<Part::GeomEllipse>()) {
 
             const Part::GeomEllipse* ellipse = static_cast<const Part::GeomEllipse*>((*it));
 
@@ -778,7 +842,7 @@ int DrawSketchHandler::seekAutoConstraint(std::vector<AutoConstraint>& suggested
                 tangDeviation = error;
             }
         }
-        else if ((*it)->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+        else if ((*it)->is<Part::GeomArcOfCircle>()) {
             const Part::GeomArcOfCircle* arc = static_cast<const Part::GeomArcOfCircle*>((*it));
 
             Base::Vector3d center = arc->getCenter();
@@ -809,7 +873,7 @@ int DrawSketchHandler::seekAutoConstraint(std::vector<AutoConstraint>& suggested
                 }
             }
         }
-        else if ((*it)->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()) {
+        else if ((*it)->is<Part::GeomArcOfEllipse>()) {
             const Part::GeomArcOfEllipse* aoe = static_cast<const Part::GeomArcOfEllipse*>((*it));
 
             Base::Vector3d center = aoe->getCenter();
@@ -952,8 +1016,7 @@ void DrawSketchHandler::createAutoConstraints(const std::vector<AutoConstraint>&
 
                     // ellipse tangency support using construction elements (lines)
                     if (geom1 && geom2
-                        && (geom1->getTypeId() == Part::GeomEllipse::getClassTypeId()
-                            || geom2->getTypeId() == Part::GeomEllipse::getClassTypeId())) {
+                        && (geom1->is<Part::GeomEllipse>() || geom2->is<Part::GeomEllipse>())) {
 
                         if (geom1->getTypeId() != Part::GeomEllipse::getClassTypeId()) {
                             std::swap(geoId1, geoId2);
@@ -963,10 +1026,9 @@ void DrawSketchHandler::createAutoConstraints(const std::vector<AutoConstraint>&
                         geom1 = Obj->getGeometry(geoId1);
                         geom2 = Obj->getGeometry(geoId2);
 
-                        if (geom2->getTypeId() == Part::GeomEllipse::getClassTypeId()
-                            || geom2->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()
-                            || geom2->getTypeId() == Part::GeomCircle::getClassTypeId()
-                            || geom2->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+                        if (geom2->is<Part::GeomEllipse>() || geom2->is<Part::GeomArcOfEllipse>()
+                            || geom2->is<Part::GeomCircle>()
+                            || geom2->is<Part::GeomArcOfCircle>()) {
                             // in all these cases an intermediate element is needed
                             makeTangentToEllipseviaNewPoint(
                                 Obj,
@@ -980,8 +1042,8 @@ void DrawSketchHandler::createAutoConstraints(const std::vector<AutoConstraint>&
 
                     // arc of ellipse tangency support using external elements
                     if (geom1 && geom2
-                        && (geom1->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()
-                            || geom2->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId())) {
+                        && (geom1->is<Part::GeomArcOfEllipse>()
+                            || geom2->is<Part::GeomArcOfEllipse>())) {
 
                         if (geom1->getTypeId() != Part::GeomArcOfEllipse::getClassTypeId()) {
                             std::swap(geoId1, geoId2);
@@ -991,9 +1053,8 @@ void DrawSketchHandler::createAutoConstraints(const std::vector<AutoConstraint>&
                         geom1 = Obj->getGeometry(geoId1);
                         geom2 = Obj->getGeometry(geoId2);
 
-                        if (geom2->getTypeId() == Part::GeomArcOfEllipse::getClassTypeId()
-                            || geom2->getTypeId() == Part::GeomCircle::getClassTypeId()
-                            || geom2->getTypeId() == Part::GeomArcOfCircle::getClassTypeId()) {
+                        if (geom2->is<Part::GeomArcOfEllipse>() || geom2->is<Part::GeomCircle>()
+                            || geom2->is<Part::GeomArcOfCircle>()) {
                             // in all these cases an intermediate element is needed
                             makeTangentToArcOfEllipseviaNewPoint(
                                 Obj,
@@ -1046,23 +1107,33 @@ void DrawSketchHandler::resetPositionText()
     ViewProviderSketchDrawSketchHandlerAttorney::resetPositionText(*sketchgui);
 }
 
-void DrawSketchHandler::drawEdit(const std::vector<Base::Vector2d>& EditCurve)
+void DrawSketchHandler::drawEdit(const std::vector<Base::Vector2d>& EditCurve) const
 {
     ViewProviderSketchDrawSketchHandlerAttorney::drawEdit(*sketchgui, EditCurve);
 }
 
-void DrawSketchHandler::drawEdit(const std::list<std::vector<Base::Vector2d>>& list)
+void DrawSketchHandler::drawEdit(const std::list<std::vector<Base::Vector2d>>& list) const
 {
     ViewProviderSketchDrawSketchHandlerAttorney::drawEdit(*sketchgui, list);
 }
 
-void DrawSketchHandler::drawEdit(const std::vector<Part::Geometry*>& geometries)
+void DrawSketchHandler::drawEdit(const std::vector<Part::Geometry*>& geometries) const
 {
     static CurveConverter c;
 
     auto list = c.toVector2DList(geometries);
 
     drawEdit(list);
+}
+
+void DrawSketchHandler::clearEdit() const
+{
+    drawEdit(std::vector<Base::Vector2d>());
+}
+
+void DrawSketchHandler::clearEditMarkers() const
+{
+    drawEditMarkers(std::vector<Base::Vector2d>());
 }
 
 void DrawSketchHandler::drawPositionAtCursor(const Base::Vector2d& position)
@@ -1073,20 +1144,73 @@ void DrawSketchHandler::drawPositionAtCursor(const Base::Vector2d& position)
 void DrawSketchHandler::drawDirectionAtCursor(const Base::Vector2d& position,
                                               const Base::Vector2d& origin)
 {
+    if (!showCursorCoords()) {
+        return;
+    }
+
     float length = (position - origin).Length();
     float angle = (position - origin).GetAngle(Base::Vector2d(1.f, 0.f));
 
-    if (showCursorCoords()) {
-        SbString text;
-        std::string lengthString = lengthToDisplayFormat(length, 1);
-        std::string angleString = angleToDisplayFormat(angle * 180.0 / M_PI, 1);
-        text.sprintf(" (%s, %s)", lengthString.c_str(), angleString.c_str());
-        setPositionText(position, text);
+    SbString text;
+    std::string lengthString = lengthToDisplayFormat(length, 1);
+    std::string angleString = angleToDisplayFormat(angle * 180.0 / M_PI, 1);
+    text.sprintf(" (%s, %s)", lengthString.c_str(), angleString.c_str());
+    setPositionText(position, text);
+}
+
+void DrawSketchHandler::drawWidthHeightAtCursor(const Base::Vector2d& position,
+                                                const double val1,
+                                                const double val2)
+{
+    if (!showCursorCoords()) {
+        return;
     }
+
+    SbString text;
+    std::string val1String = lengthToDisplayFormat(val1, 1);
+    std::string val2String = lengthToDisplayFormat(val2, 1);
+    text.sprintf(" (%s x %s)", val1String.c_str(), val2String.c_str());
+    setPositionText(position, text);
+}
+
+void DrawSketchHandler::drawDoubleAtCursor(const Base::Vector2d& position,
+                                           const double val,
+                                           Base::Unit unit)
+{
+    if (!showCursorCoords()) {
+        return;
+    }
+
+    SbString text;
+    std::string doubleString = unit == Base::Unit::Length
+        ? lengthToDisplayFormat(val, 1)
+        : angleToDisplayFormat(val * 180.0 / M_PI, 1);
+    text.sprintf(" (%s)", doubleString.c_str());
+    setPositionText(position, text);
+}
+
+std::unique_ptr<QWidget> DrawSketchHandler::createToolWidget() const
+{
+    return createWidget();  // NVI
+}
+
+bool DrawSketchHandler::isToolWidgetVisible() const
+{
+    return isWidgetVisible();  // NVI
+}
+
+QPixmap DrawSketchHandler::getToolWidgetHeaderIcon() const
+{
+    return getToolIcon();
+}
+
+QString DrawSketchHandler::getToolWidgetHeaderText() const
+{
+    return getToolWidgetText();
 }
 
 void DrawSketchHandler::drawEditMarkers(const std::vector<Base::Vector2d>& EditMarkers,
-                                        unsigned int augmentationlevel)
+                                        unsigned int augmentationlevel) const
 {
     ViewProviderSketchDrawSketchHandlerAttorney::drawEditMarkers(*sketchgui,
                                                                  EditMarkers,
@@ -1101,6 +1225,11 @@ void DrawSketchHandler::setAxisPickStyle(bool on)
 void DrawSketchHandler::moveCursorToSketchPoint(Base::Vector2d point)
 {
     ViewProviderSketchDrawSketchHandlerAttorney::moveCursorToSketchPoint(*sketchgui, point);
+}
+
+void DrawSketchHandler::ensureFocus()
+{
+    ViewProviderSketchDrawSketchHandlerAttorney::ensureFocus(*sketchgui);
 }
 
 void DrawSketchHandler::preselectAtPoint(Base::Vector2d point)
@@ -1138,4 +1267,18 @@ void DrawSketchHandler::setAngleSnapping(bool enable, Base::Vector2d referencePo
 void DrawSketchHandler::moveConstraint(int constNum, const Base::Vector2d& toPos)
 {
     ViewProviderSketchDrawSketchHandlerAttorney::moveConstraint(*sketchgui, constNum, toPos);
+}
+
+void DrawSketchHandler::signalToolChanged() const
+{
+    ViewProviderSketchDrawSketchHandlerAttorney::signalToolChanged(*sketchgui, this->getToolName());
+}
+
+Gui::View3DInventorViewer* DrawSketchHandler::getViewer()
+{
+    Gui::MDIView* view = Gui::getMainWindow()->activeWindow();
+    if (view && view->isDerivedFrom(Gui::View3DInventor::getClassTypeId())) {
+        return static_cast<Gui::View3DInventor*>(view)->getViewer();
+    }
+    return nullptr;
 }

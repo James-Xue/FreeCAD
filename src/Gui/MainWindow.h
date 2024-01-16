@@ -106,6 +106,10 @@ public:
      */
     QList<QWidget*> windows(QMdiArea::WindowOrder order = QMdiArea::CreationOrder) const;
     /**
+     * Returns the internal QMdiArea instance.
+     */
+    QMdiArea *getMdiArea() const;
+    /**
      * Can be called after the caption of an MDIView has changed to update the tab's caption.
      */
     void tabChanged(MDIView* view);
@@ -152,7 +156,7 @@ public:
     /// Loads the main window settings.
     void loadWindowSettings();
     /// Saves the main window settings.
-    void saveWindowSettings();
+    void saveWindowSettings(bool canDelay = false);
     //@}
 
     /** @name Menu
@@ -203,6 +207,10 @@ public:
     enum StatusType {None, Err, Wrn, Pane, Msg, Log, Tmp, Critical};
     void showStatus(int type, const QString & message);
 
+    void initDockWindows(bool show);
+
+    bool isRestoringWindowState() const;
+
 public Q_SLOTS:
     /**
      * Updates the standard actions of a text editor such as Cut, Copy, Paste, Undo and Redo.
@@ -212,6 +220,10 @@ public Q_SLOTS:
      * Sets text to the pane in the status bar.
      */
     void setPaneText(int i, QString text);
+    /**
+     * Sets the userschema in the status bar
+    */
+    void setUserSchema(int userSchema);
     /**
      * Arranges all child windows in a tile pattern.
      */
@@ -283,14 +295,15 @@ protected:
 
 private:
     void setupDockWindows();
-    bool setupTreeView(const std::string&);
-    bool setupTaskView(const std::string&);
-    bool setupPropertyView(const std::string&);
-    bool setupSelectionView(const std::string&);
-    bool setupComboView(const std::string&);
-    bool setupDAGView(const std::string&);
-    bool setupReportView(const std::string&);
-    bool setupPythonConsole(const std::string&);
+    bool setupTaskView();
+    bool setupSelectionView();
+    bool setupReportView();
+    bool setupPythonConsole();
+    bool updateTreeView(bool show);
+    bool updatePropertyView(bool show);
+    bool updateTaskView(bool show);
+    bool updateComboView(bool show);
+    bool updateDAGView(bool show);
 
     static void renderDevBuildWarning(QPainter &painter, const QPoint startPosition, const QSize maxSize);
 
@@ -338,7 +351,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
     void timeEvent();
-    void windowStateChanged(Gui::MDIView*);
+    void windowStateChanged(QWidget*);
     void workbenchActivated(const QString&);
     void mainWindowClosed();
 

@@ -41,6 +41,7 @@
 #include "TaskView.h"
 #include "TaskDialog.h"
 #include "TaskEditControl.h"
+#include <Gui/Control.h>
 
 #include <Gui/QSint/actionpanel/taskgroup_p.h>
 #include <Gui/QSint/actionpanel/taskheader_p.h>
@@ -299,6 +300,8 @@ TaskView::TaskView(QWidget *parent)
     App::GetApplication().signalRedoDocument.connect
         (std::bind(&Gui::TaskView::TaskView::slotRedoDocument, this, sp::_1));
     //NOLINTEND
+
+    updateWatcher();
 }
 
 TaskView::~TaskView()
@@ -308,6 +311,20 @@ TaskView::~TaskView()
     connectApplicationUndoDocument.disconnect();
     connectApplicationRedoDocument.disconnect();
     Gui::Selection().Detach(this);
+}
+
+bool TaskView::isEmpty(bool includeWatcher) const
+{
+    if (ActiveCtrl || ActiveDialog)
+        return false;
+
+    if (includeWatcher) {
+        for (auto * watcher : ActiveWatcher) {
+            if (watcher->shouldShow())
+                return false;
+        }
+    }
+    return true;
 }
 
 bool TaskView::event(QEvent* event)
@@ -542,7 +559,10 @@ void TaskView::showDialog(TaskDialog *dlg)
     ActiveDialog->open();
 
     getMainWindow()->updateActions();
+
     triggerMinimumSizeHint();
+
+    Q_EMIT taskUpdate();
 }
 
 void TaskView::removeDialog()
@@ -585,8 +605,17 @@ void TaskView::removeDialog()
     triggerMinimumSizeHint();
 }
 
-void TaskView::updateWatcher()
+void TaskView::updateWatcher(void)
 {
+    if (ActiveCtrl || ActiveDialog)
+        return;
+
+    if (ActiveWatcher.empty()) {
+        auto panel = Gui::Control().taskPanel();
+        if (panel && panel->ActiveWatcher.size())
+            takeTaskWatcher(panel);
+    }
+
     // In case a child of the TaskView has the focus and get hidden we have
     // to make sure to set the focus on a widget that won't be hidden or
     // deleted because otherwise Qt may forward the focus via focusNextPrevChild()
@@ -622,6 +651,8 @@ void TaskView::updateWatcher()
         fwp->setFocus();
 
     triggerMinimumSizeHint();
+
+    Q_EMIT taskUpdate();
 }
 
 void TaskView::addTaskWatcher(const std::vector<TaskWatcher*> &Watcher)
@@ -631,7 +662,17 @@ void TaskView::addTaskWatcher(const std::vector<TaskWatcher*> &Watcher)
         delete tw;
 
     ActiveWatcher = Watcher;
-    addTaskWatcher();
+    if (!ActiveCtrl && !ActiveDialog)
+        addTaskWatcher();
+}
+
+void TaskView::takeTaskWatcher(TaskView *other)
+{
+    clearTaskWatcher();
+    ActiveWatcher.swap(other->ActiveWatcher);
+    other->clearTaskWatcher();
+    if (isEmpty(false))
+        addTaskWatcher();
 }
 
 void TaskView::clearTaskWatcher()

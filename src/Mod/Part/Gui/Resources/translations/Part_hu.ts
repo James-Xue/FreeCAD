@@ -1230,8 +1230,8 @@
     </message>
     <message>
       <location filename="../../Command.cpp" line="2229"/>
-      <source>Clear all dimensions from the screen.</source>
-      <translation>Törölje az összes méretet a képernyőről.</translation>
+      <source>Clear all dimensions from the active 3D view.</source>
+      <translation>Törölje az összes méretet az aktív 3D nézetből.</translation>
     </message>
   </context>
   <context>
@@ -2368,7 +2368,7 @@ irányát.</translation>
       <translation>Húzás</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="198"/>
+      <location filename="../../ViewProviderMirror.cpp" line="211"/>
       <source>Edit Mirror</source>
       <translation>Tükrözés szerkesztése</translation>
     </message>
@@ -4526,57 +4526,78 @@ the sketch plane's normal vector will be used</source>
       <translation>Tükrözés</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="33"/>
+      <location filename="../../Mirroring.ui" line="121"/>
+      <source>Use selected reference</source>
+      <translation>Kiválasztott hivatkozás használata</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="142"/>
       <source>Shapes</source>
       <translation>Alakzatok</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="41"/>
+      <location filename="../../Mirroring.ui" line="98"/>
       <source>Mirror plane:</source>
       <translation>Tükör sík:</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="49"/>
+      <location filename="../../Mirroring.ui" line="106"/>
       <source>XY plane</source>
       <translation>XY sík</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="54"/>
+      <location filename="../../Mirroring.ui" line="111"/>
       <source>XZ plane</source>
       <translation>XZ sík</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="59"/>
+      <location filename="../../Mirroring.ui" line="116"/>
       <source>YZ plane</source>
       <translation>YZ síkban</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="67"/>
+      <location filename="../../Mirroring.ui" line="150"/>
+      <location filename="../../Mirroring.cpp" line="215"/>
+      <source>Selecting</source>
+      <translation>Kiválaszt</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="166"/>
+      <source>Mirror plane reference</source>
+      <translation>Referencia tükörsík</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="20"/>
       <source>Base point</source>
       <translation>Alap pont</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="73"/>
+      <location filename="../../Mirroring.ui" line="26"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="96"/>
+      <location filename="../../Mirroring.ui" line="49"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="119"/>
+      <location filename="../../Mirroring.ui" line="72"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="126"/>
+      <location filename="../../Mirroring.cpp" line="211"/>
+      <source>Select reference</source>
+      <translation>Válassz referenciát</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.cpp" line="280"/>
       <source>Select a shape for mirroring, first.</source>
       <translation>Tükrözéshez előszőr a formát válassza ki.</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="133"/>
+      <location filename="../../Mirroring.cpp" line="287"/>
       <source>No such document '%1'.</source>
       <translation>Nincs ilyen dokumentum '%1'.</translation>
     </message>
@@ -4731,7 +4752,7 @@ only created cuts will be visible</source>
       <translation>Záráskor csak a kivágások legyenek láthatók</translation>
     </message>
     <message>
-      <location filename="../../SectionCutting.cpp" line="520"/>
+      <location filename="../../SectionCutting.cpp" line="1103"/>
       <source>Sliders are disabled for assemblies</source>
       <translation>A csúszkák le vannak tiltva az összeállításoknál</translation>
     </message>
@@ -5700,21 +5721,21 @@ in the 3D view for the sweep path.</source>
       <translation>%1 szerkesztése</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="228"/>
+      <location filename="../../AppPartGui.cpp" line="235"/>
       <source>Part and Part Design workbench</source>
       <translation>Alkatrész és Alkatrész tervezési munkafelület</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="229"/>
-      <location filename="../../AppPartGui.cpp" line="230"/>
-      <location filename="../../AppPartGui.cpp" line="231"/>
-      <location filename="../../AppPartGui.cpp" line="232"/>
+      <location filename="../../AppPartGui.cpp" line="236"/>
+      <location filename="../../AppPartGui.cpp" line="237"/>
+      <location filename="../../AppPartGui.cpp" line="238"/>
+      <location filename="../../AppPartGui.cpp" line="239"/>
       <source>Part/Part Design</source>
       <translation>Alaktrész/Alkatrész tervezés</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="233"/>
-      <location filename="../../AppPartGui.cpp" line="234"/>
+      <location filename="../../AppPartGui.cpp" line="240"/>
+      <location filename="../../AppPartGui.cpp" line="241"/>
       <source>Import-Export</source>
       <translation>Importálás-Exportálás</translation>
     </message>
@@ -5921,7 +5942,7 @@ Do you want to continue?</source>
     <message>
       <location filename="../../TaskCheckGeometry.cpp" line="117"/>
       <source>Redundant Edge</source>
-      <translation>Fölösleges él</translation>
+      <translation>Felesleges él</translation>
     </message>
     <message>
       <location filename="../../TaskCheckGeometry.cpp" line="118"/>
@@ -5961,7 +5982,7 @@ Do you want to continue?</source>
     <message>
       <location filename="../../TaskCheckGeometry.cpp" line="125"/>
       <source>Redundant Face</source>
-      <translation>Szükségtelen felület</translation>
+      <translation>Felesleges felület</translation>
     </message>
     <message>
       <location filename="../../TaskCheckGeometry.cpp" line="126"/>
@@ -6121,27 +6142,27 @@ Do you want to continue?</source>
       <translation>Színek beállítása...</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="78"/>
+      <location filename="../../ViewProviderMirror.cpp" line="85"/>
       <source>Edit mirror plane</source>
       <translation>Tükrözési sík szerkesztése</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="282"/>
+      <location filename="../../ViewProviderMirror.cpp" line="295"/>
       <source>Edit fillet edges</source>
       <translation>Kijelölt élek szerkesztése</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="392"/>
+      <location filename="../../ViewProviderMirror.cpp" line="405"/>
       <source>Edit chamfer edges</source>
       <translation>Letörés szegélyek szerkesztése</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="528"/>
+      <location filename="../../ViewProviderMirror.cpp" line="541"/>
       <source>Edit offset</source>
       <translation>Eltolás szerkesztése</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="610"/>
+      <location filename="../../ViewProviderMirror.cpp" line="623"/>
       <source>Edit thickness</source>
       <translation>Vastagság szerkesztése</translation>
     </message>
@@ -6756,7 +6777,7 @@ A fennmaradó darabok kivonására az 'összetevő szűrő' használható.</tran
     <message>
       <location filename="../../DlgScale.ui" line="22"/>
       <source>X Factor</source>
-      <translation type="unfinished">X Factor</translation>
+      <translation>X lépték</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="29"/>
@@ -6766,37 +6787,37 @@ A fennmaradó darabok kivonására az 'összetevő szűrő' használható.</tran
     <message>
       <location filename="../../DlgScale.ui" line="64"/>
       <source>Z Factor</source>
-      <translation type="unfinished">Z Factor</translation>
+      <translation>Z lépték</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="71"/>
       <source>Scale the object by a single factor in all directions.</source>
-      <translation type="unfinished">Scale the object by a single factor in all directions.</translation>
+      <translation>A tárgy méretezése egyetlen tényezővel minden irányban.</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="74"/>
       <source>Uniform Scaling</source>
-      <translation type="unfinished">Uniform Scaling</translation>
+      <translation>Egyenletes méretezés</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="112"/>
       <source>Y Factor</source>
-      <translation type="unfinished">Y Factor</translation>
+      <translation>Y lépték</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="119"/>
       <source>Specify a different scale factor for each cardinal direction.</source>
-      <translation type="unfinished">Specify a different scale factor for each cardinal direction.</translation>
+      <translation>Adjon meg különböző méretezési tényezőt minden egyes kardinális irányhoz.</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="122"/>
       <source>Non-Uniform Scaling</source>
-      <translation type="unfinished">Non-Uniform Scaling</translation>
+      <translation>Nem-egyenletes méretezés</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="195"/>
       <source>Select shape(s) that should be scaled</source>
-      <translation type="unfinished">Select shape(s) that should be scaled</translation>
+      <translation>A méretezendő alakzat(ok) kijelölése</translation>
     </message>
     <message>
       <location filename="../../DlgScale.ui" line="199"/>
@@ -6806,7 +6827,7 @@ A fennmaradó darabok kivonására az 'összetevő szűrő' használható.</tran
     <message>
       <location filename="../../DlgScale.cpp" line="198"/>
       <source>No scalable shapes selected</source>
-      <translation type="unfinished">No scalable shapes selected</translation>
+      <translation>Nincsenek méretezhető alakzatok kiválasztva</translation>
     </message>
     <message>
       <location filename="../../DlgScale.cpp" line="206"/>
@@ -6818,7 +6839,7 @@ A fennmaradó darabok kivonására az 'összetevő szűrő' használható.</tran
       <location filename="../../DlgScale.cpp" line="260"/>
       <source>Creating Scale failed.
 %1</source>
-      <translation type="unfinished">Creating Scale failed.
+      <translation>Méretezés létrehozása sikertelen.
 %1</translation>
     </message>
   </context>
@@ -6837,7 +6858,73 @@ A fennmaradó darabok kivonására az 'összetevő szűrő' használható.</tran
     <message>
       <location filename="../../Command.cpp" line="1309"/>
       <source>Scale a selected shape</source>
-      <translation type="unfinished">Scale a selected shape</translation>
+      <translation>Kijelölt alakzat méretezése</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdSelectFilter</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="46"/>
+      <source>Selection filter</source>
+      <translation>Kiválasztási szűrő</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="47"/>
+      <location filename="../../CommandFilter.cpp" line="48"/>
+      <source>Change the selection filter</source>
+      <translation>Kiválasztási szűrő módosítása</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdVertexSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="173"/>
+      <source>Vertex selection</source>
+      <translation>Csúcspont kijelölés</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="174"/>
+      <location filename="../../CommandFilter.cpp" line="176"/>
+      <source>Only allow the selection of vertices</source>
+      <translation>Csak a csúcsok kiválasztását engedélyezi</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdEdgeSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="198"/>
+      <source>Edge selection</source>
+      <translation>Él kijelölés</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="199"/>
+      <location filename="../../CommandFilter.cpp" line="201"/>
+      <source>Only allow the selection of edges</source>
+      <translation>Csak az élek kiválasztását engedélyezi</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdFaceSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="223"/>
+      <source>Face selection</source>
+      <translation>Felület kijelölés</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="224"/>
+      <location filename="../../CommandFilter.cpp" line="226"/>
+      <source>Only allow the selection of faces</source>
+      <translation>Csak a felületek kiválasztását engedélyezi</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdRemoveSelectionGate</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="248"/>
+      <location filename="../../CommandFilter.cpp" line="249"/>
+      <location filename="../../CommandFilter.cpp" line="251"/>
+      <source>All selection filters cleared</source>
+      <translation>Összes kiválasztási szűrő törölve</translation>
     </message>
   </context>
 </TS>

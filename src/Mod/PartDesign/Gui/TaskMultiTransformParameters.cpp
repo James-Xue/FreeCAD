@@ -260,13 +260,13 @@ void TaskMultiTransformParameters::onTransformEdit()
     std::vector<App::DocumentObject*> transformFeatures = pcMultiTransform->Transformations.getValues();
 
     subFeature = static_cast<PartDesign::Transformed*>(transformFeatures[row]);
-    if (transformFeatures[row]->getTypeId() == PartDesign::Mirrored::getClassTypeId())
+    if (transformFeatures[row]->is<PartDesign::Mirrored>())
         subTask = new TaskMirroredParameters(this, ui->verticalLayout);
-    else if (transformFeatures[row]->getTypeId() == PartDesign::LinearPattern::getClassTypeId())
+    else if (transformFeatures[row]->is<PartDesign::LinearPattern>())
         subTask = new TaskLinearPatternParameters(this, ui->verticalLayout);
-    else if (transformFeatures[row]->getTypeId() == PartDesign::PolarPattern::getClassTypeId())
+    else if (transformFeatures[row]->is<PartDesign::PolarPattern>())
         subTask = new TaskPolarPatternParameters(this, ui->verticalLayout);
-    else if (transformFeatures[row]->getTypeId() == PartDesign::Scaled::getClassTypeId())
+    else if (transformFeatures[row]->is<PartDesign::Scaled>())
         subTask = new TaskScaledParameters(this, ui->verticalLayout);
     else
         return; // TODO: Show an error?
@@ -301,7 +301,10 @@ void TaskMultiTransformParameters::onTransformAddMirrored()
     App::DocumentObject* sketch = getSketchObject();
     if (sketch)
         FCMD_OBJ_CMD(Feat, "MirrorPlane = ("<<Gui::Command::getObjectCmd(sketch)<<",['V_Axis'])");
-
+    else {
+        App::Origin* orig = pcActiveBody->getOrigin();
+        FCMD_OBJ_CMD(Feat, "MirrorPlane = ("<<Gui::Command::getObjectCmd(orig->getXY())<<",[''])");
+    }
     finishAdd(newFeatName);
     // show the new view when no error
     if (!Feat->isError())
@@ -367,6 +370,10 @@ void TaskMultiTransformParameters::onTransformAddPolarPattern()
     App::DocumentObject* sketch = getSketchObject();
     if (sketch)
         FCMD_OBJ_CMD(Feat, "Axis = ("<<Gui::Command::getObjectCmd(sketch)<<",['N_Axis'])");
+    else {
+        App::Origin* orig = pcActiveBody->getOrigin();
+        FCMD_OBJ_CMD(Feat, "Axis = ("<<Gui::Command::getObjectCmd(orig->getX())<<",[''])");
+    }
     FCMD_OBJ_CMD(Feat, "Angle = 360");
     FCMD_OBJ_CMD(Feat, "Occurrences = 2");
 

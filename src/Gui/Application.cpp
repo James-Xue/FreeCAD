@@ -54,6 +54,8 @@
 #include <Base/Stream.h>
 #include <Base/Tools.h>
 
+#include <Base/UnitsApi.h>
+
 #include <Language/Translator.h>
 #include <Quarter/Quarter.h>
 
@@ -124,6 +126,7 @@
 #include "WaitCursor.h"
 #include "Workbench.h"
 #include "WorkbenchManager.h"
+#include "WorkbenchManipulator.h"
 #include "WidgetFactory.h"
 
 
@@ -219,7 +222,7 @@ FreeCADGui_subgraphFromObject(PyObject * /*self*/, PyObject *args)
         auto base =
             static_cast<Base::BaseClass*>(Base::Type::createInstanceByName(vp.c_str(), true));
         if (base
-            && base->getTypeId().isDerivedFrom(Gui::ViewProviderDocumentObject::getClassTypeId())) {
+            && base->isDerivedFrom<Gui::ViewProviderDocumentObject>()) {
             std::unique_ptr<Gui::ViewProviderDocumentObject> vp(
                 static_cast<Gui::ViewProviderDocumentObject*>(base));
             std::map<std::string, App::Property*> Map;
@@ -228,7 +231,7 @@ FreeCADGui_subgraphFromObject(PyObject * /*self*/, PyObject *args)
 
             // this is needed to initialize Python-based view providers
             App::Property* pyproxy = vp->getPropertyByName("Proxy");
-            if (pyproxy && pyproxy->getTypeId() == App::PropertyPythonObject::getClassTypeId()) {
+            if (pyproxy && pyproxy->is<App::PropertyPythonObject>()) {
                 static_cast<App::PropertyPythonObject*>(pyproxy)->setValue(Py::Long(1));
             }
 
@@ -342,7 +345,7 @@ namespace {
         std::stringstream str;
         str << "Image formats (";
         for (const auto& ext : supportedFormats) {
-            str << "*." << ext.constData() << " ";
+            str << "*." << ext.constData() << " *." << ext.toUpper().constData() << " ";
         }
         str << ")";
 
@@ -535,6 +538,7 @@ Application::~Application()
 {
     Base::Console().Log("Destruct Gui::Application\n");
     WorkbenchManager::destruct();
+    WorkbenchManipulator::removeAll();
     SelectionSingleton::destruct();
     Translator::destruct();
     WidgetFactorySupplier::destruct();
@@ -928,6 +932,19 @@ void Application::slotActiveDocument(const App::Document& Doc)
                 Base::PyGILStateLocker lock;
                 Py::Module("FreeCADGui").setAttr(std::string("ActiveDocument"),Py::None());
             }
+        }
+
+        // Update the application to show the unit change
+        ParameterGrp::handle hGrp = App::GetApplication().GetParameterGroupByPath
+            ("User parameter:BaseApp/Preferences/Units");
+        if( Doc.FileName.getValue()[0] != '\0' &&  ! hGrp->GetBool("IgnoreProjectSchema")) {
+            int userSchema = Doc.UnitSystem.getValue();
+            Base::UnitsApi::setSchema(static_cast<Base::UnitSystem>(userSchema));
+            getMainWindow()->setUserSchema(userSchema);
+            Application::Instance->onUpdate();
+        }else{// set up Unit system default
+			Base::UnitsApi::setSchema((Base::UnitSystem)hGrp->GetInt("UserSchema",0));
+			Base::UnitsApi::setDecimals(hGrp->GetInt("Decimals", Base::UnitsApi::getDecimals()));
         }
         signalActiveDocument(*doc->second);
         updateActions();
@@ -1685,7 +1702,7 @@ void Application::setupContextMenu(const char* recipient, MenuItem* items) const
     if (actWb) {
         // when populating the context-menu of a Python workbench invoke the method
         // 'ContextMenu' of the handler object
-        if (actWb->getTypeId().isDerivedFrom(PythonWorkbench::getClassTypeId())) {
+        if (actWb->isDerivedFrom<PythonWorkbench>()) {
             static_cast<PythonWorkbench*>(actWb)->clearContextMenu();
             Base::PyGILStateLocker lock;
             PyObject* pWorkbench = nullptr;
@@ -1709,7 +1726,7 @@ void Application::setupContextMenu(const char* recipient, MenuItem* items) const
                 }
             }
         }
-        actWb->setupContextMenu(recipient, items);
+        actWb->createContextMenu(recipient, items);
     }
 }
 
@@ -2007,7 +2024,7 @@ void Application::runApplication()
     // if application not yet created by the splasher
     int argc = App::Application::GetARGC();
     GUISingleApplication mainApp(argc, App::Application::GetARGV());
-    // http://forum.freecad.org/viewtopic.php?f=3&t=15540
+    // https://forum.freecad.org/viewtopic.php?f=3&t=15540
     mainApp.setAttribute(Qt::AA_DontShowIconsInMenus, false);
 
     // Make sure that we use '.' as decimal point. See also
@@ -2067,6 +2084,13 @@ void Application::runApplication()
              << QString::fromUtf8((App::Application::getResourceDir() + "Gui/Stylesheets/").c_str())
              << QLatin1String(":/stylesheets");
     QDir::setSearchPaths(QString::fromLatin1("qss"), qssPaths);
+    // setup the search paths for Qt overlay style sheets
+    QStringList qssOverlayPaths;
+    qssOverlayPaths << QString::fromUtf8((App::Application::getUserAppDataDir()
+                        + "Gui/Stylesheets/overlay").c_str())
+                    << QString::fromUtf8((App::Application::getResourceDir()
+                        + "Gui/Stylesheets/overlay").c_str());
+    QDir::setSearchPaths(QStringLiteral("overlay"), qssOverlayPaths);
 
     // set search paths for images
     QStringList imagePaths;

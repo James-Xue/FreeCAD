@@ -38,13 +38,13 @@ from PySide.QtCore import QT_TRANSLATE_NOOP
 import FreeCAD as App
 import FreeCADGui as Gui
 import DraftVecUtils
-import draftutils.utils as utils
-import draftutils.gui_utils as gui_utils
-import draftutils.todo as todo
-import draftguitools.gui_base_original as gui_base_original
-import draftguitools.gui_tool_utils as gui_tool_utils
-
-from draftutils.messages import _msg, _err
+from draftguitools import gui_base_original
+from draftguitools import gui_tool_utils
+from draftutils import gui_utils
+from draftutils import params
+from draftutils import utils
+from draftutils import todo
+from draftutils.messages import _err, _msg, _toolmsg
 from draftutils.translate import translate
 
 
@@ -79,7 +79,7 @@ class Line(gui_base_original.Creator):
         gui_utils.format_object(self.obj)
 
         self.call = self.view.addEventCallback("SoEvent", self.action)
-        _msg(translate("draft", "Pick first point"))
+        _toolmsg(translate("draft", "Pick first point"))
 
     def action(self, arg):
         """Handle the 3D scene events.
@@ -141,7 +141,7 @@ class Line(gui_base_original.Creator):
             # The command to run is built as a series of text strings
             # to be committed through the `draftutils.todo.ToDo` class.
             if (len(self.node) == 2
-                    and utils.getParam("UsePartPrimitives", False)):
+                    and params.get_param("UsePartPrimitives")):
                 # Insert a Part::Primitive object
                 p1 = self.node[0]
                 p2 = self.node[-1]
@@ -182,9 +182,6 @@ class Line(gui_base_original.Creator):
                 self.commit(translate("draft", "Create Wire"),
                             _cmd_list)
         super().finish()
-        if hasattr(Gui, "Snapper"):
-            Gui.Snapper.setGrid(tool=True)
-            Gui.Snapper.restack()
         if cont or (cont is None and self.ui and self.ui.continueMode):
             self.Activated()
 
@@ -214,8 +211,8 @@ class Line(gui_base_original.Creator):
                 else:
                     self.obj.ViewObject.hide()
                 # DNC: report on removal
-                # _msg(translate("draft", "Removing last point"))
-                _msg(translate("draft", "Pick next point"))
+                # _toolmsg(translate("draft", "Removing last point"))
+                _toolmsg(translate("draft", "Pick next point"))
 
     def drawSegment(self, point):
         """Draws new line segment."""
@@ -223,14 +220,14 @@ class Line(gui_base_original.Creator):
         if self.planetrack and self.node:
             self.planetrack.set(self.node[-1])
         if len(self.node) == 1:
-            _msg(translate("draft", "Pick next point"))
+            _toolmsg(translate("draft", "Pick next point"))
         elif len(self.node) == 2:
             last = self.node[len(self.node) - 2]
             newseg = Part.LineSegment(last, point).toShape()
             self.obj.Shape = newseg
             self.obj.ViewObject.Visibility = True
             if self.isWire:
-                _msg(translate("draft", "Pick next point"))
+                _toolmsg(translate("draft", "Pick next point"))
         else:
             currentshape = self.obj.Shape.copy()
             last = self.node[len(self.node) - 2]
@@ -238,7 +235,7 @@ class Line(gui_base_original.Creator):
                 newseg = Part.LineSegment(last, point).toShape()
                 newshape = currentshape.fuse(newseg)
                 self.obj.Shape = newshape
-            _msg(translate("draft", "Pick next point"))
+            _toolmsg(translate("draft", "Pick next point"))
 
     def wipe(self):
         """Remove all previous segments and starts from last point."""
@@ -248,7 +245,7 @@ class Line(gui_base_original.Creator):
             self.node = [self.node[-1]]
             if self.planetrack:
                 self.planetrack.set(self.node[0])
-            _msg(translate("draft", "Pick next point"))
+            _toolmsg(translate("draft", "Pick next point"))
 
     def orientWP(self):
         """Orient the working plane."""
@@ -259,10 +256,7 @@ class Line(gui_base_original.Creator):
                 n = self.wp.axis
             p = self.node[-1]
             v = self.node[-1].sub(self.node[-2])
-            self.wp.alignToPointAndAxis(p, n, upvec=v)
-            if hasattr(Gui, "Snapper"):
-                Gui.Snapper.setGrid()
-                Gui.Snapper.restack()
+            self.wp.align_to_point_and_axis(p, n, upvec=v, _hist_add=False)
             if self.planetrack:
                 self.planetrack.set(self.node[-1])
 

@@ -227,7 +227,7 @@
     <message>
       <location filename="../../Command.cpp" line="641"/>
       <source>Bold text</source>
-      <translation>Negrita</translation>
+      <translation>Texto en negrita</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="642"/>
@@ -263,12 +263,12 @@
     <message>
       <location filename="../../Command.cpp" line="807"/>
       <source>Underline text</source>
-      <translation>Subrayado</translation>
+      <translation>Texto subrayado</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="808"/>
       <source>Underline text in selected cells</source>
-      <translation>Texto subrayado en las celdas seleccionadas</translation>
+      <translation>Establecer texto subrayado en las celdas seleccionadas</translation>
     </message>
   </context>
   <context>
@@ -682,8 +682,8 @@ la configuración de diseño. La propiedad se creará si no existe.</translation
     <message>
       <location filename="../../Command.cpp" line="194"/>
       <location filename="../../Command.cpp" line="254"/>
-      <source>All (*)</source>
-      <translation>Todos (*)</translation>
+      <source>CSV (*.csv *.CSV);;All (*)</source>
+      <translation>CSV (*.csv *.CSV);;Todo (*)</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="196"/>
@@ -740,7 +740,7 @@ Spreadsheet.my_alias_name instead of Spreadsheet.B1</source>
 Spreadsheet.my_alias_name en lugar de Spreadsheet.B1</translation>
     </message>
     <message>
-      <location filename="../../AppSpreadsheetGui.cpp" line="124"/>
+      <location filename="../../AppSpreadsheetGui.cpp" line="126"/>
       <source>Spreadsheet</source>
       <translation>Hoja de cálculo</translation>
     </message>
@@ -948,7 +948,7 @@ Por defecto: %V = %A
     <message>
       <location filename="../../DlgSettings.ui" line="84"/>
       <source>Import/Export Settings</source>
-      <translation>Opciones de Importar/Exportar</translation>
+      <translation>Opciones para Importar/Exportar</translation>
     </message>
     <message>
       <location filename="../../DlgSettings.ui" line="96"/>

@@ -99,6 +99,7 @@ public:
     App::PropertyFloatList XAxisData;
     App::PropertyFloatList YAxisData;
     App::PropertyString PlotData;
+    App::PropertyEnumeration PlotDataComponent;
 
     const char* getViewProviderName() const override
     {
@@ -132,7 +133,6 @@ public:
     ~FemPostDataAtPointFilter() override;
 
     App::PropertyVectorDistance Center;
-    App::PropertyDistance Radius;
     App::PropertyString FieldName;
     App::PropertyFloatList PointData;
     App::PropertyString Unit;

@@ -33,6 +33,7 @@ import re
 import FreeCAD
 import FreeCADGui
 import codecs
+import hashlib
 import urllib.parse
 from . import TranslationTexts
 from PySide import QtCore, QtGui
@@ -52,6 +53,42 @@ iconprovider = QtGui.QFileIconProvider()
 iconbank = {}  # store pre-existing icons so we don't overpollute temp dir
 tempfolder = None  # store icons inside a subfolder in temp dir
 defaulticon = None  # store a default icon for problematic file types
+
+
+def getThumbnailDir():
+    parent_dir = FreeCAD.getUserCachePath()
+    return os.path.join(parent_dir, "FreeCADStartThumbnails")
+
+
+def createThumbnailDir():
+    path = getThumbnailDir()
+    if not os.path.exists(path):
+        os.mkdir(path)
+    return path
+
+
+def getSha1Hash(path, encode="utf-8"):
+    sha_hash = hashlib.sha1()
+    hashed = hashlib.sha1(path.encode(encode))
+    hex_digest = hashed.hexdigest().encode(encode)
+    sha_hash.update(hex_digest)
+    return sha_hash.hexdigest()
+
+
+def getUniquePNG(filename):
+    parent_dir = getThumbnailDir()
+    sha1 = getSha1Hash(filename) + ".png"
+    return os.path.join(parent_dir, sha1)
+
+
+def useCachedPNG(image, project):
+    if not os.path.exists(image):
+        return False
+    if not os.path.exists(project):
+        return False
+
+    stamp = os.path.getmtime
+    return stamp(image) > stamp(project)
 
 
 def gethexcolor(color):
@@ -89,7 +126,7 @@ def getInfo(filename):
     global iconbank, tempfolder
 
     tformat = FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/Start").GetString(
-        "TimeFormat", "%m/%d/%Y %H:%M:%S"
+        "TimeFormat", "%c"
     )
 
     def getLocalTime(timestamp):
@@ -139,10 +176,11 @@ def getInfo(filename):
         ctime = getLocalTime(s.st_ctime)
         mtime = getLocalTime(s.st_mtime)
         author = ""
-        company = TranslationTexts.T_UNKNOWN
-        lic = TranslationTexts.T_UNKNOWN
+        company = TranslationTexts.get("T_UNKNOWN")
+        lic = TranslationTexts.get("T_UNKNOWN")
         image = None
         descr = ""
+        path = os.path.abspath(filename)
 
         # get additional info from fcstd files
         if filename.lower().endswith(".fcstd"):
@@ -180,11 +218,15 @@ def getInfo(filename):
                 if r:
                     descr = r[0]
                 if "thumbnails/Thumbnail.png" in files:
+                    image_png = getUniquePNG(filename)
                     if filename in iconbank:
                         image = iconbank[filename]
+                    elif useCachedPNG(image_png, filename):
+                        image = image_png
+                        iconbank[filename] = image
                     else:
                         imagedata = zfile.read("thumbnails/Thumbnail.png")
-                        image = tempfile.mkstemp(dir=tempfolder, suffix=".png")[1]
+                        image = image_png
                         thumb = open(image, "wb")
                         thumb.write(imagedata)
                         thumb.close()
@@ -220,21 +262,25 @@ def getInfo(filename):
         if not image:
             i = QtCore.QFileInfo(filename)
             t = iconprovider.type(i)
+            filename_png = getUniquePNG(filename)
             if not t:
                 t = "Unknown"
             if t in iconbank:
                 image = iconbank[t]
+            elif os.path.exists(filename_png):
+                image = filename_png
+                iconbank[t] = image
             else:
                 icon = iconprovider.icon(i)
                 if icon.availableSizes():
                     preferred = icon.actualSize(QtCore.QSize(128, 128))
                     px = icon.pixmap(preferred)
-                    image = tempfile.mkstemp(dir=tempfolder, suffix=".png")[1]
+                    image = filename_png
                     px.save(image)
                 else:
                     image = getDefaultIcon()
                 iconbank[t] = image
-        return [image, size, author, ctime, mtime, descr, company, lic]
+        return [image, size, author, ctime, mtime, descr, company, lic, path]
 
     return None
 
@@ -250,7 +296,7 @@ def getDefaultIcon():
         icon = iconprovider.icon(i)
         preferred = icon.actualSize(QtCore.QSize(128, 128))
         px = icon.pixmap(preferred)
-        image = tempfile.mkstemp(dir=tempfolder, suffix=".png")[1]
+        image = getUniquePNG("default_icon")
         px.save(image)
         defaulticon = image
 
@@ -264,25 +310,25 @@ def build_new_file_card(template):
 
     templates = {
         "empty_file": [
-            TranslationTexts.T_TEMPLATE_EMPTYFILE_NAME,
-            TranslationTexts.T_TEMPLATE_EMPTYFILE_DESC,
+            TranslationTexts.get("T_TEMPLATE_EMPTYFILE_NAME"),
+            TranslationTexts.get("T_TEMPLATE_EMPTYFILE_DESC"),
         ],
         "open_file": [
-            TranslationTexts.T_TEMPLATE_OPENFILE_NAME,
-            TranslationTexts.T_TEMPLATE_OPENFILE_DESC,
+            TranslationTexts.get("T_TEMPLATE_OPENFILE_NAME"),
+            TranslationTexts.get("T_TEMPLATE_OPENFILE_DESC"),
         ],
         "parametric_part": [
-            TranslationTexts.T_TEMPLATE_PARAMETRICPART_NAME,
-            TranslationTexts.T_TEMPLATE_PARAMETRICPART_DESC,
+            TranslationTexts.get("T_TEMPLATE_PARAMETRICPART_NAME"),
+            TranslationTexts.get("T_TEMPLATE_PARAMETRICPART_DESC"),
         ],
-        # "csg_part": [TranslationTexts.T_TEMPLATE_CSGPART_NAME, TranslationTexts.T_TEMPLATE_CSGPART_DESC],
+        # "csg_part": [TranslationTexts.get("T_TEMPLATE_CSGPART_NAME"), TranslationTexts.get("T_TEMPLATE_CSGPART_DESC")],
         "2d_draft": [
-            TranslationTexts.T_TEMPLATE_2DDRAFT_NAME,
-            TranslationTexts.T_TEMPLATE_2DDRAFT_DESC,
+            TranslationTexts.get("T_TEMPLATE_2DDRAFT_NAME"),
+            TranslationTexts.get("T_TEMPLATE_2DDRAFT_DESC"),
         ],
         "architecture": [
-            TranslationTexts.T_TEMPLATE_ARCHITECTURE_NAME,
-            TranslationTexts.T_TEMPLATE_ARCHITECTURE_DESC,
+            TranslationTexts.get("T_TEMPLATE_ARCHITECTURE_NAME"),
+            TranslationTexts.get("T_TEMPLATE_ARCHITECTURE_DESC"),
         ],
     }
 
@@ -319,13 +365,15 @@ def buildCard(filename, method, arg=None):
             arg = basename
         finfo = getInfo(filename)
         if finfo:
-            image = finfo[0]
-            size = finfo[1]
-            author = finfo[2]
-            infostring = TranslationTexts.T_CREATIONDATE + ": " + finfo[3] + "\n"
-            infostring += TranslationTexts.T_LASTMODIFIED + ": " + finfo[4]
+            image, size, author, ctime, mtime, descr, company, lic, path = finfo
+            infostring = TranslationTexts.get("T_CREATIONDATE") + ": " + ctime + "\n"
+            infostring += TranslationTexts.get("T_LASTMODIFIED") + ": " + mtime + "\n"
+            infostring += TranslationTexts.get("T_SIZE") + ": " + size + "\n"
+            infostring += TranslationTexts.get("T_AUTHOR") + ": " + author + "\n"
+            infostring += TranslationTexts.get("T_LICENSE") + ": " + lic + "\n"
+            infostring += TranslationTexts.get("T_FILEPATH") + ": " + path + "\n"
             if finfo[5]:
-                infostring += "\n\n" + finfo[5]
+                infostring += "\n\n" + descr
             if size:
                 result += '<li class="file-card">'
                 result += (
@@ -359,7 +407,7 @@ def handle():
     if hasattr(Start, "tempfolder"):
         tempfolder = Start.tempfolder
     else:
-        tempfolder = tempfile.mkdtemp(prefix="FreeCADStartThumbnails")
+        tempfolder = createThumbnailDir()
 
     # build the html page skeleton
 
@@ -461,7 +509,7 @@ def handle():
 
     v = FreeCAD.Version()
     VERSIONSTRING = (
-        TranslationTexts.T_VERSION
+        TranslationTexts.get("T_VERSION")
         + " "
         + v[0]
         + "."
@@ -469,7 +517,7 @@ def handle():
         + "."
         + v[2]
         + " "
-        + TranslationTexts.T_BUILD
+        + TranslationTexts.get("T_BUILD")
         + " "
         + v[3]
     )
@@ -477,9 +525,9 @@ def handle():
 
     # translate texts
 
-    texts = [t for t in dir(TranslationTexts) if t.startswith("T_")]
+    texts = [t for t in TranslationTexts.get("index") if t.startswith("T_")]
     for text in texts:
-        HTML = HTML.replace(text, getattr(TranslationTexts, text))
+        HTML = HTML.replace(text, TranslationTexts.get(text))
 
     # build a "create new" icon with the FreeCAD background color gradient
 
@@ -494,13 +542,13 @@ def handle():
         pa = QtGui.QPainter(i)
         pa.fillRect(i.rect(), gradient)
         pa.end()
-        createimg = tempfile.mkstemp(dir=tempfolder, suffix=".png")[1]
+        createimg = getUniquePNG("createimg")
         i.save(createimg)
         iconbank["createimg"] = createimg
 
     # build SECTION_NEW_FILE
 
-    SECTION_NEW_FILE = "<h2>" + TranslationTexts.T_NEWFILE + "</h2>"
+    SECTION_NEW_FILE = "<h2>" + TranslationTexts.get("T_NEWFILE") + "</h2>"
     SECTION_NEW_FILE += "<ul>"
     SECTION_NEW_FILE += build_new_file_card("empty_file")
     SECTION_NEW_FILE += build_new_file_card("open_file")
@@ -515,7 +563,7 @@ def handle():
 
     rf = FreeCAD.ParamGet("User parameter:BaseApp/Preferences/RecentFiles")
     rfcount = rf.GetInt("RecentFiles", 0)
-    SECTION_RECENTFILES = "<h2>" + TranslationTexts.T_RECENTFILES + "</h2>"
+    SECTION_RECENTFILES = "<h2>" + TranslationTexts.get("T_RECENTFILES") + "</h2>"
     SECTION_RECENTFILES += "<ul>"
     for i in range(rfcount):
         filename = rf.GetString("MRU%d" % (i))
@@ -529,7 +577,7 @@ def handle():
     if FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/Start").GetBool(
         "ShowExamples", True
     ):
-        SECTION_EXAMPLES = "<h2>" + TranslationTexts.T_EXAMPLES + "</h2>"
+        SECTION_EXAMPLES = "<h2>" + TranslationTexts.get("T_EXAMPLES") + "</h2>"
         SECTION_EXAMPLES += "<ul>"
         examples_path = FreeCAD.getResourceDir() + "examples"
         if os.path.exists(examples_path):
@@ -676,7 +724,7 @@ def handle():
                         ]
                         p = QtGui.QPixmap(r)
                         p = p.scaled(24, 24)
-                        img = tempfile.mkstemp(dir=tempfolder, suffix=".png")[1]
+                        img = getUniquePNG(wb)
                         p.save(img)
                     else:
                         img = xpm

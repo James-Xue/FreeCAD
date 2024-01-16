@@ -1,9 +1,3 @@
-if(MSVC)
-    add_definitions(-DHAVE_ACOSH -DHAVE_ATANH -DHAVE_ASINH)
-else(MSVC)
-    add_definitions(-DHAVE_LIMITS_H -DHAVE_CONFIG_H)
-endif(MSVC)
-
 include_directories(
     ${CMAKE_BINARY_DIR}
     ${CMAKE_SOURCE_DIR}/src
@@ -36,6 +30,7 @@ generate_from_xml(ViewProviderSketchGeometryExtensionPy)
 set(SketcherGui_UIC_SRCS
     TaskSketcherConstraints.ui
     TaskSketcherElements.ui
+    SketcherToolDefaultWidget.ui
     TaskSketcherMessages.ui
     TaskSketcherSolverAdvanced.ui
     TaskSketcherValidation.ui
@@ -59,6 +54,7 @@ SET(SketcherGui_SRCS
     AutoConstraint.h
     Utils.h
     Utils.cpp
+    CircleEllipseConstructionMethod.h
     DrawSketchHandlerLine.h
     DrawSketchHandlerRectangle.h
     DrawSketchHandlerPolygon.h
@@ -69,6 +65,7 @@ SET(SketcherGui_SRCS
     DrawSketchHandlerArcOfEllipse.h
     DrawSketchHandlerArcOfHyperbola.h
     DrawSketchHandlerArcOfParabola.h
+    DrawSketchHandlerArcSlot.h
     DrawSketchHandlerBSpline.h
     DrawSketchHandlerBSplineByInterpolation.h
     DrawSketchHandlerPoint.h
@@ -79,6 +76,8 @@ SET(SketcherGui_SRCS
     DrawSketchHandlerExternal.h
     DrawSketchHandlerCarbonCopy.h
     DrawSketchHandlerSlot.h
+    DrawSketchHandlerOffset.h
+    DrawSketchHandlerRotate.h
     CommandCreateGeo.cpp
     CommandConstraints.h
     CommandConstraints.cpp
@@ -103,6 +102,11 @@ SET(SketcherGui_SRCS
     TaskSketcherElements.h
     TaskSketcherCreateCommands.cpp
     TaskSketcherCreateCommands.h
+    SketcherToolDefaultWidget.ui
+    SketcherToolDefaultWidget.cpp
+    SketcherToolDefaultWidget.h
+    TaskSketcherTool.cpp
+    TaskSketcherTool.h
     TaskSketcherMessages.ui
     TaskSketcherMessages.cpp
     TaskSketcherMessages.h
@@ -132,6 +136,12 @@ SET(SketcherGui_SRCS
     ViewProviderSketch.h
     DrawSketchHandler.cpp
     DrawSketchHandler.h
+    DrawSketchDefaultHandler.h
+    DrawSketchController.h
+    DrawSketchDefaultWidgetController.h
+    DrawSketchControllableHandler.h
+    DrawSketchKeyboardManager.h
+    DrawSketchKeyboardManager.cpp
     Workbench.cpp
     Workbench.h
     EditDatumDialog.cpp

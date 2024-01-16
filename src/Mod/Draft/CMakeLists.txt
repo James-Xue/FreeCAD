@@ -71,6 +71,7 @@ SET(Draft_utilities
     draftutils/groups.py
     draftutils/init_tools.py
     draftutils/init_draft_statusbar.py
+    draftutils/params.py
     draftutils/units.py
     draftutils/utils.py
     draftutils/gui_utils.py
@@ -269,6 +270,7 @@ SET(Draft_GUI_tools
     draftguitools/gui_lineslope.py
     draftguitools/gui_layers.py
     draftguitools/gui_setstyle.py
+    draftguitools/gui_hyperlink.py
     ${Creator_tools}
     ${Modifier_tools}
     draftguitools/README.md

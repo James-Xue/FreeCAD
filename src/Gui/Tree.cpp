@@ -32,6 +32,7 @@
 # include <QHeaderView>
 # include <QMenu>
 # include <QMessageBox>
+# include <QPainter>
 # include <QPixmap>
 # include <QThread>
 # include <QTimer>
@@ -89,6 +90,7 @@ std::set<TreeWidget*> TreeWidget::Instances;
 static TreeWidget* _LastSelectedTreeWidget;
 const int TreeWidget::DocumentType = 1000;
 const int TreeWidget::ObjectType = 1001;
+static bool _DraggingActive;
 static bool _DragEventFilter;
 
 void TreeParams::onItemBackgroundChanged()
@@ -251,7 +253,7 @@ public:
             auto childVp = docItem->getViewProvider(child);
             if (!childVp)
                 continue;
-            if (child && child->getNameInDocument()) {
+            if (child && child->isAttachedToDocument()) {
                 if (!newSet.insert(child).second) {
                     TREE_WARN("duplicate child item " << obj->getFullName()
                         << '.' << child->getNameInDocument());
@@ -355,13 +357,95 @@ public:
 
 // ---------------------------------------------------------------------------
 
-TreeWidgetEditDelegate::TreeWidgetEditDelegate(QObject* parent)
+namespace Gui {
+/**
+ * TreeWidget item delegate for editing
+ */
+class TreeWidgetItemDelegate: public QStyledItemDelegate {
+    typedef QStyledItemDelegate inherited;
+public:
+    explicit TreeWidgetItemDelegate(QObject* parent=nullptr);
+
+    virtual QWidget* createEditor(QWidget *parent,
+            const QStyleOptionViewItem &, const QModelIndex &index) const;
+
+    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
+    virtual void initStyleOption(QStyleOptionViewItem *option, const QModelIndex &index) const;
+
+    virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+};
+
+} // namespace Gui
+
+TreeWidgetItemDelegate::TreeWidgetItemDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
 {
 }
 
-QWidget* TreeWidgetEditDelegate::createEditor(
-    QWidget* parent, const QStyleOptionViewItem&, const QModelIndex& index) const
+void TreeWidgetItemDelegate::paint(QPainter *painter,
+                const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QStyleOptionViewItem opt = option;
+    initStyleOption(&opt, index);
+
+    TreeWidget * tree = static_cast<TreeWidget*>(parent());
+    auto style = tree->style();
+
+    // If the second column is not shown, we'll trim the color background when
+    // rendering as transparent overlay.
+    bool trimBG = TreeParams::getHideColumn();
+    QRect rect = opt.rect;
+
+    if (index.column() == 0) {
+        if (tree->testAttribute(Qt::WA_NoSystemBackground)
+                && (trimBG || (opt.backgroundBrush.style() == Qt::NoBrush
+                                && _TreeItemBackground.style() != Qt::NoBrush)))
+        {
+            const int margin = style->pixelMetric(QStyle::PM_FocusFrameHMargin, &option, tree) + 1;
+            // 2 margin for text, 2 margin for decoration (icon)
+            int width = 4*margin + opt.fontMetrics.boundingRect(opt.text).width()
+                + opt.decorationSize.width() + TreeParams::getItemBackgroundPadding();
+            if (TreeParams::getCheckBoxesSelection()) {
+                // another 2 margin for checkbox
+                width += 2*margin + style->pixelMetric(QStyle::PM_IndicatorWidth)
+                    + style->pixelMetric(QStyle::PM_LayoutHorizontalSpacing);
+            }
+            if (width < rect.width())
+                rect.setWidth(width);
+            if (trimBG) {
+                rect.setWidth(rect.width() + 5);
+                opt.rect = rect;
+                if (opt.backgroundBrush.style() == Qt::NoBrush)
+                    painter->fillRect(rect, _TreeItemBackground);
+            } else if (!opt.state.testFlag(QStyle::State_Selected))
+                painter->fillRect(rect, _TreeItemBackground);
+        }
+
+    }
+
+    style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, tree);
+}
+
+void TreeWidgetItemDelegate::initStyleOption(QStyleOptionViewItem *option,
+                                             const QModelIndex &index) const
+{
+    inherited::initStyleOption(option, index);
+
+    TreeWidget * tree = static_cast<TreeWidget*>(parent());
+    QTreeWidgetItem * item = tree->itemFromIndex(index);
+    if (!item || item->type() != TreeWidget::ObjectType)
+        return;
+
+    QSize size;
+    size = option->icon.actualSize(QSize(0xffff, 0xffff));
+    if (size.height())
+        option->decorationSize = QSize(size.width()*TreeWidget::iconSize()/size.height(),
+                                       TreeWidget::iconSize());
+}
+
+QWidget* TreeWidgetItemDelegate::createEditor(
+        QWidget *parent, const QStyleOptionViewItem &, const QModelIndex &index) const
 {
     auto ti = static_cast<QTreeWidgetItem*>(index.internalPointer());
     if (ti->type() != TreeWidget::ObjectType || index.column() > 1)
@@ -375,14 +459,27 @@ QWidget* TreeWidgetEditDelegate::createEditor(
     App::GetApplication().setActiveTransaction(str.str().c_str());
     FC_LOG("create editor transaction " << App::GetApplication().getActiveTransaction());
 
-    auto le = new ExpLineEdit(parent);
-    le->setFrame(false);
-    le->setReadOnly(prop.isReadOnly());
-    le->bind(App::ObjectIdentifier(prop));
-    le->setAutoApply(true);
-    return le;
+    QLineEdit *editor;
+    if(TreeParams::getLabelExpression()) {
+        ExpLineEdit *le = new ExpLineEdit(parent);
+        le->setAutoApply(true);
+        le->setFrame(false);
+        le->bind(App::ObjectIdentifier(prop));
+        editor = le;
+    } else {
+        editor = new QLineEdit(parent);
+    }
+    editor->setReadOnly(prop.isReadOnly());
+    return editor;
 }
 
+QSize TreeWidgetItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QSize size = QStyledItemDelegate::sizeHint(option, index);
+    int spacing = std::max(0, static_cast<int>(TreeParams::getItemSpacing()));
+    size.setHeight(size.height() + spacing);
+    return size;
+}
 // ---------------------------------------------------------------------------
 
 TreeWidget::TreeWidget(const char* name, QWidget* parent)
@@ -404,7 +501,7 @@ TreeWidget::TreeWidget(const char* name, QWidget* parent)
     this->setDropIndicatorShown(false);
     this->setDragDropMode(QTreeWidget::InternalMove);
     this->setColumnCount(2);
-    this->setItemDelegate(new TreeWidgetEditDelegate(this));
+    this->setItemDelegate(new TreeWidgetItemDelegate(this));
 
     this->showHiddenAction = new QAction(this);
     this->showHiddenAction->setCheckable(true);
@@ -562,7 +659,7 @@ void TreeWidget::selectAll() {
 }
 
 bool TreeWidget::isObjectShowable(App::DocumentObject* obj) {
-    if (!obj || !obj->getNameInDocument())
+    if (!obj || !obj->isAttachedToDocument())
         return true;
     Gui::Document* doc = Application::Instance->getDocument(obj->getDocument());
     if (!doc)
@@ -581,7 +678,7 @@ static bool _DisableCheckTopParent;
 void TreeWidget::checkTopParent(App::DocumentObject*& obj, std::string& subname) {
     if (_DisableCheckTopParent)
         return;
-    if (!Instances.empty() && obj && obj->getNameInDocument()) {
+    if (!Instances.empty() && obj && obj->isAttachedToDocument()) {
         auto tree = *Instances.begin();
         auto it = tree->DocumentMap.find(Application::Instance->getDocument(obj->getDocument()));
         if (it != tree->DocumentMap.end()) {
@@ -995,7 +1092,7 @@ void TreeWidget::onStartEditing()
             int edit = action->data().toInt();
 
             App::DocumentObject* obj = objitem->object()->getObject();
-            if (!obj || !obj->getNameInDocument())
+            if (!obj || !obj->isAttachedToDocument())
                 return;
             auto doc = const_cast<Document*>(objitem->getOwnerDocument()->document());
             MDIView* view = doc->getActiveView();
@@ -1170,6 +1267,55 @@ void TreeWidget::selectAllInstances(const ViewProviderDocumentObject& vpd) {
         v.second->selectAllInstances(vpd);
 }
 
+static int &treeIconSize()
+{
+    static int _treeIconSize = -1;
+
+    if (_treeIconSize < 0)
+        _treeIconSize = TreeParams::getIconSize();
+    return _treeIconSize;
+}
+
+int TreeWidget::iconHeight() const
+{
+    return treeIconSize();
+}
+
+void TreeWidget::setIconHeight(int height)
+{
+    if (treeIconSize() == height)
+        return;
+
+    treeIconSize() = height;
+    if (treeIconSize() <= 0)
+        treeIconSize() = std::max(10, iconSize());
+
+    for(auto tree : Instances)
+        tree->setIconSize(QSize(treeIconSize(), treeIconSize()));
+}
+
+int TreeWidget::iconSize() {
+    static int defaultSize;
+    if (defaultSize == 0) {
+        auto tree = instance();
+        if(tree) {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+            defaultSize = tree->viewOptions().decorationSize.width();
+#else
+            QStyleOptionViewItem opt;
+            tree->initViewItemOption(&opt);
+            defaultSize = opt.decorationSize.width();
+#endif
+        }
+        else {
+            defaultSize = QApplication::style()->pixelMetric(QStyle::PM_SmallIconSize);
+        }
+    }
+    if (treeIconSize() > 0)
+        return std::max(10, treeIconSize());
+    return defaultSize;
+}
+
 TreeWidget* TreeWidget::instance() {
     auto res = _LastSelectedTreeWidget;
     if (res && res->isVisible())
@@ -1227,7 +1373,7 @@ std::vector<TreeWidget::SelInfo> TreeWidget::getSelection(App::Document* doc)
         auto item = static_cast<DocumentObjectItem*>(ti);
         auto vp = item->object();
         auto obj = vp->getObject();
-        if (!obj || !obj->getNameInDocument()) {
+        if (!obj || !obj->isAttachedToDocument()) {
             FC_WARN("skip invalid object");
             continue;
         }
@@ -1239,7 +1385,7 @@ std::vector<TreeWidget::SelInfo> TreeWidget::getSelection(App::Document* doc)
         auto parent = item->getParentItem();
         if (parent) {
             parentVp = parent->object();
-            if (!parentVp->getObject()->getNameInDocument()) {
+            if (!parentVp->getObject()->isAttachedToDocument()) {
                 FC_WARN("skip '" << obj->getFullName() << "' with invalid parent");
                 continue;
             }
@@ -1264,7 +1410,7 @@ void TreeWidget::selectAllLinks(App::DocumentObject* obj) {
     if (!isSelectionAttached())
         return;
 
-    if (!obj || !obj->getNameInDocument()) {
+    if (!obj || !obj->isAttachedToDocument()) {
         TREE_ERR("invalid object");
         return;
     }
@@ -1276,7 +1422,7 @@ void TreeWidget::selectAllLinks(App::DocumentObject* obj) {
 
     for (auto link : App::GetApplication().getLinksTo(obj, App::GetLinkRecursive))
     {
-        if (!link || !link->getNameInDocument()) {
+        if (!link || !link->isAttachedToDocument()) {
             TREE_ERR("invalid linked object");
             continue;
         }
@@ -1335,6 +1481,15 @@ bool TreeWidget::eventFilter(QObject*, QEvent* ev) {
     }
     return false;
 }
+
+namespace Gui {
+
+bool isTreeViewDragging()
+{
+    return _DraggingActive;
+}
+
+} // namespace Gui
 
 void TreeWidget::keyPressEvent(QKeyEvent* event)
 {
@@ -1477,6 +1632,7 @@ void TreeWidget::startDragging() {
 
 void TreeWidget::startDrag(Qt::DropActions supportedActions)
 {
+    Base::StateLocker guard(_DraggingActive);
     QTreeWidget::startDrag(supportedActions);
     if (_DragEventFilter) {
         _DragEventFilter = false;
@@ -1760,7 +1916,7 @@ void TreeWidget::dropEvent(QDropEvent* event)
         thisDoc = targetItemObj->getOwnerDocument()->document()->getDocument();
         Gui::ViewProviderDocumentObject* vp = targetItemObj->object();
 
-        if (!vp || !vp->getObject() || !vp->getObject()->getNameInDocument()) {
+        if (!vp || !vp->getObject() || !vp->getObject()->isAttachedToDocument()) {
             TREE_TRACE("invalid object");
             return;
         }
@@ -1942,7 +2098,7 @@ void TreeWidget::dropEvent(QDropEvent* event)
                     ss.str("");
 
                     obj = doc->getObject(info.obj.c_str());
-                    if (!obj || !obj->getNameInDocument()) {
+                    if (!obj || !obj->isAttachedToDocument()) {
                         FC_WARN("Dropping object deleted: " << info.doc << '#' << info.obj);
                         continue;
                     }
@@ -2229,7 +2385,7 @@ void TreeWidget::dropEvent(QDropEvent* event)
 
                     // check if the object has been deleted
                     obj = doc->getObject(info.obj.c_str());
-                    if (!obj || !obj->getNameInDocument())
+                    if (!obj || !obj->isAttachedToDocument())
                         continue;
                     droppedObjs.push_back(obj);
                     if (propPlacement)
@@ -3271,7 +3427,7 @@ const char* DocumentItem::getTreeName() const {
 
 #define FOREACH_ITEM(_item, _obj) \
     auto _it = ObjectMap.end();\
-    if(_obj.getObject() && _obj.getObject()->getNameInDocument())\
+    if(_obj.getObject() && _obj.getObject()->isAttachedToDocument())\
         _it = ObjectMap.find(_obj.getObject());\
     if(_it != ObjectMap.end()) {\
         for(auto _item : _it->second->items) {
@@ -3331,7 +3487,7 @@ void DocumentItem::slotResetEdit(const Gui::ViewProviderDocumentObject& v)
 }
 
 void DocumentItem::slotNewObject(const Gui::ViewProviderDocumentObject& obj) {
-    if (!obj.getObject() || !obj.getObject()->getNameInDocument()) {
+    if (!obj.getObject() || !obj.getObject()->isAttachedToDocument()) {
         FC_ERR("view provider not attached");
         return;
     }
@@ -3342,9 +3498,8 @@ void DocumentItem::slotNewObject(const Gui::ViewProviderDocumentObject& obj) {
 bool DocumentItem::createNewItem(const Gui::ViewProviderDocumentObject& obj,
     QTreeWidgetItem* parent, int index, DocumentObjectDataPtr data)
 {
-    const char* name;
     if (!obj.getObject() ||
-        !(name = obj.getObject()->getNameInDocument()) ||
+        !obj.getObject()->isAttachedToDocument() ||
         obj.getObject()->testStatus(App::PartialObject))
         return false;
 
@@ -3671,7 +3826,7 @@ void DocumentItem::populateItem(DocumentObjectItem* item, bool refresh, bool del
 }
 
 int DocumentItem::findRootIndex(App::DocumentObject* childObj) {
-    if (!TreeParams::getKeepRootOrder() || !childObj || !childObj->getNameInDocument())
+    if (!TreeParams::getKeepRootOrder() || !childObj || !childObj->isAttachedToDocument())
         return -1;
 
     // object id is monotonically increasing, so use this as a hint to insert
@@ -3737,7 +3892,7 @@ void TreeWidget::slotChangeObject(
     const Gui::ViewProviderDocumentObject& view, const App::Property& prop) {
 
     auto obj = view.getObject();
-    if (!obj || !obj->getNameInDocument())
+    if (!obj || !obj->isAttachedToDocument())
         return;
 
     auto itEntry = ObjectTable.find(obj);
@@ -3888,7 +4043,7 @@ static unsigned int countExpandedItem(const QTreeWidgetItem* item) {
         if (citem->type() != TreeWidget::ObjectType || !citem->isExpanded())
             continue;
         auto obj = static_cast<const DocumentObjectItem*>(citem)->object()->getObject();
-        if (obj->getNameInDocument())
+        if (obj->isAttachedToDocument())
             size += strlen(obj->getNameInDocument()) + countExpandedItem(citem);
     }
     return size;
@@ -3905,7 +4060,7 @@ static void saveExpandedItem(Base::Writer& writer, const QTreeWidgetItem* item) 
         if (citem->type() != TreeWidget::ObjectType || !citem->isExpanded())
             continue;
         auto obj = static_cast<const DocumentObjectItem*>(citem)->object()->getObject();
-        if (obj->getNameInDocument())
+        if (obj->isAttachedToDocument())
             ++itemCount;
     }
 
@@ -3921,7 +4076,7 @@ static void saveExpandedItem(Base::Writer& writer, const QTreeWidgetItem* item) 
         if (citem->type() != TreeWidget::ObjectType || !citem->isExpanded())
             continue;
         auto obj = static_cast<const DocumentObjectItem*>(citem)->object()->getObject();
-        if (obj->getNameInDocument()) {
+        if (obj->isAttachedToDocument()) {
             writer.Stream() << writer.ind() << "<Expand name=\""
                 << obj->getNameInDocument() << "\"";
             saveExpandedItem(writer, static_cast<const DocumentObjectItem*>(citem));
@@ -3960,7 +4115,7 @@ void DocumentItem::restoreItemExpansion(const ExpandInfoPtr& info, DocumentObjec
         if (citem->type() != TreeWidget::ObjectType)
             continue;
         auto obj = static_cast<DocumentObjectItem*>(citem)->object()->getObject();
-        if (!obj->getNameInDocument())
+        if (!obj->isAttachedToDocument())
             continue;
         auto it = info->find(obj->getNameInDocument());
         if (it != info->end())
@@ -4048,7 +4203,7 @@ void DocumentItem::slotExpandObject(const Gui::ViewProviderDocumentObject& obj,
 
 void DocumentItem::slotScrollToObject(const Gui::ViewProviderDocumentObject& obj)
 {
-    if (!obj.getObject() || !obj.getObject()->getNameInDocument())
+    if (!obj.getObject() || !obj.getObject()->isAttachedToDocument())
         return;
     auto it = ObjectMap.find(obj.getObject());
     if (it == ObjectMap.end() || it->second->items.empty())
@@ -4177,18 +4332,13 @@ void DocumentItem::updateItemSelection(DocumentObjectItem* item) {
     item->selected = selected;
 
     auto obj = item->object()->getObject();
-    if (!obj || !obj->getNameInDocument())
+    if (!obj || !obj->isAttachedToDocument())
         return;
 
     std::ostringstream str;
     App::DocumentObject* topParent = nullptr;
     item->getSubName(str, topParent);
     if (topParent) {
-        if (topParent->hasExtension(App::GeoFeatureGroupExtension::getExtensionClassTypeId())) {
-            // remove legacy selection, i.e. those without subname
-            Gui::Selection().rmvSelection(obj->getDocument()->getName(),
-                obj->getNameInDocument(), nullptr);
-        }
         if (!obj->redirectSubName(str, topParent, nullptr))
             str << obj->getNameInDocument() << '.';
         obj = topParent;
@@ -5105,7 +5255,7 @@ int DocumentObjectItem::getSubName(std::ostringstream& str, App::DocumentObject*
     }
 
     auto obj = parent->object()->getObject();
-    if (!obj || !obj->getNameInDocument()) {
+    if (!obj || !obj->isAttachedToDocument()) {
         topParent = nullptr;
         str.str("");
         return NotGroup;

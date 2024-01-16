@@ -45,32 +45,47 @@ class GuiExport EditableDatumLabel : public QObject
     Q_DISABLE_COPY(EditableDatumLabel)
 
 public:
-    EditableDatumLabel(View3DInventorViewer* view, const Base::Placement& plc, SbColor color, bool autoDistance = false);
+    enum class Function {
+        Positioning,
+        Dimensioning
+    };
+
+    EditableDatumLabel(View3DInventorViewer* view, const Base::Placement& plc, SbColor color, bool autoDistance = false, bool avoidMouseCursor = false);
+
     ~EditableDatumLabel() override;
 
     void activate();
     void deactivate();
 
-    void startEdit(double val, QObject* eventFilteringObj = nullptr);
+    void startEdit(double val, QObject* eventFilteringObj = nullptr, bool visibleToMouse = false);
     void stopEdit();
-    double getValue();
-    void setSpinboxValue(double val);
+    bool isActive() const;
+    bool isInEdit() const;
+    double getValue() const;
+    void setSpinboxValue(double val, const Base::Unit& unit = Base::Unit::Length);
     void setPlacement(const Base::Placement& plc);
     void setColor(SbColor color);
     void setFocus();
     void setPoints(SbVec3f p1, SbVec3f p2);
     void setPoints(Base::Vector3d p1, Base::Vector3d p2);
     void setFocusToSpinbox();
-    void setLabelType(SoDatumLabel::Type type);
-    void setLabelDistance(double distance);
+    void setLabelType(SoDatumLabel::Type type, Function function = Function::Positioning);
+    void setLabelDistance(double val);
+    void setLabelStartAngle(double val);
+    void setLabelRange(double val);
     void setLabelRecommendedDistance();
     void setLabelAutoDistanceReverse(bool val);
+    void setSpinboxVisibleToMouse(bool val);
+
+    Function getFunction();
 
     // NOLINTBEGIN
     SoDatumLabel* label;
     bool isSet;
     bool autoDistance;
     bool autoDistanceReverse;
+    bool avoidMouseCursor;
+    double value;
     // NOLINTEND
 
 Q_SIGNALS:
@@ -87,6 +102,8 @@ private:
     QuantitySpinBox* spinBox;
     SoNodeSensor* cameraSensor;
     SbVec3f midpos;
+
+    Function function;
 };
 
 }

@@ -277,7 +277,7 @@
       <location filename="../../AttacherTexts.cpp" line="205"/>
       <source>Object's X</source>
       <comment>AttachmentLine mode caption</comment>
-      <translation>Obiekt X</translation>
+      <translation>Oś X Obiektu</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="206"/>
@@ -290,7 +290,7 @@
       <location filename="../../AttacherTexts.cpp" line="208"/>
       <source>Object's Y</source>
       <comment>AttachmentLine mode caption</comment>
-      <translation>Objekt Y</translation>
+      <translation>Oś Y obiektu</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="209"/>
@@ -302,7 +302,7 @@
       <location filename="../../AttacherTexts.cpp" line="211"/>
       <source>Object's Z</source>
       <comment>AttachmentLine mode caption</comment>
-      <translation>Obiekt Z</translation>
+      <translation>Oś Z obiektu</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="214"/>
@@ -392,7 +392,7 @@
       <location filename="../../AttacherTexts.cpp" line="235"/>
       <source>Binormal</source>
       <comment>AttachmentLine mode caption</comment>
-      <translation>Binormalny</translation>
+      <translation>Binormalna</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="236"/>
@@ -447,7 +447,7 @@
       <location filename="../../AttacherTexts.cpp" line="250"/>
       <source>Proximity line</source>
       <comment>AttachmentLine mode caption</comment>
-      <translation>Linia zbliżania</translation>
+      <translation>Linia zbliżeniowa</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="251"/>
@@ -582,7 +582,7 @@
       <location filename="../../AttacherTexts.cpp" line="145"/>
       <source>Tangent to surface</source>
       <comment>AttachmentPlane mode caption</comment>
-      <translation>Prostopadły do powierzchni</translation>
+      <translation>Prostopadle do powierzchni</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="146"/>
@@ -644,7 +644,7 @@
       <location filename="../../AttacherTexts.cpp" line="163"/>
       <source>Revolution Section</source>
       <comment>AttachmentPlane mode caption</comment>
-      <translation>Przekrój przez obrót</translation>
+      <translation>Przekrój przez obrót wokół osi</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="164"/>
@@ -656,7 +656,7 @@
       <location filename="../../AttacherTexts.cpp" line="166"/>
       <source>Plane by 3 points</source>
       <comment>AttachmentPlane mode caption</comment>
-      <translation>Płaszczyzna przez 3 punkty</translation>
+      <translation>Płaszczyzna wyznaczona przez 3 punkty</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="167"/>
@@ -668,7 +668,7 @@
       <location filename="../../AttacherTexts.cpp" line="169"/>
       <source>Normal to 3 points</source>
       <comment>AttachmentPlane mode caption</comment>
-      <translation>Normalny do 3 punktów</translation>
+      <translation>Normalna do 3 punktów</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="170"/>
@@ -841,7 +841,7 @@
       <location filename="../../AttacherTexts.cpp" line="88"/>
       <source>Revolution Section</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Przekrój przez obrót</translation>
+      <translation>Przekrój przez obrót wokół osi</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="89"/>
@@ -889,7 +889,7 @@
       <location filename="../../AttacherTexts.cpp" line="100"/>
       <source>Inertial CS</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Inercyjny CS</translation>
+      <translation>Bezwładność CS</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="101"/>
@@ -901,7 +901,7 @@
       <location filename="../../AttacherTexts.cpp" line="103"/>
       <source>Align O-Z-X</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-Z-X</translation>
+      <translation>Wyrównanie O-Z-X</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="104"/>
@@ -913,7 +913,7 @@
       <location filename="../../AttacherTexts.cpp" line="106"/>
       <source>Align O-Z-Y</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-Z-Y</translation>
+      <translation>Wyrównanie O-Z-Y</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="107"/>
@@ -926,7 +926,7 @@
       <location filename="../../AttacherTexts.cpp" line="184"/>
       <source>Align O-X-Y</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-X-Y</translation>
+      <translation>Wyrównanie O-X-Y</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="110"/>
@@ -938,7 +938,7 @@
       <location filename="../../AttacherTexts.cpp" line="112"/>
       <source>Align O-X-Z</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-X-Z</translation>
+      <translation>Wyrównanie O-X-Z</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="113"/>
@@ -950,7 +950,7 @@
       <location filename="../../AttacherTexts.cpp" line="115"/>
       <source>Align O-Y-Z</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-Y-Z</translation>
+      <translation>Wyrównanie O-Y-Z</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="116"/>
@@ -963,7 +963,7 @@
       <location filename="../../AttacherTexts.cpp" line="193"/>
       <source>Align O-Y-X</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-Y-X</translation>
+      <translation>Wyrównanie O-Y-X</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="119"/>
@@ -975,7 +975,7 @@
       <location filename="../../AttacherTexts.cpp" line="178"/>
       <source>Align O-N-X</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-N-X</translation>
+      <translation>Wyrównanie O-N-X</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="179"/>
@@ -987,7 +987,7 @@
       <location filename="../../AttacherTexts.cpp" line="181"/>
       <source>Align O-N-Y</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-N-Y</translation>
+      <translation>Wyrównanie O-N-Y</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="182"/>
@@ -1005,7 +1005,7 @@
       <location filename="../../AttacherTexts.cpp" line="187"/>
       <source>Align O-X-N</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-X-N</translation>
+      <translation>Wyrównanie O-X-N</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="188"/>
@@ -1017,7 +1017,7 @@
       <location filename="../../AttacherTexts.cpp" line="190"/>
       <source>Align O-Y-N</source>
       <comment>Attachment3D mode caption</comment>
-      <translation>Wyrównaj O-Y-N</translation>
+      <translation>Wyrównanie O-Y-N</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="191"/>
@@ -1230,8 +1230,8 @@
     </message>
     <message>
       <location filename="../../Command.cpp" line="2229"/>
-      <source>Clear all dimensions from the screen.</source>
-      <translation>Wyczyść z ekranu wszystkie wymiary.</translation>
+      <source>Clear all dimensions from the active 3D view.</source>
+      <translation>Wyczyść wszystkie pomiary z aktywnego widoku 3D.</translation>
     </message>
   </context>
   <context>
@@ -2367,7 +2367,7 @@ Ujęcie widoku określa kierunek rzutowania.</translation>
       <translation>Wyciągnięcie po ścieżce</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="198"/>
+      <location filename="../../ViewProviderMirror.cpp" line="211"/>
       <source>Edit Mirror</source>
       <translation>Edytuj odbicie lustrzane</translation>
     </message>
@@ -4527,57 +4527,78 @@ zostanie użyty wektor normalnej płaszczyzny szkicu</translation>
       <translation>Odbicie lustrzane</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="33"/>
+      <location filename="../../Mirroring.ui" line="121"/>
+      <source>Use selected reference</source>
+      <translation>Użyj wybranego odniesienia</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="142"/>
       <source>Shapes</source>
       <translation>Kształty</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="41"/>
+      <location filename="../../Mirroring.ui" line="98"/>
       <source>Mirror plane:</source>
       <translation>Płaszczyzna odbicia lustrzanego:</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="49"/>
+      <location filename="../../Mirroring.ui" line="106"/>
       <source>XY plane</source>
       <translation>Płaszczyzna XY</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="54"/>
+      <location filename="../../Mirroring.ui" line="111"/>
       <source>XZ plane</source>
       <translation>Płaszczyzna XZ</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="59"/>
+      <location filename="../../Mirroring.ui" line="116"/>
       <source>YZ plane</source>
       <translation>Płaszczyzna YZ</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="67"/>
+      <location filename="../../Mirroring.ui" line="150"/>
+      <location filename="../../Mirroring.cpp" line="215"/>
+      <source>Selecting</source>
+      <translation>Wybieranie</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="166"/>
+      <source>Mirror plane reference</source>
+      <translation>Odniesienie do płaszczyzny odbicia lustrzanego</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="20"/>
       <source>Base point</source>
       <translation>Punkt odniesienia</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="73"/>
+      <location filename="../../Mirroring.ui" line="26"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="96"/>
+      <location filename="../../Mirroring.ui" line="49"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="119"/>
+      <location filename="../../Mirroring.ui" line="72"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="126"/>
+      <location filename="../../Mirroring.cpp" line="211"/>
+      <source>Select reference</source>
+      <translation>Wybierz odniesienie</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.cpp" line="280"/>
       <source>Select a shape for mirroring, first.</source>
       <translation>Najpierw wybierz kształt do przekształcenia przez odbicie lustrzane.</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="133"/>
+      <location filename="../../Mirroring.cpp" line="287"/>
       <source>No such document '%1'.</source>
       <translation>Nie ma takiego dokumentu '%1'.</translation>
     </message>
@@ -4732,7 +4753,7 @@ only created cuts will be visible</source>
       <translation>Zachowaj tylko przecięcia widoczne podczas zamykania</translation>
     </message>
     <message>
-      <location filename="../../SectionCutting.cpp" line="520"/>
+      <location filename="../../SectionCutting.cpp" line="1103"/>
       <source>Sliders are disabled for assemblies</source>
       <translation>Suwaki są wyłączone dla złożeń</translation>
     </message>
@@ -4871,7 +4892,7 @@ only created cuts will be visible</source>
     <message>
       <location filename="../../TaskSweep.cpp" line="339"/>
       <source>Wrong selection</source>
-      <translation>Niewłaściwy wybór</translation>
+      <translation>Nieprawidłowy wybór</translation>
     </message>
     <message>
       <location filename="../../TaskSweep.cpp" line="339"/>
@@ -5587,7 +5608,7 @@ przez przeciągnięcie prostokąta zaznaczenia w oknie widoku 3D</translation>
     <message>
       <location filename="../../TaskSweep.ui" line="60"/>
       <source>Frenet</source>
-      <translation>Freneta</translation>
+      <translation>Wektor Freneta</translation>
     </message>
     <message>
       <location filename="../../TaskSweep.cpp" line="484"/>
@@ -5703,22 +5724,21 @@ in the 3D view for the sweep path.</source>
       <translation>Edytuj %1</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="228"/>
+      <location filename="../../AppPartGui.cpp" line="235"/>
       <source>Part and Part Design workbench</source>
       <translation>Środowisko pracy Część i Projekt Części</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="229"/>
-      <location filename="../../AppPartGui.cpp" line="230"/>
-      <location filename="../../AppPartGui.cpp" line="231"/>
-      <location filename="../../AppPartGui.cpp" line="232"/>
+      <location filename="../../AppPartGui.cpp" line="236"/>
+      <location filename="../../AppPartGui.cpp" line="237"/>
+      <location filename="../../AppPartGui.cpp" line="238"/>
+      <location filename="../../AppPartGui.cpp" line="239"/>
       <source>Part/Part Design</source>
-      <translation>Część / 
-Projekt Części</translation>
+      <translation>Część / Projekt Części</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="233"/>
-      <location filename="../../AppPartGui.cpp" line="234"/>
+      <location filename="../../AppPartGui.cpp" line="240"/>
+      <location filename="../../AppPartGui.cpp" line="241"/>
       <source>Import-Export</source>
       <translation>Import-Eksport</translation>
     </message>
@@ -5730,7 +5750,7 @@ Projekt Części</translation>
       <location filename="../../Command.cpp" line="914"/>
       <location filename="../../Command.cpp" line="2035"/>
       <source>Wrong selection</source>
-      <translation>Nieprawidłowy wybór</translation>
+      <translation>Niewłaściwy wybór</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="315"/>
@@ -6125,27 +6145,27 @@ Do you want to continue?</source>
       <translation>Ustaw kolory ...</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="78"/>
+      <location filename="../../ViewProviderMirror.cpp" line="85"/>
       <source>Edit mirror plane</source>
       <translation>Edycja płaszczyzny odbicia lustrzanego</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="282"/>
+      <location filename="../../ViewProviderMirror.cpp" line="295"/>
       <source>Edit fillet edges</source>
       <translation>Edytuj krawędzie zaokrąglenia</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="392"/>
+      <location filename="../../ViewProviderMirror.cpp" line="405"/>
       <source>Edit chamfer edges</source>
       <translation>Edytuj krawędzie fazki</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="528"/>
+      <location filename="../../ViewProviderMirror.cpp" line="541"/>
       <source>Edit offset</source>
       <translation>Edytuj odsunięcie</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="610"/>
+      <location filename="../../ViewProviderMirror.cpp" line="623"/>
       <source>Edit thickness</source>
       <translation>Edytuj grubość</translation>
     </message>
@@ -6356,7 +6376,7 @@ Do you want to continue?</source>
       <location filename="../../../BOPTools/SplitFeatures.py" line="494"/>
       <location filename="../../../BOPTools/SplitFeatures.py" line="535"/>
       <source>Bad selection</source>
-      <translation>Nieprawidłowy wybór</translation>
+      <translation>Błędny wybór</translation>
     </message>
     <message>
       <location filename="../../../BOPTools/SplitFeatures.py" line="159"/>
@@ -6408,7 +6428,7 @@ do filtrowania według kolizji lub odległości.</translation>
       <location filename="../../../CompoundTools/_CommandCompoundFilter.py" line="71"/>
       <location filename="../../../CompoundTools/_CommandCompoundFilter.py" line="112"/>
       <source>Bad selection</source>
-      <translation>Błędny wybór</translation>
+      <translation>Nieprawidłowy wybór</translation>
     </message>
     <message>
       <location filename="../../../CompoundTools/_CommandCompoundFilter.py" line="110"/>
@@ -6846,6 +6866,72 @@ Oznacza to, że nakładające się na siebie objętości kształtów zostaną us
       <location filename="../../Command.cpp" line="1309"/>
       <source>Scale a selected shape</source>
       <translation>Skaluj wybrany kształt</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdSelectFilter</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="46"/>
+      <source>Selection filter</source>
+      <translation>Filtr wyboru</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="47"/>
+      <location filename="../../CommandFilter.cpp" line="48"/>
+      <source>Change the selection filter</source>
+      <translation>Zmienia filtr wyboru</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdVertexSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="173"/>
+      <source>Vertex selection</source>
+      <translation>Wybór wierzchołka</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="174"/>
+      <location filename="../../CommandFilter.cpp" line="176"/>
+      <source>Only allow the selection of vertices</source>
+      <translation>Zezwala tylko na wybór wierzchołków</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdEdgeSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="198"/>
+      <source>Edge selection</source>
+      <translation>Wybór krawędzi</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="199"/>
+      <location filename="../../CommandFilter.cpp" line="201"/>
+      <source>Only allow the selection of edges</source>
+      <translation>Zezwala tylko na wybór krawędzi</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdFaceSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="223"/>
+      <source>Face selection</source>
+      <translation>Wybór ściany</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="224"/>
+      <location filename="../../CommandFilter.cpp" line="226"/>
+      <source>Only allow the selection of faces</source>
+      <translation>Zezwala tylko na wybór ścian</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdRemoveSelectionGate</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="248"/>
+      <location filename="../../CommandFilter.cpp" line="249"/>
+      <location filename="../../CommandFilter.cpp" line="251"/>
+      <source>All selection filters cleared</source>
+      <translation>Wszystkie filtry wyboru wyczyszczone</translation>
     </message>
   </context>
 </TS>

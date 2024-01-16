@@ -50,7 +50,7 @@ import draftguitools.gui_tool_utils as gui_tool_utils
 import draftguitools.gui_trackers as trackers
 import drafttaskpanels.task_scale as task_scale
 
-from draftutils.messages import _msg, _err
+from draftutils.messages import _msg, _err, _toolmsg
 from draftutils.translate import translate
 
 # The module is used to prevent complaints from code checkers (flake8)
@@ -105,7 +105,7 @@ class Scale(gui_base_original.Modifier):
         self.pickmode = False
         self.task = None
         self.call = self.view.addEventCallback("SoEvent", self.action)
-        _msg(translate("draft", "Pick base point"))
+        _toolmsg(translate("draft", "Pick base point"))
 
     def set_ghosts(self):
         """Set the ghost to display."""
@@ -133,7 +133,7 @@ class Scale(gui_base_original.Modifier):
         self.pickmode = True
         if self.node:
             self.node = self.node[:1]  # remove previous picks
-        _msg(translate("draft", "Pick reference distance from base point"))
+        _toolmsg(translate("draft", "Pick reference distance from base point"))
         self.call = self.view.addEventCallback("SoEvent", self.action)
 
     def action(self, arg):
@@ -211,7 +211,7 @@ class Scale(gui_base_original.Modifier):
     def scale_with_clone(self):
         """Scale with clone."""
         if self.task.relative.isChecked():
-            self.delta = self.wp.getGlobalCoords(self.delta)
+            self.delta = self.wp.get_global_coords(self.delta)
 
         Gui.addModule("Draft")
 
@@ -325,7 +325,7 @@ class Scale(gui_base_original.Modifier):
     def scale_object(self):
         """Scale the object."""
         if self.task.relative.isChecked():
-            self.delta =self.wp.getGlobalCoords(self.delta)
+            self.delta =self.wp.get_global_coords(self.delta)
         goods = []
         bads = []
         for obj in self.selected_objects:
@@ -371,7 +371,7 @@ class Scale(gui_base_original.Modifier):
         """Scale the preview of the object."""
         delta = App.Vector(x, y, z)
         if rel:
-            delta = self.wp.getGlobalCoords(delta)
+            delta = self.wp.get_global_coords(delta)
         for ghost in self.ghosts:
             ghost.scale(delta)
         # calculate a correction factor depending on the scaling center
@@ -404,7 +404,7 @@ class Scale(gui_base_original.Modifier):
             for ghost in self.ghosts:
                 ghost.on()
         elif len(self.node) == 2:
-            _msg(translate("draft", "Pick new distance from base point"))
+            _toolmsg(translate("draft", "Pick new distance from base point"))
         elif len(self.node) == 3:
             if hasattr(Gui, "Snapper"):
                 Gui.Snapper.off()

@@ -212,6 +212,12 @@ void CmdPartDesignBody::activated(int iMsg)
         }
     }
     addModule(Gui,"PartDesignGui"); // import the Gui module only once a session
+
+    if (actPart) {
+        doCommand(Doc,"App.activeDocument().%s.addObject(App.ActiveDocument.%s)",
+                 actPart->getNameInDocument(), bodyString);
+    }
+
     doCommand(Gui::Command::Gui, "Gui.activateView('Gui::View3DInventor', True)\n"
                                  "Gui.activeView().setActiveObject('%s', App.activeDocument().%s)",
             PDBODYKEY, bodyString);
@@ -219,10 +225,6 @@ void CmdPartDesignBody::activated(int iMsg)
     // Make the "Create sketch" prompt appear in the task panel
     doCommand(Gui,"Gui.Selection.clearSelection()");
     doCommand(Gui,"Gui.Selection.addSelection(App.ActiveDocument.%s)", bodyString);
-    if (actPart) {
-        doCommand(Doc,"App.activeDocument().%s.addObject(App.ActiveDocument.%s)",
-                 actPart->getNameInDocument(), bodyString);
-    }
 
     // check if a proxy object has been created for the base feature inside the body
     if (baseFeature) {
@@ -231,7 +233,7 @@ void CmdPartDesignBody::activated(int iMsg)
         if (body) {
             std::vector<App::DocumentObject*> links = body->Group.getValues();
             for (auto it : links) {
-                if (it->getTypeId().isDerivedFrom(PartDesign::FeatureBase::getClassTypeId())) {
+                if (it->isDerivedFrom<PartDesign::FeatureBase>()) {
                     PartDesign::FeatureBase* base = static_cast<PartDesign::FeatureBase*>(it);
                     if (base && base->BaseFeature.getValue() == baseFeature) {
                         Gui::Application::Instance->hideViewProvider(baseFeature);
@@ -797,7 +799,7 @@ void CmdPartDesignMoveFeature::activated(int iMsg)
         }
 
         // Fix sketch support
-        if (feat->getTypeId().isDerivedFrom(Sketcher::SketchObject::getClassTypeId())) {
+        if (feat->isDerivedFrom<Sketcher::SketchObject>()) {
             Sketcher::SketchObject *sketch = static_cast<Sketcher::SketchObject*>(feat);
             try {
                 PartDesignGui::fixSketchSupport(sketch);

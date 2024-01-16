@@ -132,17 +132,19 @@ void ViewProviderBody::setupContextMenu(QMenu* menu, QObject* receiver, const ch
     Q_UNUSED(receiver);
     Q_UNUSED(member);
     Gui::ActionFunction* func = new Gui::ActionFunction(menu);
-    QAction* act = menu->addAction(tr("Toggle active body"));
+
+    QAction* act = menu->addAction(tr("Active body"));
+    act->setCheckable(true);
+    act->setChecked(isActiveBody());
     func->trigger(act, [this]() {
-        this->doubleClicked();
+        this->toggleActiveBody();
     });
 
     Gui::ViewProviderGeometryObject::setupContextMenu(menu, receiver, member); // clazy:exclude=skipped-base-method
 }
 
-bool ViewProviderBody::doubleClicked()
+bool ViewProviderBody::isActiveBody()
 {
-    //first, check if the body is already active.
     auto activeDoc = Gui::Application::Instance->activeDocument();
     if(!activeDoc)
         activeDoc = getDocument();
@@ -150,7 +152,16 @@ bool ViewProviderBody::doubleClicked()
     if(!activeView)
         return false;
 
-    if (activeView->isActiveObject(getObject(),PDBODYKEY)) {
+    if (activeView->isActiveObject(getObject(),PDBODYKEY)){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void ViewProviderBody::toggleActiveBody()
+{
+    if (isActiveBody()) {
         //active body double-clicked. Deactivate.
         Gui::Command::doCommand(Gui::Command::Gui,
                 "Gui.ActiveDocument.ActiveView.setActiveObject('%s', None)", PDBODYKEY);
@@ -162,7 +173,7 @@ bool ViewProviderBody::doubleClicked()
 
         // and set correct active objects
         auto* part = App::Part::getPartOfObject ( getObject() );
-        if ( part && part != activeView->getActiveObject<App::Part*> ( PARTKEY ) ) {
+        if ( part && !isActiveBody() ) {
             Gui::Command::doCommand(Gui::Command::Gui,
                     "Gui.ActiveDocument.ActiveView.setActiveObject('%s',%s)",
                     PARTKEY, Gui::Command::getObjectCmd(part).c_str());
@@ -172,7 +183,11 @@ bool ViewProviderBody::doubleClicked()
                 "Gui.ActiveDocument.ActiveView.setActiveObject('%s',%s)",
                 PDBODYKEY, Gui::Command::getObjectCmd(getObject()).c_str());
     }
+}
 
+bool ViewProviderBody::doubleClicked()
+{
+    toggleActiveBody();
     return true;
 }
 
@@ -404,29 +419,40 @@ void ViewProviderBody::onChanged(const App::Property* prop) {
 
 void ViewProviderBody::unifyVisualProperty(const App::Property* prop) {
 
-    if(!pcObject || isRestoring())
+    if (!pcObject || isRestoring()) {
         return;
+    }
 
-    if(prop == &Visibility ||
-       prop == &Selectable ||
-       prop == &DisplayModeBody ||
-       prop == &DiffuseColor ||
-       prop == &PointColorArray ||
-       prop == &LineColorArray)
+    if (prop == &Visibility ||
+        prop == &Selectable ||
+        prop == &DisplayModeBody ||
+        prop == &DiffuseColor ||
+        prop == &PointColorArray ||
+        prop == &LineColorArray) {
         return;
+    }
+
+    // Fixes issue 11197. In case of affected projects where the bounding box of a sub-feature
+    // is shown allow it to hide it
+    if (prop == &BoundingBox) {
+        if (BoundingBox.getValue()) {
+            return;
+        }
+    }
 
     Gui::Document *gdoc = Gui::Application::Instance->getDocument ( pcObject->getDocument() ) ;
 
     PartDesign::Body *body = static_cast<PartDesign::Body *> ( getObject() );
     auto features = body->Group.getValues();
-    for(auto feature : features) {
+    for (auto feature : features) {
 
-        if(!feature->isDerivedFrom(PartDesign::Feature::getClassTypeId()))
+        if (!feature->isDerivedFrom(PartDesign::Feature::getClassTypeId())) {
             continue;
+        }
 
         //copy over the properties data
-        auto p = gdoc->getViewProvider(feature)->getPropertyByName(prop->getName());
-        p->Paste(*prop);
+        auto fprop = gdoc->getViewProvider(feature)->getPropertyByName(prop->getName());
+        fprop->Paste(*prop);
     }
 }
 
@@ -490,7 +516,7 @@ bool ViewProviderBody::canDropObject(App::DocumentObject* obj) const
 void ViewProviderBody::dropObject(App::DocumentObject* obj)
 {
     PartDesign::Body* body = static_cast<PartDesign::Body*>(getObject());
-    if (obj->getTypeId().isDerivedFrom(Part::Part2DObject::getClassTypeId())) {
+    if (obj->isDerivedFrom<Part::Part2DObject>()) {
         body->addObject(obj);
     }
     else if (PartDesign::Body::isAllowed(obj) && PartDesignGui::isFeatureMovable(obj)) {
@@ -519,7 +545,7 @@ void ViewProviderBody::dropObject(App::DocumentObject* obj)
     // check if a proxy object has been created for the base feature
     std::vector<App::DocumentObject*> links = body->Group.getValues();
     for (auto it : links) {
-        if (it->getTypeId().isDerivedFrom(PartDesign::FeatureBase::getClassTypeId())) {
+        if (it->isDerivedFrom<PartDesign::FeatureBase>()) {
             PartDesign::FeatureBase* base = static_cast<PartDesign::FeatureBase*>(it);
             if (base && base->BaseFeature.getValue() == obj) {
                 Gui::Application::Instance->hideViewProvider(obj);

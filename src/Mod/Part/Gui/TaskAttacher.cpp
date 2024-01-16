@@ -65,8 +65,8 @@ const QString makeRefString(const App::DocumentObject* obj, const std::string& s
     if (!obj)
         return QObject::tr("No reference selected");
 
-    if (obj->getTypeId().isDerivedFrom(App::OriginFeature::getClassTypeId()) ||
-        obj->getTypeId().isDerivedFrom(Part::Datum::getClassTypeId()))
+    if (obj->isDerivedFrom<App::OriginFeature>() ||
+        obj->isDerivedFrom<Part::Datum>())
         // App::Plane, Line or Datum feature
         return QString::fromLatin1(obj->getNameInDocument());
 
@@ -372,8 +372,8 @@ void TaskAttacher::onSelectionChanged(const Gui::SelectionChanges& msg)
         std::string subname = msg.pSubName;
 
         // Remove subname for planes and datum features
-        if (selObj->getTypeId().isDerivedFrom(App::OriginFeature::getClassTypeId()) ||
-            selObj->getTypeId().isDerivedFrom(Part::Datum::getClassTypeId()))
+        if (selObj->isDerivedFrom<App::OriginFeature>() ||
+            selObj->isDerivedFrom<Part::Datum>())
             subname = "";
 
         // eliminate duplicate selections
@@ -614,14 +614,14 @@ void TaskAttacher::onRefName(const QString& text, unsigned idx)
 
     std::string subElement;
 
-    if (obj->getTypeId().isDerivedFrom(App::Plane::getClassTypeId())) {
+    if (obj->isDerivedFrom<App::Plane>()) {
         // everything is OK (we assume a Part can only have exactly 3 App::Plane objects located at the base of the feature tree)
-        subElement = "";
-    } else if (obj->getTypeId().isDerivedFrom(App::Line::getClassTypeId())) {
+        subElement.clear();
+    } else if (obj->isDerivedFrom<App::Line>()) {
         // everything is OK (we assume a Part can only have exactly 3 App::Line objects located at the base of the feature tree)
-        subElement = "";
-    } else if (obj->getTypeId().isDerivedFrom(Part::Datum::getClassTypeId())) {
-        subElement = "";
+        subElement.clear();
+    } else if (obj->isDerivedFrom<Part::Datum>()) {
+        subElement.clear();
     } else {
         // TODO: check validity of the text that was entered: Does subElement actually reference to an element on the obj?
 
@@ -669,10 +669,10 @@ void TaskAttacher::onRefName(const QString& text, unsigned idx)
     std::vector<std::string> refnames = pcAttach->Support.getSubValues();
     if (idx < refs.size()) {
         refs[idx] = obj;
-        refnames[idx] = subElement.c_str();
+        refnames[idx] = subElement;
     } else {
         refs.push_back(obj);
-        refnames.emplace_back(subElement.c_str());
+        refnames.emplace_back(subElement);
     }
     pcAttach->Support.setValues(refs, refnames);
     updateListOfModes();
@@ -1003,7 +1003,7 @@ void TaskAttacher::visibilityAutomation(bool opening_not_closing)
             return;
         if (!ViewProvider->getObject())
             return;
-        if (!ViewProvider->getObject()->getNameInDocument())
+        if (!ViewProvider->getObject()->isAttachedToDocument())
             return;
 
         auto editDoc = Gui::Application::Instance->editDocument();

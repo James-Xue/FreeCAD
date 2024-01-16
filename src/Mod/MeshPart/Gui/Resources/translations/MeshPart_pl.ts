@@ -198,12 +198,12 @@ To polecenie działa tylko z obiektem typu Siatka.</translation>
       <translation>Anuluj</translation>
     </message>
     <message>
-      <location filename="../../CurveOnMesh.cpp" line="626"/>
+      <location filename="../../CurveOnMesh.cpp" line="624"/>
       <source>Wrong mesh picked</source>
       <translation>Wybrano nieodpowiednią siatkę</translation>
     </message>
     <message>
-      <location filename="../../CurveOnMesh.cpp" line="667"/>
+      <location filename="../../CurveOnMesh.cpp" line="663"/>
       <source>No point was picked</source>
       <translation>Nie wybrano żadnego punktu</translation>
     </message>
@@ -579,7 +579,7 @@ Proszę wybrać inny kształt.</translation>
     <name>MeshPart_CreateFlatMesh</name>
     <message>
       <location filename="../../MeshFlatteningCommand.py" line="49"/>
-      <source>Unwrap Mesh</source>
+      <source>Unwrap mesh</source>
       <translation>Rozwiń siatkę</translation>
     </message>
     <message>
@@ -592,7 +592,7 @@ Proszę wybrać inny kształt.</translation>
     <name>MeshPart_CreateFlatFace</name>
     <message>
       <location filename="../../MeshFlatteningCommand.py" line="88"/>
-      <source>Unwrap Face</source>
+      <source>Unwrap face</source>
       <translation>Rozwiń ścianę</translation>
     </message>
     <message>

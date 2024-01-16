@@ -981,7 +981,7 @@
       <location filename="../../AttacherTexts.cpp" line="179"/>
       <source>Match origin with first Vertex. Align normal and horizontal plane axis towards vertex/along line.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation>Ursprung und ersten Vertex übereinander legen. Ausrichten der Normalen und der Achse der horizontalen Ebene in Richtung Vertex/entlang der Linie.</translation>
+      <translation>Legt den Ursprung und den ersten Knoten übereinander. Richtet die Normale und die horizontale Achse der Ebene jeweils in Richtung eines Knotens oder entlang einer Linie aus.</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="181"/>
@@ -993,13 +993,13 @@
       <location filename="../../AttacherTexts.cpp" line="182"/>
       <source>Match origin with first Vertex. Align normal and vertical plane axis towards vertex/along line.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation>Ursprung und ersten Vertex übereinander legen. Ausrichten der Normalen und der Achse der vertikalen Ebene in Richtung Vertex/entlang der Linie.</translation>
+      <translation>Legt den Ursprung und den ersten Knoten übereinander. Richtet die Normale und die vertikale Achse der Ebene jeweils in Richtung eines Knotens oder entlang einer Linie aus.</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="185"/>
       <source>Match origin with first Vertex. Align horizontal and vertical plane axes towards vertex/along line.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation>Ursprung und ersten Vertex übereinander legen. Ausrichten der Achsen von horizontaler und vertikaler Ebene in Richtung Vertex/entlang der Linie.</translation>
+      <translation>Legt den Ursprung und den ersten Knoten übereinander. Richtet die horizontale und die vertikale Achse der Ebene jeweils in Richtung eines Knotens oder entlang einer Linie aus.</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="187"/>
@@ -1011,7 +1011,7 @@
       <location filename="../../AttacherTexts.cpp" line="188"/>
       <source>Match origin with first Vertex. Align horizontal plane axis and normal towards vertex/along line.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation>Ursprung und ersten Vertex übereinander legen. Ausrichten der horizontalen Achse der Ebene zur Normalen in Richtung Vertex/entlang der Linie.</translation>
+      <translation>Legt den Ursprung und den ersten Knoten übereinander. Richtet die horizontale Achse und die Normale der Ebene jeweils in Richtung eines Knotens oder entlang einer Linie aus.</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="190"/>
@@ -1023,13 +1023,13 @@
       <location filename="../../AttacherTexts.cpp" line="191"/>
       <source>Match origin with first Vertex. Align vertical plane axis and normal towards vertex/along line.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation>Ursprung und ersten Vertex übereinander legen. Ausrichten der Achse von vertikaler Ebene und der Normalen in Richtung Vertex/entlang der Linie.</translation>
+      <translation>Legt den Ursprung und den ersten Knoten übereinander. Richtet die vertikale Achse und die Normale der Ebene jeweils in Richtung eines Knotens oder entlang einer Linie aus.</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="194"/>
       <source>Match origin with first Vertex. Align vertical and horizontal plane axes towards vertex/along line.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation>Ursprung und ersten Vertex übereinander legen. Ausrichten der Achsen von vertikaler und horizontaler Ebene in Richtung Vertex/entlang der Linie.</translation>
+      <translation>Legt den Ursprung und den ersten Knoten übereinander. Richtet die vertikale und die horizontale Achse der Ebene jeweils in Richtung eines Knotens oder entlang einer Linie aus.</translation>
     </message>
   </context>
   <context>
@@ -1230,8 +1230,8 @@
     </message>
     <message>
       <location filename="../../Command.cpp" line="2229"/>
-      <source>Clear all dimensions from the screen.</source>
-      <translation>Alle Maße vom Bildschirm entfernen.</translation>
+      <source>Clear all dimensions from the active 3D view.</source>
+      <translation>Alle Maße aus der aktiven 3D-Ansicht löschen.</translation>
     </message>
   </context>
   <context>
@@ -1367,7 +1367,7 @@ X-, Y- und Z-Komponenten zerlegt wird.</translation>
       <location filename="../../CommandParametric.cpp" line="118"/>
       <location filename="../../CommandParametric.cpp" line="123"/>
       <source>Cube</source>
-      <translation>Würfel</translation>
+      <translation>Quader</translation>
     </message>
     <message>
       <location filename="../../CommandParametric.cpp" line="108"/>
@@ -2048,7 +2048,7 @@ der Projektion.</translation>
     <message>
       <location filename="../../Command.cpp" line="902"/>
       <source>Make a section of two shapes</source>
-      <translation>Schnitt von zwei Formen erzeugen</translation>
+      <translation>Erstellt die Schnittkurve zweier Formen</translation>
     </message>
   </context>
   <context>
@@ -2367,7 +2367,7 @@ der Projektion.</translation>
       <translation>Sweep</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="198"/>
+      <location filename="../../ViewProviderMirror.cpp" line="211"/>
       <source>Edit Mirror</source>
       <translation>Spiegel bearbeiten</translation>
     </message>
@@ -2407,7 +2407,7 @@ der Projektion.</translation>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.ui" line="124"/>
       <source>Attachment Offset (in local coordinates):</source>
-      <translation>Versatz der Anhänge (in lokalen Koordinaten):</translation>
+      <translation>Befestigungsversatz (in lokalen Koordinaten):</translation>
     </message>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.ui" line="136"/>
@@ -2419,7 +2419,7 @@ der Projektion.</translation>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.ui" line="190"/>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.ui" line="222"/>
       <source>Note: The placement is expressed in local space of object being attached.</source>
-      <translation>Hinweis: Die Positionierung wird im lokalen Raum des angehängten Objekts dargestellt.</translation>
+      <translation>Hinweis: Die Positionierung wird im lokalen Raum des befestigten Objekts dargestellt.</translation>
     </message>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.ui" line="171"/>
@@ -2441,7 +2441,7 @@ der Projektion.</translation>
       <source>Rotation around the x-axis
 Note: The placement is expressed in local space of object being attached.</source>
       <translation>Drehung um die X-Achse
-Hinweis: Die Positionierung wird im lokalen Raum des angehängten Objekts dargestellt.</translation>
+Hinweis: Die Positionierung wird im lokalen Raum des befestigten Objekts dargestellt.</translation>
     </message>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.ui" line="280"/>
@@ -2453,7 +2453,7 @@ Hinweis: Die Positionierung wird im lokalen Raum des angehängten Objekts darges
       <source>Rotation around the y-axis
 Note: The placement is expressed in local space of object being attached.</source>
       <translation>Drehung um die Y-Achse
-Hinweis: Die Positionierung wird im lokalen Raum des angehängten Objekts dargestellt.</translation>
+Hinweis: Die Positionierung wird im lokalen Raum des befestigten Objekts dargestellt.</translation>
     </message>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.ui" line="325"/>
@@ -2465,7 +2465,7 @@ Hinweis: Die Positionierung wird im lokalen Raum des angehängten Objekts darges
       <source>Rotation around the z-axis
 Note: The placement is expressed in local space of object being attached.</source>
       <translation>Drehung um die Z-Achse
-Hinweis: Die Positionierung wird im lokalen Raum des angehängten Objekts dargestellt.</translation>
+Hinweis: Die Positionierung wird im lokalen Raum des befestigten Objekts dargestellt.</translation>
     </message>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.ui" line="367"/>
@@ -2782,7 +2782,7 @@ die Größe der resultierenden STEP Datei zu minimieren.</translation>
     <message>
       <location filename="../../DlgExtrusion.ui" line="35"/>
       <source>Along normal</source>
-      <translation>Entlang der Normalen</translation>
+      <translation>Entlang der Normale</translation>
     </message>
     <message>
       <location filename="../../DlgExtrusion.ui" line="45"/>
@@ -4523,57 +4523,78 @@ der Normalenvektor der Skizze verwendet</translation>
       <translation>Spiegelung</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="33"/>
+      <location filename="../../Mirroring.ui" line="121"/>
+      <source>Use selected reference</source>
+      <translation>Ausgewählte Referenz verwenden</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="142"/>
       <source>Shapes</source>
       <translation>Formen</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="41"/>
+      <location filename="../../Mirroring.ui" line="98"/>
       <source>Mirror plane:</source>
       <translation>Spiegelebene:</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="49"/>
+      <location filename="../../Mirroring.ui" line="106"/>
       <source>XY plane</source>
       <translation>XY-Ebene</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="54"/>
+      <location filename="../../Mirroring.ui" line="111"/>
       <source>XZ plane</source>
       <translation>XZ-Ebene</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="59"/>
+      <location filename="../../Mirroring.ui" line="116"/>
       <source>YZ plane</source>
       <translation>YZ-Ebene</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="67"/>
+      <location filename="../../Mirroring.ui" line="150"/>
+      <location filename="../../Mirroring.cpp" line="215"/>
+      <source>Selecting</source>
+      <translation>Auswählen</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="166"/>
+      <source>Mirror plane reference</source>
+      <translation>Referenz der Spiegelebene</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.ui" line="20"/>
       <source>Base point</source>
       <translation>Basispunkt</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="73"/>
+      <location filename="../../Mirroring.ui" line="26"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="96"/>
+      <location filename="../../Mirroring.ui" line="49"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.ui" line="119"/>
+      <location filename="../../Mirroring.ui" line="72"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="126"/>
+      <location filename="../../Mirroring.cpp" line="211"/>
+      <source>Select reference</source>
+      <translation>Referenz auswählen</translation>
+    </message>
+    <message>
+      <location filename="../../Mirroring.cpp" line="280"/>
       <source>Select a shape for mirroring, first.</source>
       <translation>Wählen Sie zuerst eine Form für die Spiegelung.</translation>
     </message>
     <message>
-      <location filename="../../Mirroring.cpp" line="133"/>
+      <location filename="../../Mirroring.cpp" line="287"/>
       <source>No such document '%1'.</source>
       <translation>Es gibt kein Dokument "%1".</translation>
     </message>
@@ -4728,7 +4749,7 @@ nur die beschnittenen Objeke sichtbar</translation>
       <translation>Beim Schließen nur die beschnittenen Objekte sichtbar lassen</translation>
     </message>
     <message>
-      <location filename="../../SectionCutting.cpp" line="520"/>
+      <location filename="../../SectionCutting.cpp" line="1103"/>
       <source>Sliders are disabled for assemblies</source>
       <translation>Schieberegler sind für Baugruppen deaktiviert</translation>
     </message>
@@ -4961,7 +4982,7 @@ nur die beschnittenen Objeke sichtbar</translation>
       <location filename="../../TaskAttacher.ui" line="230"/>
       <source>Note: The placement is expressed in local coordinate system
 of object being attached.</source>
-      <translation>Hinweis: Die Positionierung wird im lokalen Koordinatensystem des angehängten Objekts dargestellt.</translation>
+      <translation>Hinweis: Die Positionierung wird im lokalen Koordinatensystem des befestigten Objekts dargestellt.</translation>
     </message>
     <message>
       <location filename="../../TaskAttacher.ui" line="175"/>
@@ -4984,7 +5005,7 @@ of object being attached.</source>
 Note: The placement is expressed in local coordinate system
 of object being attached.</source>
       <translation>Drehung um die X-Achse
-Hinweis: Die Positionierung wird im lokalen Koordinatensystem des angehängten Objekts dargestellt.</translation>
+Hinweis: Die Positionierung wird im lokalen Koordinatensystem des befestigten Objekts dargestellt.</translation>
     </message>
     <message>
       <location filename="../../TaskAttacher.ui" line="287"/>
@@ -4997,7 +5018,7 @@ Hinweis: Die Positionierung wird im lokalen Koordinatensystem des angehängten O
 Note: The placement is expressed in local coordinate system
 of object being attached.</source>
       <translation>Drehung um die Y-Achse
-Hinweis: Die Positionierung wird im lokalen Koordinatensystem des angehängten Objekts dargestellt.</translation>
+Hinweis: Die Positionierung wird im lokalen Koordinatensystem des befestigten Objekts dargestellt.</translation>
     </message>
     <message>
       <location filename="../../TaskAttacher.ui" line="327"/>
@@ -5010,7 +5031,7 @@ Hinweis: Die Positionierung wird im lokalen Koordinatensystem des angehängten O
 Note: The placement is expressed in local coordinate system
 of object being attached.</source>
       <translation>Drehung um die Z-Achse
-Hinweis: Die Positionierung wird im lokalen Koordinatensystem des angehängten Objekts dargestellt.</translation>
+Hinweis: Die Positionierung wird im lokalen Koordinatensystem des befestigten Objekts dargestellt.</translation>
     </message>
     <message>
       <location filename="../../TaskAttacher.ui" line="364"/>
@@ -5040,12 +5061,12 @@ Hinweis: Die Positionierung wird im lokalen Koordinatensystem des angehängten O
     <message>
       <location filename="../../TaskAttacher.cpp" line="329"/>
       <source>Not attached</source>
-      <translation>Nicht gebunden</translation>
+      <translation>Nicht befestigt</translation>
     </message>
     <message>
       <location filename="../../TaskAttacher.cpp" line="333"/>
       <source>Attached with mode %1</source>
-      <translation>Angehängt im Modus: %1</translation>
+      <translation>Befestigungsverfahren: %1</translation>
     </message>
     <message>
       <location filename="../../TaskAttacher.cpp" line="337"/>
@@ -5214,7 +5235,7 @@ Einzelne Überprüfungen boolescher Verknüpfungen:</translation>
     <message>
       <location filename="../../TaskCheckGeometry.cpp" line="1107"/>
       <source>Continuity</source>
-      <translation>Kontinuität</translation>
+      <translation>Stetigkeit</translation>
     </message>
     <message>
       <location filename="../../TaskCheckGeometry.cpp" line="1115"/>
@@ -5429,7 +5450,7 @@ indem Sie ein Auswahlrechteck in der 3D-Ansicht aufziehen</translation>
       <location filename="../../TaskOffset.ui" line="14"/>
       <location filename="../../TaskOffset.ui" line="20"/>
       <source>Offset</source>
-      <translation>Versetzen</translation>
+      <translation>Versatz</translation>
     </message>
     <message>
       <location filename="../../TaskOffset.ui" line="34"/>
@@ -5694,21 +5715,21 @@ für den Austragungspfad in der 3D-Ansicht auswählen.</translation>
       <translation>%1 bearbeiten</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="228"/>
+      <location filename="../../AppPartGui.cpp" line="235"/>
       <source>Part and Part Design workbench</source>
       <translation>Arbeitsbereich für Bauteile und deren Konstruktion</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="229"/>
-      <location filename="../../AppPartGui.cpp" line="230"/>
-      <location filename="../../AppPartGui.cpp" line="231"/>
-      <location filename="../../AppPartGui.cpp" line="232"/>
+      <location filename="../../AppPartGui.cpp" line="236"/>
+      <location filename="../../AppPartGui.cpp" line="237"/>
+      <location filename="../../AppPartGui.cpp" line="238"/>
+      <location filename="../../AppPartGui.cpp" line="239"/>
       <source>Part/Part Design</source>
       <translation>Part/Part Design</translation>
     </message>
     <message>
-      <location filename="../../AppPartGui.cpp" line="233"/>
-      <location filename="../../AppPartGui.cpp" line="234"/>
+      <location filename="../../AppPartGui.cpp" line="240"/>
+      <location filename="../../AppPartGui.cpp" line="241"/>
       <source>Import-Export</source>
       <translation>Import / Export</translation>
     </message>
@@ -6115,27 +6136,27 @@ Do you want to continue?</source>
       <translation>Farben festlegen...</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="78"/>
+      <location filename="../../ViewProviderMirror.cpp" line="85"/>
       <source>Edit mirror plane</source>
       <translation>Spiegelebene bearbeiten</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="282"/>
+      <location filename="../../ViewProviderMirror.cpp" line="295"/>
       <source>Edit fillet edges</source>
       <translation>Abgerundete Kanten bearbeiten</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="392"/>
+      <location filename="../../ViewProviderMirror.cpp" line="405"/>
       <source>Edit chamfer edges</source>
       <translation>Fasen bearbeiten</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="528"/>
+      <location filename="../../ViewProviderMirror.cpp" line="541"/>
       <source>Edit offset</source>
       <translation>Versatz bearbeiten</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderMirror.cpp" line="610"/>
+      <location filename="../../ViewProviderMirror.cpp" line="623"/>
       <source>Edit thickness</source>
       <translation>Dicke bearbeiten</translation>
     </message>
@@ -6516,12 +6537,12 @@ Es wird ein 'Compound-Filter'-Objekt für jede Form erzeugt.</translation>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.py" line="590"/>
       <source>Not attached</source>
-      <translation>Nicht gebunden</translation>
+      <translation>Nicht befestigt</translation>
     </message>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.py" line="593"/>
       <source>Attached with mode {}</source>
-      <translation>Befestigt im Modus {}</translation>
+      <translation>Befestigungsverfahren {}</translation>
     </message>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.py" line="599"/>
@@ -6531,7 +6552,7 @@ Es wird ein 'Compound-Filter'-Objekt für jede Form erzeugt.</translation>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.py" line="602"/>
       <source>Attachment Offset (in local coordinates):</source>
-      <translation>Versatz der Anhänge (in lokalen Koordinaten):</translation>
+      <translation>Befestigungsversatz (in lokalen Koordinaten):</translation>
     </message>
     <message>
       <location filename="../../../AttachmentEditor/TaskAttachmentEditor.py" line="605"/>
@@ -6637,7 +6658,7 @@ Es wird ein 'Compound-Filter'-Objekt für jede Form erzeugt.</translation>
     <message>
       <location filename="../../../BasicShapes/ShapeContent.py" line="156"/>
       <source>Continuity</source>
-      <translation>Kontinuität</translation>
+      <translation>Stetigkeit</translation>
     </message>
     <message>
       <location filename="../../../BasicShapes/ShapeContent.py" line="163"/>
@@ -6833,6 +6854,72 @@ Ein 'Verbundfilter' kann verwendet werden, um die restlichen Stücke zu extrahie
       <location filename="../../Command.cpp" line="1309"/>
       <source>Scale a selected shape</source>
       <translation>Skaliert eine ausgewählte Form</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdSelectFilter</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="46"/>
+      <source>Selection filter</source>
+      <translation>Auswahlfilter</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="47"/>
+      <location filename="../../CommandFilter.cpp" line="48"/>
+      <source>Change the selection filter</source>
+      <translation>Auswahlfilter wechseln</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdVertexSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="173"/>
+      <source>Vertex selection</source>
+      <translation>Knotenauswahl</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="174"/>
+      <location filename="../../CommandFilter.cpp" line="176"/>
+      <source>Only allow the selection of vertices</source>
+      <translation>Lässt nur die Auswahl von Knoten zu</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdEdgeSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="198"/>
+      <source>Edge selection</source>
+      <translation>Kantenauswahl</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="199"/>
+      <location filename="../../CommandFilter.cpp" line="201"/>
+      <source>Only allow the selection of edges</source>
+      <translation>Lässt nur die Auswahl von Kanten zu</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdFaceSelection</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="223"/>
+      <source>Face selection</source>
+      <translation>Flächenauswahl</translation>
+    </message>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="224"/>
+      <location filename="../../CommandFilter.cpp" line="226"/>
+      <source>Only allow the selection of faces</source>
+      <translation>Lässt nur die Auswahl von Flächen zu</translation>
+    </message>
+  </context>
+  <context>
+    <name>PartCmdRemoveSelectionGate</name>
+    <message>
+      <location filename="../../CommandFilter.cpp" line="248"/>
+      <location filename="../../CommandFilter.cpp" line="249"/>
+      <location filename="../../CommandFilter.cpp" line="251"/>
+      <source>All selection filters cleared</source>
+      <translation>Alle Auswahlfilter gelöscht</translation>
     </message>
   </context>
 </TS>

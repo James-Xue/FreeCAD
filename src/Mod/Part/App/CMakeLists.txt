@@ -1,9 +1,3 @@
-if(MSVC)
-    add_definitions(-DFCAppPart -DHAVE_ACOSH -DHAVE_ASINH -DHAVE_ATANH)
-else(MSVC)
-    add_definitions(-DHAVE_LIMITS_H -DHAVE_CONFIG_H)
-endif(MSVC)
-
 if(FREETYPE_FOUND)
     add_definitions(-DFCUseFreeType)
 endif(FREETYPE_FOUND)
@@ -536,6 +530,9 @@ SET(Part_SRCS
     ProgressIndicator.h
     TopoShape.cpp
     TopoShape.h
+    TopoShapeCache.cpp
+    TopoShapeCache.h
+    TopoShapeExpansion.cpp
     TopoShapeOpCode.h
     edgecluster.cpp
     edgecluster.h

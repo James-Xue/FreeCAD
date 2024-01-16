@@ -198,6 +198,8 @@ SET(FreeCADBase_UNITAPI_SRCS
     UnitsSchemaMmMin.cpp
     UnitsSchemaFemMilliMeterNewton.h
     UnitsSchemaFemMilliMeterNewton.cpp
+    UnitsSchemaMeterDecimal.h
+    UnitsSchemaMeterDecimal.cpp
     Quantity.h
     Quantity.cpp
     QuantityPyImp.cpp
@@ -287,6 +289,7 @@ SET(SWIG_HEADERS
 SET(FreeCADBase_HPP_SRCS
     Axis.h
     Base64.h
+    Base64Filter.h
     BaseClass.h
     BindingManager.h
     Bitmask.h

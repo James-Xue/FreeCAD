@@ -71,6 +71,7 @@
 #include "GeometryObject.h"
 #include "ProjectionAlgos.h"
 #include "TechDrawExport.h"
+#include "CosmeticVertexPy.h"
 
 
 namespace TechDraw {
@@ -185,7 +186,10 @@ public:
         );
         add_varargs_method("build3dCurves", &Module::build3dCurves,
             "TopoShape = build3dCurves(TopoShape) -- convert the edges to a 3D curve\n"
-	    "which is useful for shapes obtained Part.HLRBRep.Algo"
+            "which is useful for shapes obtained Part.HLRBRep.Algo"
+        );
+        add_varargs_method("makeCanonicalPoint", &Module::makeCanonicalPoint,
+            "makeCanonicalPoint(DrawViewPart, Vector3d) - Returns the unscaled, unrotated version of the input point)"
         );
         initialize("This is a module for making drawings"); // register with Python
     }
@@ -961,19 +965,17 @@ private:
     {
         PyObject* pFace(nullptr);
         double scale = 1.0;
-        char* pPatName = "";
-        char* pPatFile = "";
+        const char* pPatName = {nullptr};
+        const char* pPatFile = {nullptr};
         TechDraw::DrawViewPart* source = nullptr;
         TopoDS_Face face;
 
-        if (!PyArg_ParseTuple(args.ptr(), "O|detet", &pFace, &scale, "utf-8", &pPatName, "utf-8", &pPatFile)) {
+        if (!PyArg_ParseTuple(args.ptr(), "O|dss", &pFace, &scale, &pPatName, &pPatFile)) {
             throw Py::TypeError("expected (face, [scale], [patName], [patFile])");
         }
 
         std::string patName = std::string(pPatName);
-        PyMem_Free(pPatName);
         std::string patFile = std::string(pPatFile);
-        PyMem_Free(pPatFile);
 
         if (PyObject_TypeCheck(pFace, &(TopoShapeFacePy::Type))) {
             const TopoDS_Shape& shape = static_cast<TopoShapePy*>(pFace)->getTopoShapePtr()->getShape();
@@ -1236,14 +1238,14 @@ private:
         PyObject *pcObjShape(nullptr);
 
         if (!PyArg_ParseTuple(args.ptr(), "O!",
-			      &(TopoShapePy::Type), &pcObjShape))
+                  &(TopoShapePy::Type), &pcObjShape))
             throw Py::Exception();
 
         TopoShapePy* pShape = static_cast<TopoShapePy*>(pcObjShape);
-	SVGOutput output;
-	Py::String result(output.exportEdges(pShape->getTopoShapePtr()->getShape()));
+    SVGOutput output;
+    Py::String result(output.exportEdges(pShape->getTopoShapePtr()->getShape()));
 
-	return result;
+    return result;
     }
 
     Py::Object build3dCurves(const Py::Tuple& args)
@@ -1251,15 +1253,34 @@ private:
         PyObject *pcObjShape(nullptr);
 
         if (!PyArg_ParseTuple(args.ptr(), "O!",
-			      &(TopoShapePy::Type), &pcObjShape))
+                  &(TopoShapePy::Type), &pcObjShape))
             throw Py::Exception();
 
         TopoShapePy* pShape = static_cast<TopoShapePy*>(pcObjShape);
-	const TopoShape& nShape =
-	    TechDraw::build3dCurves(pShape->getTopoShapePtr()->getShape());
-	
-	return Py::Object(new TopoShapePy(new TopoShape(nShape)));
+    const TopoShape& nShape =
+        TechDraw::build3dCurves(pShape->getTopoShapePtr()->getShape());
+
+    return Py::Object(new TopoShapePy(new TopoShape(nShape)));
     }
+
+
+    Py::Object makeCanonicalPoint(const Py::Tuple& args)
+{
+    PyObject* pyDocObj{nullptr};
+    PyObject* pyPointIn{nullptr};
+    PyObject *pyUnscale{Py_True};
+
+    if (!PyArg_ParseTuple(args.ptr(), "O!O!|O", &(TechDraw::DrawViewPartPy::Type), &pyDocObj,
+                                        &(Base::VectorPy::Type), &pyPointIn, &pyUnscale)) {
+        return Py::None();
+    }
+    bool unscale = pyUnscale == Py_True ? true : false;
+    DrawViewPartPy* pyDvp = static_cast<TechDraw::DrawViewPartPy*>(pyDocObj);
+    DrawViewPart* dvp = pyDvp->getDrawViewPartPtr();
+    Base::Vector3d cPoint = static_cast<Base::VectorPy*>(pyPointIn)->value();
+    cPoint = CosmeticVertex::makeCanonicalPoint(dvp, cPoint, unscale);
+    return Py::asObject(new Base::VectorPy(cPoint));
+}
  };
 
  PyObject* initModule()

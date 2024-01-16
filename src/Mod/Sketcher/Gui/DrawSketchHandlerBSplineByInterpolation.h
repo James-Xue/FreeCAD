@@ -27,8 +27,15 @@
 #include <QInputDialog>
 
 #include <Gui/Notifications.h>
+#include <Gui/Command.h>
+#include <Gui/CommandT.h>
 
+#include <Mod/Sketcher/App/SketchObject.h>
+
+#include "DrawSketchHandler.h"
 #include "GeometryCreationMode.h"
+#include "Utils.h"
+#include "ViewProviderSketch.h"
 
 
 namespace SketcherGui
@@ -385,7 +392,12 @@ private:
 
     QString getCrosshairCursorSVGName() const override
     {
-        return QString::fromLatin1("Sketcher_Pointer_Create_BSpline");
+        if (SketcherGui::DrawSketchHandlerBSplineByInterpolation::ConstrMethod == 1) {
+            return QString::fromLatin1("Sketcher_Pointer_Create_Periodic_BSplineByInterpolation");
+        }
+        else {
+            return QString::fromLatin1("Sketcher_Pointer_Create_BSplineByInterpolation");
+        }
     }
 
     void addSugConstraint()
@@ -542,7 +554,7 @@ private:
                     "(_finalbsp_poles,_finalbsp_mults,_finalbsp_knots,%s,%d,None,False),%s)",
                     ConstrMethod == 0 ? "False" : "True",
                     myDegree,
-                    geometryCreationMode == Construction ? "True" : "False");
+                    constructionModeAsBooleanText());
                 currentgeoid++;
 
                 // TODO: Confirm we do not need to delete individual elements

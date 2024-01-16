@@ -1,11 +1,8 @@
-if(MSVC)
-    add_definitions(-DFCAppMeshPart -DHAVE_ACOSH -DHAVE_ASINH -DHAVE_ATANH)
-else(MSVC)
-    add_definitions(-DHAVE_LIMITS_H -DHAVE_CONFIG_H)
-endif(MSVC)
-
 if (BUILD_SMESH)
-    add_definitions(-DHAVE_SMESH -DHAVE_MEFISTO)
+    add_definitions(-DHAVE_SMESH)
+    if(SMESH_VERSION_MAJOR LESS_EQUAL 9 AND SMESH_VERSION_MINOR LESS 10 )
+      add_definitions(-DHAVE_MEFISTO)
+    endif()
 endif(BUILD_SMESH)
 
 if(BUILD_FEM_NETGEN)

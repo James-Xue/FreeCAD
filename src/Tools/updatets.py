@@ -172,6 +172,11 @@ directories = [
         "workingdir": "./src/Mod/Web/",
         "tsdir": "Gui/Resources/translations",
     },
+    {
+        "tsname": "Help",
+        "workingdir": "./src/Mod/Help/",
+        "tsdir": "Resources/translations",
+    },
 ]
 
 # Exclude these files from consideration
@@ -237,10 +242,6 @@ def find_tools(noobsolete=True):
                 PYLUPDATE += " -no-obsolete"
         elif os.system("pylupdate5 -version") == 0:
             PYLUPDATE = "pylupdate5"
-            if noobsolete:
-                PYLUPDATE += " -noobsolete"
-        elif os.system("pylupdate4 -version") == 0:
-            PYLUPDATE = "pylupdate4"
             if noobsolete:
                 PYLUPDATE += " -noobsolete"
         elif os.system("pyside2-lupdate -version") == 0:

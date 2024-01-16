@@ -16,11 +16,9 @@ INSTALLATION WHEN NECESSARY
     LINUX = /home/[YOUR_USER_NAME]/.FreeCAD/Gui/Stylesheets/
 
 ============================================================================================================
-TO MODIFY USE THESE COLORS:
- @ThemeAccentColor1
- @ThemeAccentColor2
-
-
+FOLLOWING CODES ARE CHANGED IN THE SETTINGS:
+  @ThemeAccentColor1
+  @ThemeAccentColor2
 See Qt documentation:
 
   - https://doc.qt.io/qt-5/stylesheet.html
@@ -216,9 +214,9 @@ QStatusBar::item {
 }
 
 QStatusBar QToolTip {
-  background-color: #F6F6F6;
-  border: 1px solid #C1C1C1;
-  color: #F6F6F6;
+  background-color: #f6f6f6;
+  border: 1px solid #cccccc;
+  color: black;
   /* Remove padding, for fix combo box tooltip */
   padding: 0px;
   /* Reducing transparency to read better */
@@ -1382,6 +1380,7 @@ QComboBox {
   /* changed to 4px to fix #239 */
   /* Fixes #103, #111 */
   min-height: 1.5em;
+  margin: 0px -1px 0px 0px; /* hack for Mac... try it on Windows and Linux */
   /* padding-top: 2px;     removed to fix #132 */
   /* padding-bottom: 2px;  removed to fix #132 */
   /* min-width: 75px;      removed to fix #109 */
@@ -1411,6 +1410,10 @@ QComboBox QAbstractItemView:alternate {
   background: #f6f6f6;
 }
 
+QComboBox:checked {
+  color: black;
+}
+
 QComboBox:disabled {
   background-color: #F6F6F6;
   color: #BABABA;
@@ -1430,17 +1433,14 @@ QComboBox:on {
 }
 
 QComboBox::indicator {
-  border: none;
-  border-radius: 0px;
+  padding-left: 8px;
   background-color: transparent;
-  selection-background-color: transparent;
-  color: transparent;
-  selection-color: @ThemeAccentColor1;
-  /* Needed to remove indicator - fix #132 */
 }
 
-QComboBox::indicator:alternate {
-  background: #f6f6f6;
+QComboBox::indicator:checked {
+  width: 12px;
+  height: 12px;
+  image:url(qss:images_dark-light/check_dark.svg);
 }
 
 QComboBox::item {
@@ -1454,9 +1454,17 @@ QComboBox::item {
         }
         */
 }
+/* Background color of popup-list.*/
 
+/* Needed to complete the rule set. */
 QComboBox::item:alternate {
   background: #f6f6f6;
+}
+
+/* Color of the selected list item. */
+QComboBox::item:selected {
+  border: 1px solid @ThemeAccentColor2;
+  background: @ThemeAccentColor2;
 }
 
 QComboBox::drop-down {
@@ -1795,6 +1803,7 @@ QTabWidget::pane {
   margin: 0px;
   /* Fixes double border inside pane with pyqt5 */
   padding: 0px;
+  background-color: #f6f6f6;
 }
 
 QTabWidget::pane:selected {
@@ -2613,4 +2622,53 @@ Gui--StatefulLabel[state="fully_constrained"] {
 Gui--UrlLabel {
   color : rgba(0,91,255,255); /* Deep sky blue */
   text-decoration : underline;
+}
+
+Gui--NotificationLabel {
+  background-color: #f6f6f6;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+}
+
+/*==================================================================================================
+Forming windows below are the border settings. See also https://forum.freecad.org/viewtopic.php?p=439797#p439797
+==================================================================================================*/
+QMdiSubWindow {
+  border:2px solid #ffffff;
+  border-radius: 2px;
+  border-top-right-radius: 7px;
+  border-top-left-radius: 7px;
+  background-color: #f6f6f6;
+}
+
+QMdiSubWindow:hover {
+  border:2px solid #cccccc;
+}
+
+QMdiSubWindow:active {
+  border:2px solid @ThemeAccentColor1;
+}
+
+/*==================================================================================================
+Settings menu #groupsTreeView:
+==================================================================================================*/
+
+QTreeView::branch#groupsTreeView:closed:has-children:has-siblings  {
+  border-image: none 0;
+}
+
+QTreeView::branch#groupsTreeView:open:has-children:has-siblings  {
+  border-image: none 0;
+}
+
+QTreeView::branch#groupsTreeView:open:has-children:!has-siblings  {
+ border-image: none 0;
+}
+
+QTreeView::branch#groupsTreeView:has-children:!has-siblings:closed  {
+  border-image: none 0;
+}
+
+QTreeView::branch#groupsTreeView:has-siblings:!adjoins-item  {
+  border-image: none 0;
 }

@@ -190,6 +190,7 @@
         <file>Std_ToggleNavigation.svg</file>
         <file>Std_ToggleObjects.svg</file>
         <file>Std_ToggleVisibility.svg</file>
+        <file>Std_ToggleTransparency.svg</file>
         <file>Std_Tool1.svg</file>
         <file>Std_Tool2.svg</file>
         <file>Std_Tool3.svg</file>
@@ -255,6 +256,7 @@
         <file>folder.svg</file>
         <file>document-python.svg</file>
         <file>document-package.svg</file>
+        <file>cursor-through.svg</file>
         <file>Std_Alignment.svg</file>
         <file>Std_DuplicateSelection.svg</file>
         <file>Std_UserEditModeDefault.svg</file>

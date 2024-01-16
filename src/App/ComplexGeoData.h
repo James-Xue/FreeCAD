@@ -176,6 +176,7 @@ public:
     virtual bool getCenterOfGravity(Base::Vector3d& center) const;
     //@}
 
+    static const std::string &elementMapPrefix();
 
     /** @name Element name mapping */
     //@{
@@ -247,6 +248,9 @@ public:
 
     // NOTE: getElementHistory is now in ElementMap
 
+    void setMappedChildElements(const std::vector<Data::ElementMap::MappedChildElements> & children);
+    std::vector<Data::ElementMap::MappedChildElements> getMappedChildElements() const;
+
     char elementType(const Data::MappedName &) const;
     char elementType(const Data::IndexedName &) const;
     char elementType(const char *name) const;
@@ -278,6 +282,19 @@ public:
 
     /** Flush an internal buffering for element mapping */
     virtual void flushElementMap() const;
+    //@}
+
+    /** @name Save/restore */
+    //@{
+    void Save (Base::Writer &writer) const override;
+    void Restore(Base::XMLReader &reader) override;
+    void SaveDocFile(Base::Writer &writer) const override;
+    void RestoreDocFile(Base::Reader &reader) override;
+    unsigned int getMemSize () const override;
+    void setPersistenceFileName(const char *name) const;
+    virtual void beforeSave() const;
+    bool isRestoreFailed() const { return _restoreFailed; }
+    void resetRestoreFailure() const { _restoreFailed = true; }
     //@}
 
 protected:
@@ -347,6 +364,9 @@ public:
 
 protected:
 
+    void restoreStream(std::istream & stream, std::size_t count);
+    void readElements(Base::XMLReader& reader, size_t count);
+
     /// from local to outside
     inline Base::Vector3d transformToOutside(const Base::Vector3f& vec) const
     {
@@ -370,6 +390,10 @@ protected:
 
 private:
     ElementMapPtr _elementMap;
+
+protected:
+    mutable std::string _persistenceName;
+    mutable bool _restoreFailed = false;
 };
 
 } //namespace App

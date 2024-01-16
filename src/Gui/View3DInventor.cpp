@@ -57,6 +57,7 @@
 #include "View3DInventor.h"
 #include "View3DSettings.h"
 #include "Application.h"
+#include "BitmapFactory.h"
 #include "Camera.h"
 #include "Document.h"
 #include "FileDialog.h"
@@ -121,9 +122,9 @@ View3DInventor::View3DInventor(Gui::Document* pcDocument, QWidget* parent,
     // create the inventor widget and set the defaults
     _viewer->setDocument(this->_pcDocument);
     stack->addWidget(_viewer->getWidget());
-    // http://forum.freecad.org/viewtopic.php?f=3&t=6055&sid=150ed90cbefba50f1e2ad4b4e6684eba
+    // https://forum.freecad.org/viewtopic.php?f=3&t=6055&sid=150ed90cbefba50f1e2ad4b4e6684eba
     // describes a minor error but trying to fix it leads to a major issue
-    // http://forum.freecad.org/viewtopic.php?f=3&t=6085&sid=3f4bcab8007b96aaf31928b564190fd7
+    // https://forum.freecad.org/viewtopic.php?f=3&t=6085&sid=3f4bcab8007b96aaf31928b564190fd7
     // so the change is commented out
     // By default, the wheel events are processed by the 3d view AND the mdi area.
     //_viewer->getGLWidget()->setAttribute(Qt::WA_NoMousePropagation);
@@ -134,6 +135,8 @@ View3DInventor::View3DInventor(Gui::Document* pcDocument, QWidget* parent,
 
     stopSpinTimer = new QTimer(this);
     connect(stopSpinTimer, &QTimer::timeout, this, &View3DInventor::stopAnimating);
+
+    setWindowIcon(Gui::BitmapFactory().pixmap("Document"));
 }
 
 View3DInventor::~View3DInventor()
@@ -440,7 +443,10 @@ bool View3DInventor::onMsg(const char* pMsg, const char** ppReturn)
 
 bool View3DInventor::onHasMsg(const char* pMsg) const
 {
-    if  (strcmp("Save",pMsg) == 0) {
+    if (strcmp("CanPan", pMsg) == 0) {
+        return true;
+    }
+    else if (strcmp("Save",pMsg) == 0) {
         return true;
     }
     else if (strcmp("SaveAs",pMsg) == 0) {
@@ -669,7 +675,7 @@ void View3DInventor::dump(const char* filename, bool onlyVisible)
     }
 }
 
-void View3DInventor::windowStateChanged(MDIView* view)
+void View3DInventor::windowStateChanged(QWidget* view)
 {
     bool canStartTimer = false;
     if (this != view) {

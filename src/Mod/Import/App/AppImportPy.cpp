@@ -25,22 +25,15 @@
 #define WNT  // avoid conflict with GUID
 #endif
 #ifndef _PreComp_
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/range/adaptor/indexed.hpp>
 #include <climits>
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wextra-semi"
 #endif
-#include <APIHeaderSection_MakeHeader.hxx>
-#include <IGESCAFControl_Reader.hxx>
-#include <IGESCAFControl_Writer.hxx>
-#include <IGESControl_Controller.hxx>
-#include <IGESData_GlobalSection.hxx>
-#include <IGESData_IGESModel.hxx>
-#include <IGESToBRep_Actor.hxx>
 #include <Interface_Static.hxx>
 #include <OSD_Exception.hxx>
-#include <STEPCAFControl_Reader.hxx>
-#include <STEPCAFControl_Writer.hxx>
 #include <Standard_Version.hxx>
 #include <TColStd_IndexedDataMapOfStringString.hxx>
 #include <TDocStd_Document.hxx>
@@ -58,6 +51,7 @@
 #endif
 
 #include "dxf/ImpExpDxf.h"
+#include "SketchExportHelper.h"
 #include <App/Application.h>
 #include <App/Document.h>
 #include <App/DocumentObjectPy.h>
@@ -74,26 +68,14 @@
 
 #include "ImportOCAF2.h"
 #include "ReaderGltf.h"
+#include "ReaderIges.h"
+#include "ReaderStep.h"
 #include "WriterGltf.h"
+#include "WriterIges.h"
+#include "WriterStep.h"
 
 namespace Import
 {
-
-class ImportOCAFExt: public Import::ImportOCAF2
-{
-public:
-    ImportOCAFExt(Handle(TDocStd_Document) hStdDoc, App::Document* doc, const std::string& name)
-        : ImportOCAF2(hStdDoc, doc, name)
-    {}
-
-    std::map<Part::Feature*, std::vector<App::Color>> partColors;
-
-private:
-    void applyFaceColors(Part::Feature* part, const std::vector<App::Color>& colors) override
-    {
-        partColors[part] = colors;
-    }
-};
 
 class Module: public Py::ExtensionModule<Module>
 {
@@ -131,7 +113,7 @@ public:
 private:
     Py::Object importer(const Py::Tuple& args, const Py::Dict& kwds)
     {
-        char* Name;
+        char* Name = nullptr;
         char* DocName = nullptr;
         PyObject* importHidden = Py_None;
         PyObject* merge = Py_None;
@@ -158,7 +140,6 @@ private:
 
         std::string Utf8Name = std::string(Name);
         PyMem_Free(Name);
-        std::string name8bit = Part::encodeFilename(Utf8Name);
 
         try {
             Base::FileInfo file(Utf8Name.c_str());
@@ -177,25 +158,8 @@ private:
 
             if (file.hasExtension({"stp", "step"})) {
                 try {
-                    STEPCAFControl_Reader aReader;
-                    aReader.SetColorMode(true);
-                    aReader.SetNameMode(true);
-                    aReader.SetLayerMode(true);
-                    if (aReader.ReadFile((Standard_CString)(name8bit.c_str()))
-                        != IFSelect_RetDone) {
-                        throw Py::Exception(PyExc_IOError, "cannot read STEP file");
-                    }
-
-#if OCC_VERSION_HEX < 0x070500
-                    Handle(Message_ProgressIndicator) pi = new Part::ProgressIndicator(100);
-                    aReader.Reader().WS()->MapReader()->SetProgress(pi);
-                    pi->NewScope(100, "Reading STEP file...");
-                    pi->Show();
-#endif
-                    aReader.Transfer(hDoc);
-#if OCC_VERSION_HEX < 0x070500
-                    pi->EndScope();
-#endif
+                    Import::ReaderStep reader(file);
+                    reader.read(hDoc);
                 }
                 catch (OSD_Exception& e) {
                     Base::Console().Error("%s\n", e.GetMessageString());
@@ -206,40 +170,9 @@ private:
                 }
             }
             else if (file.hasExtension({"igs", "iges"})) {
-                Base::Reference<ParameterGrp> hGrp = App::GetApplication()
-                                                         .GetUserParameter()
-                                                         .GetGroup("BaseApp")
-                                                         ->GetGroup("Preferences")
-                                                         ->GetGroup("Mod/Part")
-                                                         ->GetGroup("IGES");
-
                 try {
-                    IGESControl_Controller::Init();
-                    IGESCAFControl_Reader aReader;
-                    // http://www.opencascade.org/org/forum/thread_20603/?forum=3
-                    aReader.SetReadVisible(
-                        hGrp->GetBool("SkipBlankEntities", true) ? Standard_True : Standard_False);
-                    aReader.SetColorMode(true);
-                    aReader.SetNameMode(true);
-                    aReader.SetLayerMode(true);
-                    if (aReader.ReadFile((Standard_CString)(name8bit.c_str()))
-                        != IFSelect_RetDone) {
-                        throw Py::Exception(PyExc_IOError, "cannot read IGES file");
-                    }
-
-#if OCC_VERSION_HEX < 0x070500
-                    Handle(Message_ProgressIndicator) pi = new Part::ProgressIndicator(100);
-                    aReader.WS()->MapReader()->SetProgress(pi);
-                    pi->NewScope(100, "Reading IGES file...");
-                    pi->Show();
-#endif
-                    aReader.Transfer(hDoc);
-#if OCC_VERSION_HEX < 0x070500
-                    pi->EndScope();
-#endif
-                    // http://opencascade.blogspot.de/2009/03/unnoticeable-memory-leaks-part-2.html
-                    Handle(IGESToBRep_Actor)::DownCast(aReader.WS()->TransferReader()->Actor())
-                        ->SetModel(new IGESData_IGESModel);
+                    Import::ReaderIges reader(file);
+                    reader.read(hDoc);
                 }
                 catch (OSD_Exception& e) {
                     Base::Console().Error("%s\n", e.GetMessageString());
@@ -288,7 +221,7 @@ private:
                     list.append(tuple);
                 }
 
-                return list;
+                return list;  // NOLINT
             }
         }
         catch (Standard_Failure& e) {
@@ -303,11 +236,11 @@ private:
     }
     Py::Object exporter(const Py::Tuple& args, const Py::Dict& kwds)
     {
-        PyObject* object;
-        char* Name;
-        PyObject* exportHidden = Py_None;
-        PyObject* legacy = Py_None;
-        PyObject* keepPlacement = Py_None;
+        PyObject* object = nullptr;
+        char* Name = nullptr;
+        PyObject* pyexportHidden = Py_None;
+        PyObject* pylegacy = Py_None;
+        PyObject* pykeepPlacement = Py_None;
         static const std::array<const char*, 6> kwd_list {"obj",
                                                           "name",
                                                           "exportHidden",
@@ -322,123 +255,99 @@ private:
                                                  "utf-8",
                                                  &Name,
                                                  &PyBool_Type,
-                                                 &exportHidden,
+                                                 &pyexportHidden,
                                                  &PyBool_Type,
-                                                 &legacy,
+                                                 &pylegacy,
                                                  &PyBool_Type,
-                                                 &keepPlacement)) {
+                                                 &pykeepPlacement)) {
             throw Py::Exception();
         }
 
         std::string Utf8Name = std::string(Name);
         PyMem_Free(Name);
-        std::string name8bit = Part::encodeFilename(Utf8Name);
+
+        // clang-format off
+        // determine export options
+        Part::OCAF::ImportExportSettings settings;
+
+        bool legacyExport = (pylegacy         == Py_None ? settings.getExportLegacy()
+                                                         : Base::asBoolean(pylegacy));
+        bool exportHidden = (pyexportHidden   == Py_None ? settings.getExportHiddenObject()
+                                                         : Base::asBoolean(pyexportHidden));
+        bool keepPlacement = (pykeepPlacement == Py_None ? settings.getExportKeepPlacement()
+                                                         : Base::asBoolean(pykeepPlacement));
+        // clang-format on
 
         try {
             Py::Sequence list(object);
+            std::vector<App::DocumentObject*> objs;
+            std::map<Part::Feature*, std::vector<App::Color>> partColor;
+            for (Py::Sequence::iterator it = list.begin(); it != list.end(); ++it) {
+                PyObject* item = (*it).ptr();
+                if (PyObject_TypeCheck(item, &(App::DocumentObjectPy::Type))) {
+                    auto pydoc = static_cast<App::DocumentObjectPy*>(item);
+                    objs.push_back(pydoc->getDocumentObjectPtr());
+                }
+                else if (PyTuple_Check(item) && PyTuple_Size(item) == 2) {
+                    Py::Tuple tuple(*it);
+                    Py::Object item0 = tuple.getItem(0);
+                    Py::Object item1 = tuple.getItem(1);
+                    if (PyObject_TypeCheck(item0.ptr(), &(App::DocumentObjectPy::Type))) {
+                        auto pydoc = static_cast<App::DocumentObjectPy*>(item0.ptr());
+                        App::DocumentObject* obj = pydoc->getDocumentObjectPtr();
+                        objs.push_back(obj);
+                        if (Part::Feature* part = dynamic_cast<Part::Feature*>(obj)) {
+                            App::PropertyColorList colors;
+                            colors.setPyObject(item1.ptr());
+                            partColor[part] = colors.getValues();
+                        }
+                    }
+                }
+            }
+
             Handle(XCAFApp_Application) hApp = XCAFApp_Application::GetApplication();
             Handle(TDocStd_Document) hDoc;
             hApp->NewDocument(TCollection_ExtendedString("MDTV-CAF"), hDoc);
 
-            std::vector<App::DocumentObject*> objs;
-            for (Py::Sequence::iterator it = list.begin(); it != list.end(); ++it) {
-                PyObject* item = (*it).ptr();
-                if (PyObject_TypeCheck(item, &(App::DocumentObjectPy::Type))) {
-                    objs.push_back(
-                        static_cast<App::DocumentObjectPy*>(item)->getDocumentObjectPtr());
+            auto getShapeColors = [partColor](App::DocumentObject* obj, const char* subname) {
+                std::map<std::string, App::Color> cols;
+                auto it = partColor.find(dynamic_cast<Part::Feature*>(obj));
+                if (it != partColor.end() && boost::starts_with(subname, "Face")) {
+                    const auto& colors = it->second;
+                    std::string face("Face");
+                    for (const auto& element : colors | boost::adaptors::indexed(1)) {
+                        cols[face + std::to_string(element.index())] = element.value();
+                    }
                 }
-            }
+                return cols;
+            };
 
-            if (legacy == Py_None) {
-                Part::OCAF::ImportExportSettings settings;
-                legacy = settings.getExportLegacy() ? Py_True : Py_False;
-            }
-
-            Import::ExportOCAF2 ocaf(hDoc);
-            if (!Base::asBoolean(legacy) || !ocaf.canFallback(objs)) {
+            Import::ExportOCAF2 ocaf(hDoc, getShapeColors);
+            if (!legacyExport || !ocaf.canFallback(objs)) {
                 ocaf.setExportOptions(ExportOCAF2::customExportOptions());
-
-                if (exportHidden != Py_None) {
-                    ocaf.setExportHiddenObject(Base::asBoolean(exportHidden));
-                }
-                if (keepPlacement != Py_None) {
-                    ocaf.setKeepPlacement(Base::asBoolean(keepPlacement));
-                }
+                ocaf.setExportHiddenObject(exportHidden);
+                ocaf.setKeepPlacement(keepPlacement);
 
                 ocaf.exportObjects(objs);
             }
             else {
-                bool keepExplicitPlacement = Standard_True;
-                ExportOCAF ocaf(hDoc, keepExplicitPlacement);
-                // That stuff is exporting a list of selected objects into FreeCAD Tree
-                std::vector<TDF_Label> hierarchical_label;
-                std::vector<TopLoc_Location> hierarchical_loc;
-                std::vector<App::DocumentObject*> hierarchical_part;
-                for (auto obj : objs) {
-                    ocaf.exportObject(obj, hierarchical_label, hierarchical_loc, hierarchical_part);
-                }
-
-                // Free Shapes must have absolute placement and not explicit
-                std::vector<TDF_Label> FreeLabels;
-                std::vector<int> part_id;
-                ocaf.getFreeLabels(hierarchical_label, FreeLabels, part_id);
-                // Update is not performed automatically anymore:
-                // https://tracker.dev.opencascade.org/view.php?id=28055
-                XCAFDoc_DocumentTool::ShapeTool(hDoc->Main())->UpdateAssemblies();
+                bool keepExplicitPlacement = true;
+                ExportOCAFCmd ocaf(hDoc, keepExplicitPlacement);
+                ocaf.setPartColorsMap(partColor);
+                ocaf.exportObjects(objs);
             }
 
             Base::FileInfo file(Utf8Name.c_str());
             if (file.hasExtension({"stp", "step"})) {
-                STEPCAFControl_Writer writer;
-                Part::Interface::writeStepAssembly(Part::Interface::Assembly::On);
-                writer.Transfer(hDoc, STEPControl_AsIs);
-
-                APIHeaderSection_MakeHeader makeHeader(writer.ChangeWriter().Model());
-                Base::Reference<ParameterGrp> hGrp = App::GetApplication()
-                                                         .GetUserParameter()
-                                                         .GetGroup("BaseApp")
-                                                         ->GetGroup("Preferences")
-                                                         ->GetGroup("Mod/Part")
-                                                         ->GetGroup("STEP");
-
-                // Don't set name because STEP doesn't support UTF-8
-                // https://forum.freecad.org/viewtopic.php?f=8&t=52967
-                makeHeader.SetAuthorValue(
-                    1,
-                    new TCollection_HAsciiString(hGrp->GetASCII("Author", "Author").c_str()));
-                makeHeader.SetOrganizationValue(
-                    1,
-                    new TCollection_HAsciiString(hGrp->GetASCII("Company").c_str()));
-                makeHeader.SetOriginatingSystem(
-                    new TCollection_HAsciiString(App::Application::getExecutableName().c_str()));
-                makeHeader.SetDescriptionValue(1, new TCollection_HAsciiString("FreeCAD Model"));
-                IFSelect_ReturnStatus ret = writer.Write(name8bit.c_str());
-                if (ret == IFSelect_RetError || ret == IFSelect_RetFail
-                    || ret == IFSelect_RetStop) {
-                    PyErr_Format(PyExc_IOError, "Cannot open file '%s'", Utf8Name.c_str());
-                    throw Py::Exception();
-                }
+                Import::WriterStep writer(file);
+                writer.write(hDoc);
             }
             else if (file.hasExtension({"igs", "iges"})) {
-                IGESControl_Controller::Init();
-                IGESCAFControl_Writer writer;
-                IGESData_GlobalSection header = writer.Model()->GlobalSection();
-                header.SetAuthorName(
-                    new TCollection_HAsciiString(Part::Interface::writeIgesHeaderAuthor()));
-                header.SetCompanyName(
-                    new TCollection_HAsciiString(Part::Interface::writeIgesHeaderCompany()));
-                header.SetSendName(
-                    new TCollection_HAsciiString(Part::Interface::writeIgesHeaderProduct()));
-                writer.Model()->SetGlobalSection(header);
-                writer.Transfer(hDoc);
-                Standard_Boolean ret = writer.Write(name8bit.c_str());
-                if (!ret) {
-                    PyErr_Format(PyExc_IOError, "Cannot open file '%s'", Utf8Name.c_str());
-                    throw Py::Exception();
-                }
+                Import::WriterIges writer(file);
+                writer.write(hDoc);
             }
             else if (file.hasExtension({"glb", "gltf"})) {
-                Import::WriterGltf writer(name8bit, file);
+                Import::WriterGltf writer(file);
                 writer.write(hDoc);
             }
 
@@ -455,9 +364,16 @@ private:
         return Py::None();
     }
 
+    // This readDXF method is an almost exact duplicate of the one in ImportGui::Module.
+    // The only difference is the CDxfRead class derivation that is created.
+    // It would seem desirable to have most of this code in just one place, passing it
+    // e.g. a pointer to a function that does the 4 lines during the lifetime of the
+    // CDxfRead object, but right now Import::Module and ImportGui::Module cannot see
+    // each other's functions so this shared code would need some place to live where
+    // both places could include a declaration.
     Py::Object readDXF(const Py::Tuple& args)
     {
-        char* Name;
+        char* Name = nullptr;
         const char* DocName = nullptr;
         const char* optionSource = nullptr;
         std::string defaultOptions = "User parameter:BaseApp/Preferences/Mod/Draft";
@@ -484,7 +400,7 @@ private:
             defaultOptions = optionSource;
         }
 
-        App::Document* pcDoc;
+        App::Document* pcDoc = nullptr;
         if (DocName) {
             pcDoc = App::GetApplication().getDocument(DocName);
         }
@@ -512,10 +428,12 @@ private:
         return Py::None();
     }
 
+
     Py::Object writeDXFShape(const Py::Tuple& args)
     {
-        PyObject* shapeObj;
-        char* fname;
+        Base::Console().Message("Imp:writeDXFShape()\n");
+        PyObject* shapeObj = nullptr;
+        char* fname = nullptr;
         std::string filePath;
         std::string layerName;
         const char* optionSource = nullptr;
@@ -626,8 +544,8 @@ private:
 
     Py::Object writeDXFObject(const Py::Tuple& args)
     {
-        PyObject* docObj;
-        char* fname;
+        PyObject* docObj = nullptr;
+        char* fname = nullptr;
         std::string filePath;
         std::string layerName;
         const char* optionSource = nullptr;
@@ -677,11 +595,21 @@ private:
                         PyObject* item = (*it).ptr();
                         App::DocumentObject* obj =
                             static_cast<App::DocumentObjectPy*>(item)->getDocumentObjectPtr();
-                        Part::Feature* part = static_cast<Part::Feature*>(obj);
-                        layerName = part->getNameInDocument();
+                        layerName = obj->getNameInDocument();
                         writer.setLayerName(layerName);
-                        const TopoDS_Shape& shape = part->Shape.getValue();
-                        writer.exportShape(shape);
+                        TopoDS_Shape shapeToExport;
+                        if (SketchExportHelper::isSketch(obj)) {
+                            // project sketch along sketch Z via hlrProjector to get geometry on XY
+                            // plane
+                            shapeToExport = SketchExportHelper::getFlatSketchXY(obj);
+                        }
+                        else {
+                            // do we know that obj is a Part::Feature? is this checked somewhere
+                            // before this? this should be a located shape??
+                            Part::Feature* part = static_cast<Part::Feature*>(obj);
+                            shapeToExport = part->Shape.getValue();
+                        }
+                        writer.exportShape(shapeToExport);
                     }
                 }
                 writer.endRun();
@@ -705,6 +633,9 @@ private:
             filePath = std::string(fname);
             layerName = "none";
             PyMem_Free(fname);
+            App::DocumentObject* obj =
+                static_cast<App::DocumentObjectPy*>(docObj)->getDocumentObjectPtr();
+            Base::Console().Message("Imp:writeDXFObject - docObj: %s\n", obj->getNameInDocument());
 
             if ((versionParm == 12) || (versionParm == 14)) {
                 versionOverride = true;
@@ -729,11 +660,21 @@ private:
                 writer.init();
                 App::DocumentObject* obj =
                     static_cast<App::DocumentObjectPy*>(docObj)->getDocumentObjectPtr();
-                Part::Feature* part = static_cast<Part::Feature*>(obj);
-                layerName = part->getNameInDocument();
+                layerName = obj->getNameInDocument();
                 writer.setLayerName(layerName);
-                const TopoDS_Shape& shape = part->Shape.getValue();
-                writer.exportShape(shape);
+                TopoDS_Shape shapeToExport;
+                if (SketchExportHelper::isSketch(obj)) {
+                    // project sketch along sketch Z via hlrProjector to get geometry on XY plane
+                    shapeToExport = SketchExportHelper::getFlatSketchXY(obj);
+                }
+                else {
+                    // TODO: do we know that obj is a Part::Feature? is this checked somewhere
+                    // before this?
+                    // TODO: this should be a located shape??
+                    Part::Feature* part = static_cast<Part::Feature*>(obj);
+                    shapeToExport = part->Shape.getValue();
+                }
+                writer.exportShape(shapeToExport);
                 writer.endRun();
                 return Py::None();
             }

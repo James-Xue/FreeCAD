@@ -33,10 +33,10 @@ import lazy_loader.lazy_loader as lz
 import FreeCAD as App
 import DraftVecUtils
 import WorkingPlane
-import draftutils.utils as utils
-import draftfunctions.svgtext as svgtext
-
+from draftfunctions import svgtext
 from draftfunctions.svgshapes import get_proj, get_circle, get_path
+from draftutils import params
+from draftutils import utils
 from draftutils.messages import _wrn, _err
 
 # Delay import of module until first use because it is heavy
@@ -50,15 +50,14 @@ DraftGeomUtils = lz.LazyLoader("DraftGeomUtils", globals(), "DraftGeomUtils")
 
 def get_line_style(line_style, scale):
     """Return a linestyle scaled by a factor."""
-    param = App.ParamGet("User parameter:BaseApp/Preferences/Mod/Draft")
     style = None
 
     if line_style == "Dashed":
-        style = param.GetString("svgDashedLine", "2,2")
+        style = params.get_param("svgDashedLine")
     elif line_style == "Dashdot":
-        style = param.GetString("svgDashdotLine", "3,2,0.2,2")
+        style = params.get_param("svgDashdotLine")
     elif line_style == "Dotted":
-        style = param.GetString("svgDottedLine", "0.2,2")
+        style = params.get_param("svgDottedLine")
     elif line_style:
         if "," in line_style:
             style = line_style
@@ -396,7 +395,7 @@ def get_svg(obj,
 
     direction: Base::Vector3, optional
         It defaults to `None`.
-        It is an arbitrary projection vector or a `WorkingPlane.Plane`
+        It is an arbitrary projection vector or a `WorkingPlane.PlaneBase`
         instance.
 
     linestyle: optional
@@ -462,13 +461,13 @@ def get_svg(obj,
     if direction:
         if isinstance(direction, App.Vector):
             if direction != App.Vector(0, 0, 0):
-                plane = WorkingPlane.plane()
-                plane.alignToPointAndAxis_SVG(App.Vector(0, 0, 0),
-                                              direction.negative().negative(),
-                                              0)
+                plane = WorkingPlane.PlaneBase()
+                plane.align_to_point_and_axis_svg(App.Vector(0, 0, 0),
+                                                  direction.negative().negative(),
+                                                  0)
             else:
                 raise ValueError("'direction' cannot be: Vector(0, 0, 0)")
-        elif isinstance(direction, WorkingPlane.plane):
+        elif isinstance(direction, WorkingPlane.PlaneBase):
             plane = direction
 
     stroke = "#000000"

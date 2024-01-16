@@ -186,6 +186,7 @@ class _CommandWindow:
         self.Include = True
         self.baseFace = None
         self.wparams = ["Width","Height","H1","H2","H3","W1","W2","O1","O2"]
+        self.wp = None
 
         # autobuild mode
         if FreeCADGui.Selection.getSelectionEx():
@@ -235,8 +236,8 @@ class _CommandWindow:
                     return
 
         # interactive mode
-        if hasattr(FreeCAD,"DraftWorkingPlane"):
-            FreeCAD.DraftWorkingPlane.setup()
+        import WorkingPlane
+        self.wp = WorkingPlane.get_working_plane()
 
         self.tracker = DraftTrackers.boxTracker()
         self.tracker.length(self.Width)
@@ -274,8 +275,8 @@ class _CommandWindow:
         point = point.add(FreeCAD.Vector(0,0,self.Sill))
         FreeCAD.ActiveDocument.openTransaction(translate("Arch","Create Window"))
 
-        FreeCADGui.doCommand("import math, FreeCAD, Arch, DraftGeomUtils")
-        FreeCADGui.doCommand("wp = FreeCAD.DraftWorkingPlane")
+        FreeCADGui.doCommand("import math, FreeCAD, Arch, DraftGeomUtils, WorkingPlane")
+        FreeCADGui.doCommand("wp = WorkingPlane.get_working_plane()")
 
         if self.baseFace is not None:
             FreeCADGui.doCommand("face = FreeCAD.ActiveDocument." + self.baseFace[0].Name + ".Shape.Faces[" + str(self.baseFace[1]) + "]")
@@ -342,9 +343,8 @@ class _CommandWindow:
         delta = FreeCAD.Vector(self.Width/2,self.Thickness/2,self.Height/2)
         delta = delta.add(FreeCAD.Vector(0,0,self.Sill))
 
-        wp = FreeCAD.DraftWorkingPlane
         if self.baseFace is None:
-            rot = FreeCAD.Rotation(wp.u,wp.v,-wp.axis,"XZY")
+            rot = FreeCAD.Rotation(self.wp.u,self.wp.v,-self.wp.axis,"XZY")
             self.tracker.setRotation(rot)
         if info:
             if "Face" in info['Component']:
@@ -353,7 +353,7 @@ class _CommandWindow:
                 self.baseFace = [o,int(info['Component'][4:])-1]
                 #print("switching to ",o.Label," face ",self.baseFace[1])
                 f = o.Shape.Faces[self.baseFace[1]]
-                p = DraftGeomUtils.placement_from_face(f,vec_z=wp.axis,rotated=True)
+                p = DraftGeomUtils.placement_from_face(f,vec_z=self.wp.axis,rotated=True)
                 rot = p.Rotation
                 self.tracker.setRotation(rot)
         r = self.tracker.trans.rotation.getValue().getValue()
@@ -648,19 +648,26 @@ class _Window(ArchComponent.Component):
 
         if prop in ["Base","WindowParts","Placement","HoleDepth","Height","Width","Hosts"]:
             setattr(self,prop,getattr(obj,prop))
+        if prop in ["Height","Width"]:
+            self.TouchOnShapeChange = True  # touch hosts after next "Shape" change
 
     def onChanged(self,obj,prop):
 
         self.hideSubobjects(obj,prop)
         if not "Restore" in obj.State:
-            if prop in ["Base","WindowParts","Placement","HoleDepth","Height","Width","Hosts"]:
+            if prop in ["Base","WindowParts","Placement","HoleDepth","Height","Width","Hosts","Shape"]:
                 # anti-recursive loops, bc the base sketch will touch the Placement all the time
                 touchhosts = False
-                if hasattr(self,prop):
-                    if getattr(self,prop) != getattr(obj,prop):
+                if prop == "Shape":
+                    if hasattr(self,"TouchOnShapeChange") and self.TouchOnShapeChange:
+                        self.TouchOnShapeChange = False
                         touchhosts = True
-                if touchhosts and hasattr(self, "Hosts") and hasattr(obj, "Hosts"):
-                    for host in set(self.Hosts + obj.Hosts): # use set to remove duplicates
+                elif hasattr(self,prop) and getattr(self,prop) != getattr(obj,prop):
+                    touchhosts = True
+                if touchhosts:
+                    hosts = self.Hosts if hasattr(self, "Hosts") else []
+                    hosts += obj.Hosts if hasattr(obj, "Hosts") else []
+                    for host in set(hosts): # use set to remove duplicates
                         # mark host to recompute so it can detect this object
                         host.touch()
             if prop in ["Width","Height","Frame"]:
@@ -987,9 +994,9 @@ class _Window(ArchComponent.Component):
                     if not obj.Subvolume.Shape.isNull():
                         sh = obj.Subvolume.Shape.copy()
                         pl = FreeCAD.Placement(sh.Placement)
-                        pl = pl.multiply(obj.Placement)
+                        pl = obj.Placement.multiply(pl)
                         if plac:
-                            pl = pl.multiply(plac)
+                            pl = plac.multiply(pl)
                         sh.Placement = pl
                         return sh
 

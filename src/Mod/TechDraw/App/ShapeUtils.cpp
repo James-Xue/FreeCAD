@@ -265,7 +265,7 @@ TopoDS_Shape ShapeUtils::mirrorShape(const TopoDS_Shape& input, const gp_Pnt& in
         return transShape;
     }
     try {
-        // Make tempTransform scale the object around it's centre point and
+        // Make tempTransform scale the object around its centre point and
         // mirror about the Y axis
         gp_Trsf tempTransform;
         //BRepBuilderAPI_Transform will loop forever if asked to use 0.0 as scale
@@ -365,5 +365,14 @@ std::pair<Base::Vector3d, Base::Vector3d> ShapeUtils::getEdgeEnds(TopoDS_Edge ed
     result.first = DU::toVector3d(gpFirst);
     result.second = DU::toVector3d(gpLast);
     return result;
+}
+
+//! check for shape is null or shape has no subshapes(vertex/edge/face/etc)
+//! this handles the case of an empty compound which is not IsNull, but has no
+//! content.
+bool  ShapeUtils::isShapeReallyNull(TopoDS_Shape shape)
+{
+    // if the shape is null or it has no subshapes, then it is really null
+    return shape.IsNull() || !TopoDS_Iterator(shape).More();
 }
 

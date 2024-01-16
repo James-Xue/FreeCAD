@@ -1,9 +1,17 @@
 # file types to ignore
 .*
-!/.gitignore
 !/.clang-format
+!/.clang-tidy
 !/.git-blame-ignore-revs
 !/.gitattributes
+!/.gitignore
+!/.gitmodules
+!/.pre-commit-config.yaml
+!/.pylintrc
+!/.github/
+!/contrib/.vscode/
+!*.gitattributes
+!*.gitignore
 *.DS_Store
 *.pyc
 *.obj
@@ -41,8 +49,11 @@ install_manifest.txt
 /src/Tools/offlinedoc/localwiki/
 /src/Tools/offlinedoc/*.txt
 /conda/environment.yml
+/.vscode/
 OpenSCAD_rc.py
 tags
+/CMakeUserPresets.json
+Testing
 
 # crowdin file
 src/Tools/freecad.zip

@@ -50,6 +50,11 @@ class SoIndexedLineSet;
 class SoEventCallback;
 class SoMarkerSet;
 
+namespace Fem
+{
+class FemPostDataAlongLineFilter;
+class FemPostDataAtPointFilter;
+}  // namespace Fem
 
 namespace FemGui
 {
@@ -57,31 +62,35 @@ namespace FemGui
 // ***************************************************************************
 // point marker
 class ViewProviderPointMarker;
+
 class PointMarker: public QObject
 {
     Q_OBJECT
 
 public:
-    PointMarker(Gui::View3DInventorViewer* view, std::string ObjName);
+    PointMarker(Gui::View3DInventorViewer* view, App::DocumentObject* obj);
     ~PointMarker() override;
 
     void addPoint(const SbVec3f&);
+    void clearPoints() const;
     int countPoints() const;
-
-Q_SIGNALS:
-    void PointsChanged(double x1, double y1, double z1, double x2, double y2, double z2);
+    SbVec3f getPoint(int idx) const;
+    void setPoint(int idx, const SbVec3f& pt) const;
+    Gui::View3DInventorViewer* getView() const;
+    App::DocumentObject* getObject() const;
+    QMetaObject::Connection connSelectPoint;
 
 protected:
-    void customEvent(QEvent* e) override;
+    std::string ObjectInvisible();
 
 private:
     Gui::View3DInventorViewer* view;
+    App::DocumentObject* obj;
     ViewProviderPointMarker* vp;
-    std::string m_name;
-    std::string ObjectInvisible();
 };
 
-class FemGuiExport ViewProviderPointMarker: public Gui::ViewProviderDocumentObject
+
+class FemGuiExport ViewProviderPointMarker: public Gui::ViewProvider
 {
     PROPERTY_HEADER_WITH_OVERRIDE(FemGui::ViewProviderPointMarker);
 
@@ -91,50 +100,25 @@ public:
 
 protected:
     SoCoordinate3* pCoords;
+    SoMarkerSet* pMarker;
     friend class PointMarker;
 };
 
 
 // ***************************************************************************
-// data marker
-class ViewProviderDataMarker;
-class DataMarker: public QObject
+// DataAlongLine markers
+class DataAlongLineMarker: public PointMarker
 {
     Q_OBJECT
 
 public:
-    DataMarker(Gui::View3DInventorViewer* view, std::string ObjName);
-    ~DataMarker() override;
-
-    void addPoint(const SbVec3f&);
-    int countPoints() const;
+    DataAlongLineMarker(Gui::View3DInventorViewer* view, Fem::FemPostDataAlongLineFilter* obj);
 
 Q_SIGNALS:
-    void PointsChanged(double x, double y, double z);
+    void PointsChanged(double x1, double y1, double z1, double x2, double y2, double z2);
 
 protected:
     void customEvent(QEvent* e) override;
-
-private:
-    Gui::View3DInventorViewer* view;
-    ViewProviderDataMarker* vp;
-    std::string m_name;
-    std::string ObjectInvisible();
-};
-
-
-class FemGuiExport ViewProviderDataMarker: public Gui::ViewProviderDocumentObject
-{
-    PROPERTY_HEADER_WITH_OVERRIDE(FemGui::ViewProviderDataMarker);
-
-public:
-    ViewProviderDataMarker();
-    ~ViewProviderDataMarker() override;
-
-protected:
-    SoCoordinate3* pCoords;
-    SoMarkerSet* pMarker;
-    friend class DataMarker;
 };
 
 
@@ -237,12 +221,14 @@ protected:
 
 // ***************************************************************************
 // box to set the coloring
+class ViewProviderFemPostObject;
+
 class TaskPostDisplay: public TaskPostBox
 {
     Q_OBJECT
 
 public:
-    explicit TaskPostDisplay(Gui::ViewProviderDocumentObject* view, QWidget* parent = nullptr);
+    explicit TaskPostDisplay(ViewProviderFemPostObject* view, QWidget* parent = nullptr);
     ~TaskPostDisplay() override;
 
     void applyPythonCode() override;
@@ -267,12 +253,14 @@ private:
 
 // ***************************************************************************
 // functions
+class ViewProviderFemPostFunction;
+
 class TaskPostFunction: public TaskPostBox
 {
     Q_OBJECT
 
 public:
-    explicit TaskPostFunction(Gui::ViewProviderDocumentObject* view, QWidget* parent = nullptr);
+    explicit TaskPostFunction(ViewProviderFemPostFunction* view, QWidget* parent = nullptr);
     ~TaskPostFunction() override;
 
     void applyPythonCode() override;
@@ -286,12 +274,14 @@ public:
 
 // ***************************************************************************
 // data along line filter
+class ViewProviderFemPostDataAlongLine;
+
 class TaskPostDataAlongLine: public TaskPostBox
 {
     Q_OBJECT
 
 public:
-    explicit TaskPostDataAlongLine(Gui::ViewProviderDocumentObject* view,
+    explicit TaskPostDataAlongLine(ViewProviderFemPostDataAlongLine* view,
                                    QWidget* parent = nullptr);
     ~TaskPostDataAlongLine() override;
 
@@ -316,21 +306,31 @@ private:
     std::string ObjectVisible();
     QWidget* proxy;
     std::unique_ptr<Ui_TaskPostDataAlongLine> ui;
+    DataAlongLineMarker* marker;
 };
 
 
 // ***************************************************************************
 // data at point filter
+class ViewProviderFemPostDataAtPoint;
+
 class TaskPostDataAtPoint: public TaskPostBox
 {
     Q_OBJECT
 
 public:
-    explicit TaskPostDataAtPoint(Gui::ViewProviderDocumentObject* view, QWidget* parent = nullptr);
+    explicit TaskPostDataAtPoint(ViewProviderFemPostDataAtPoint* view, QWidget* parent = nullptr);
     ~TaskPostDataAtPoint() override;
 
     void applyPythonCode() override;
     static void pointCallback(void* ud, SoEventCallback* n);
+
+Q_SIGNALS:
+    void PointsChanged(double x, double y, double z);
+
+protected:
+    Gui::View3DInventorViewer* viewer;
+    QMetaObject::Connection connSelectPoint;
 
 private:
     void setupConnections();
@@ -339,10 +339,9 @@ private:
     void centerChanged(double);
     void onChange(double x, double y, double z);
 
-private:
     std::string toString(double val) const;
     void showValue(double value, const char* unit);
-    std::string ObjectVisible();
+    std::string objectVisible(bool visible) const;
     QWidget* proxy;
     std::unique_ptr<Ui_TaskPostDataAtPoint> ui;
 };
@@ -350,12 +349,14 @@ private:
 
 // ***************************************************************************
 // clip filter
+class ViewProviderFemPostClip;
+
 class TaskPostClip: public TaskPostBox
 {
     Q_OBJECT
 
 public:
-    TaskPostClip(Gui::ViewProviderDocumentObject* view,
+    TaskPostClip(ViewProviderFemPostClip* view,
                  App::PropertyLink* function,
                  QWidget* parent = nullptr);
     ~TaskPostClip() override;
@@ -384,12 +385,14 @@ private:
 
 // ***************************************************************************
 // contours filter
+class ViewProviderFemPostContours;
+
 class TaskPostContours: public TaskPostBox
 {
     Q_OBJECT
 
 public:
-    explicit TaskPostContours(Gui::ViewProviderDocumentObject* view, QWidget* parent = nullptr);
+    explicit TaskPostContours(ViewProviderFemPostContours* view, QWidget* parent = nullptr);
     ~TaskPostContours() override;
 
     void applyPythonCode() override;
@@ -410,12 +413,14 @@ private:
 
 // ***************************************************************************
 // cut filter
+class ViewProviderFemPostCut;
+
 class TaskPostCut: public TaskPostBox
 {
     Q_OBJECT
 
 public:
-    TaskPostCut(Gui::ViewProviderDocumentObject* view,
+    TaskPostCut(ViewProviderFemPostCut* view,
                 App::PropertyLink* function,
                 QWidget* parent = nullptr);
     ~TaskPostCut() override;
@@ -442,12 +447,14 @@ private:
 
 // ***************************************************************************
 // scalar clip filter
+class ViewProviderFemPostScalarClip;
+
 class TaskPostScalarClip: public TaskPostBox
 {
     Q_OBJECT
 
 public:
-    explicit TaskPostScalarClip(Gui::ViewProviderDocumentObject* view, QWidget* parent = nullptr);
+    explicit TaskPostScalarClip(ViewProviderFemPostScalarClip* view, QWidget* parent = nullptr);
     ~TaskPostScalarClip() override;
 
     void applyPythonCode() override;
@@ -467,12 +474,14 @@ private:
 
 // ***************************************************************************
 // warp vector filter
+class ViewProviderFemPostWarpVector;
+
 class TaskPostWarpVector: public TaskPostBox
 {
     Q_OBJECT
 
 public:
-    explicit TaskPostWarpVector(Gui::ViewProviderDocumentObject* view, QWidget* parent = nullptr);
+    explicit TaskPostWarpVector(ViewProviderFemPostWarpVector* view, QWidget* parent = nullptr);
     ~TaskPostWarpVector() override;
 
     void applyPythonCode() override;

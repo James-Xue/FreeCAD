@@ -154,11 +154,17 @@ public:
 
     void addTaskWatcher(const std::vector<TaskWatcher*> &Watcher);
     void clearTaskWatcher();
+    void takeTaskWatcher(TaskView *other);
+
+    bool isEmpty(bool includeWatcher = true) const;
 
     void clearActionStyle();
     void restoreActionStyle();
 
     QSize minimumSizeHint() const override;
+
+Q_SIGNALS:
+    void taskUpdate();
 
 protected Q_SLOTS:
     void accept();

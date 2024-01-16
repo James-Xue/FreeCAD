@@ -23,8 +23,12 @@
 #ifndef SKETCHERGUI_DrawSketchHandler_H
 #define SKETCHERGUI_DrawSketchHandler_H
 
+#include <QCursor>
+#include <QPixmap>
+
 #include <Inventor/SbString.h>
 
+#include <Base/Parameter.h>
 #include <Base/Tools2D.h>
 #include <Gui/Selection.h>
 #include <Mod/Part/App/Geometry.h>
@@ -32,14 +36,18 @@
 
 #include "AutoConstraint.h"
 
-
-class QPixmap;
+class QWidget;
 
 namespace Sketcher
 {
 class Sketch;
 class SketchObject;
 }  // namespace Sketcher
+
+namespace Gui
+{
+class View3DInventorViewer;
+}
 
 namespace SketcherGui
 {
@@ -96,6 +104,7 @@ private:
                                        unsigned int augmentationlevel = 0);
     static inline void setAxisPickStyle(ViewProviderSketch& vp, bool on);
     static inline void moveCursorToSketchPoint(ViewProviderSketch& vp, Base::Vector2d point);
+    static inline void ensureFocus(ViewProviderSketch& vp);
     static inline void preselectAtPoint(ViewProviderSketch& vp, Base::Vector2d point);
     static inline void setAngleSnapping(ViewProviderSketch& vp,
                                         bool enable,
@@ -107,6 +116,8 @@ private:
 
     static inline void
     moveConstraint(ViewProviderSketch& vp, int constNum, const Base::Vector2d& toPos);
+
+    static inline void signalToolChanged(const ViewProviderSketch& vp, const std::string& toolname);
 
     friend class DrawSketchHandler;
 };
@@ -142,8 +153,8 @@ public:
     {
         return false;
     }
-    virtual void registerPressedKey(bool /*pressed*/, int /*key*/)
-    {}
+    virtual void registerPressedKey(bool pressed, int key);
+    virtual void pressRightButton(Base::Vector2d onSketchPos);
 
     virtual void quit();
 
@@ -171,6 +182,38 @@ public:
     void resetPositionText();
     void renderSuggestConstraintsCursor(std::vector<AutoConstraint>& suggestedConstraints);
 
+    /** @name Interfacing with tool dialogs */
+    //@{
+
+    /** @brief Slot to receive signaling that a widget intended for the tool has changed and is
+     *  available ant the provided pointer.
+     */
+    void toolWidgetChanged(QWidget* newwidget);
+
+    /** @brief Factory function returning a tool widget of the type necessary for the specific tool.
+     * This is a NVI interface and specific handlers must overload the corresponding virtual
+     * function.
+     */
+    std::unique_ptr<QWidget> createToolWidget() const;
+
+    /** @brief Returns whether this tool expects/supports a visible tool widget. Emphasis is in
+     * visibility, so to allow to adapt the interface accordingly.
+     * This is an NVI interface and specific handlers must overload the corresponding virtual
+     * function.
+     */
+    bool isToolWidgetVisible() const;
+    /** @brief Returns a pixmap icon intended for a visible tool widget.
+     * This is an NVI interface and specific handlers must overload the corresponding virtual
+     * function.
+     */
+    QPixmap getToolWidgetHeaderIcon() const;
+    /** @brief Returns a header text intended for a visible tool widget.
+     * This is an NVI interface and specific handlers must overload the corresponding virtual
+     * function.
+     */
+    QString getToolWidgetHeaderText() const;
+    //@}
+
 private:  // NVI
     virtual void preActivated();
     virtual void activated()
@@ -179,9 +222,17 @@ private:  // NVI
     {}
     virtual void postDeactivated()
     {}
+    virtual void onWidgetChanged()
+    {}
 
 protected:  // NVI requiring base implementation
+    virtual std::string getToolName() const;
     virtual QString getCrosshairCursorSVGName() const;
+
+    virtual std::unique_ptr<QWidget> createWidget() const;
+    virtual bool isWidgetVisible() const;
+    virtual QPixmap getToolIcon() const;
+    virtual QString getToolWidgetText() const;
 
 protected:
     // helpers
@@ -215,17 +266,27 @@ protected:
     qreal devicePixelRatio();
     //@}
 
-    void drawEdit(const std::vector<Base::Vector2d>& EditCurve);
-    void drawEdit(const std::list<std::vector<Base::Vector2d>>& list);
-    void drawEdit(const std::vector<Part::Geometry*>& geometries);
+    void drawEdit(const std::vector<Base::Vector2d>& EditCurve) const;
+    void drawEdit(const std::list<std::vector<Base::Vector2d>>& list) const;
+    void drawEdit(const std::vector<Part::Geometry*>& geometries) const;
     void drawEditMarkers(const std::vector<Base::Vector2d>& EditMarkers,
-                         unsigned int augmentationlevel = 0);
+                         unsigned int augmentationlevel = 0) const;
+
+    void clearEdit() const;
+    void clearEditMarkers() const;
+
     void setAxisPickStyle(bool on);
     void moveCursorToSketchPoint(Base::Vector2d point);
+    void ensureFocus();
     void preselectAtPoint(Base::Vector2d point);
 
     void drawPositionAtCursor(const Base::Vector2d& position);
     void drawDirectionAtCursor(const Base::Vector2d& position, const Base::Vector2d& origin);
+    void
+    drawWidthHeightAtCursor(const Base::Vector2d& position, const double val1, const double val2);
+    void drawDoubleAtCursor(const Base::Vector2d& position,
+                            const double radius,
+                            Base::Unit unit = Base::Unit::Length);
 
     int getPreselectPoint() const;
     int getPreselectCurve() const;
@@ -236,6 +297,10 @@ protected:
     void setAngleSnapping(bool enable, Base::Vector2d referencePoint = Base::Vector2d(0., 0.));
 
     void moveConstraint(int constNum, const Base::Vector2d& toPos);
+
+    void signalToolChanged() const;
+
+    Gui::View3DInventorViewer* getViewer();
 
 private:
     void setSvgCursor(const QString& svgName,
@@ -251,6 +316,7 @@ private:
     void setCrosshairCursor(const QString& svgName);
     void setCrosshairCursor(const char* svgName);
 
+
 protected:
     /**
      * Returns constraints icons scaled to width.
@@ -262,6 +328,8 @@ protected:
     QCursor oldCursor;
     QCursor actCursor;
     QPixmap actCursorPixmap;
+
+    QWidget* toolwidget;
 };
 
 

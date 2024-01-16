@@ -52,14 +52,14 @@
        <item row="1" column="0">
         <widget class="QLabel" name="unitSystemLabel">
          <property name="text">
-          <string>Unit system:</string>
+          <string>Default Unit system:</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
         <widget class="QComboBox" name="comboBox_UnitSystem">
          <property name="toolTip">
-          <string>Unit system that should be used for all parts of the application</string>
+          <string>Unit system for all parts of the application. Can be overridden by specifying a document unit system.</string>
          </property>
         </widget>
        </item>
@@ -87,14 +87,24 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="0">
+       <item row="2" column="0" colspan="3">
+        <widget class="QCheckBox" name="checkBox_projectUnitSystemIgnore">
+          <property name="toolTip">
+           <string>If enabled, document unit systems are ignored</string>
+          </property>
+          <property name="text">
+           <string>Ignore project unit system and use default</string>
+          </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
         <widget class="QLabel" name="fractionalInchLabel">
          <property name="text">
           <string>Minimum fractional inch:</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QComboBox" name="comboBox_FracInch">
          <property name="toolTip">
           <string>Minimum fractional inch to be displayed</string>
@@ -136,14 +146,14 @@
          </item>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="TextLabel1_5">
          <property name="text">
           <string>Number format:</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="Gui::PrefComboBox" name="UseLocaleFormatting">
          <property name="prefEntry" stdset="0">
           <cstring>UseLocaleFormatting</cstring>
@@ -168,7 +178,7 @@
          </item>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item row="4" column="2">
         <widget class="Gui::PrefCheckBox" name="SubstituteDecimal">
          <property name="toolTip">
           <string>If enabled, numerical keypad decimal separator
@@ -329,6 +339,25 @@ display the splash screen</string>
          </property>
          <property name="prefPath" stdset="0">
           <cstring>General</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="Gui::PrefCheckBox" name="ActivateOverlay">
+         <property name="toolTip">
+          <string>Activate overlay handling of dock windows</string>
+         </property>
+         <property name="text">
+          <string>Activate overlay handling</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="prefEntry" stdset="0">
+          <cstring>ActivateOverlay</cstring>
+         </property>
+         <property name="prefPath" stdset="0">
+          <cstring>DockWindows</cstring>
          </property>
         </widget>
        </item>

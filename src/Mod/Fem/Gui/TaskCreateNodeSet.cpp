@@ -28,7 +28,6 @@
 
 #include <SMESHDS_Mesh.hxx>
 #include <SMESH_Mesh.hxx>
-#include <Standard_math.hxx>
 #endif
 
 #include <Base/Console.h>
@@ -91,7 +90,7 @@ void TaskCreateNodeSet::Poly()
 {
     Gui::Document* doc = Gui::Application::Instance->activeDocument();
     Gui::MDIView* view = doc->getActiveView();
-    if (view->getTypeId().isDerivedFrom(Gui::View3DInventor::getClassTypeId())) {
+    if (view->isDerivedFrom<Gui::View3DInventor>()) {
         Gui::View3DInventorViewer* viewer = ((Gui::View3DInventor*)view)->getViewer();
         viewer->setEditing(true);
         viewer->startSelection(Gui::View3DInventorViewer::Clip);

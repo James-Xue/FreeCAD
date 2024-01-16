@@ -74,11 +74,17 @@ public:
     QColor getFillColor() { return m_colDefFill; }
     void setFillOverride(bool b) { m_fillOverride = b; }
 
+    virtual void setCurrentPen();
+
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+
+    virtual bool multiselectEligible() { return false; }
+
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
     virtual QColor getNormalColor();
     virtual QColor getPreColor();
@@ -87,12 +93,14 @@ protected:
     virtual Qt::PenCapStyle prefCapStyle();
 
     bool isHighlighted;
+    bool multiselectActivated;
 
     QPen m_pen;
     QColor m_colCurrent;
     QColor m_colNormal;
     bool   m_colOverride;
     Qt::PenStyle m_styleCurrent;
+    Qt::PenStyle m_styleNormal;
     double m_width;
     Qt::PenCapStyle m_capStyle;
 
@@ -102,9 +110,9 @@ protected:
 
     QColor m_colDefFill;                        //"no color" default normal fill color
     QColor m_colNormalFill;                     //current Normal fill color def or plain fill
-    Qt::BrushStyle m_styleDef;                  //default Normal fill style
-    Qt::BrushStyle m_styleNormal;               //current Normal fill style
-    Qt::BrushStyle m_styleSelect;               //Select/preSelect fill style
+    Qt::BrushStyle m_fillDef;                  //default Normal fill style
+    Qt::BrushStyle m_fillNormal;               //current Normal fill style
+    Qt::BrushStyle m_fillSelect;               //Select/preSelect fill style
 
     bool m_fillOverride;
 

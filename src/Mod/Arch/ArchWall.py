@@ -316,6 +316,7 @@ class _CommandWall:
         sel = FreeCADGui.Selection.getSelectionEx()
         done = False
         self.existing = []
+        self.wp = None
 
         if sel:
             # automatic mode
@@ -345,9 +346,9 @@ class _CommandWall:
             # interactive mode
 
             self.points = []
+            import WorkingPlane
+            self.wp = WorkingPlane.get_working_plane()
             self.tracker = DraftTrackers.boxTracker()
-            if hasattr(FreeCAD,"DraftWorkingPlane"):
-                FreeCAD.DraftWorkingPlane.setup()
             FreeCADGui.Snapper.getPoint(callback=self.getPoint,
                                         extradlg=self.taskbox(),
                                         title=translate("Arch","First point of wall")+":")
@@ -386,8 +387,8 @@ class _CommandWall:
 
         elif len(self.points) == 2:
             import Part
-            l = Part.LineSegment(FreeCAD.DraftWorkingPlane.getLocalCoords(self.points[0]),
-                                 FreeCAD.DraftWorkingPlane.getLocalCoords(self.points[1]))
+            l = Part.LineSegment(self.wp.get_local_coords(self.points[0]),
+                                 self.wp.get_local_coords(self.points[1]))
             self.tracker.finalize()
             FreeCAD.ActiveDocument.openTransaction(translate("Arch","Create Wall"))
             FreeCADGui.addModule("Arch")
@@ -431,6 +432,8 @@ class _CommandWall:
         """
 
         FreeCADGui.addModule("Draft")
+        FreeCADGui.addModule("WorkingPlane")
+        FreeCADGui.doCommand("wp = WorkingPlane.get_working_plane()")
         if FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/Arch").GetBool("WallSketches",True):
             # Use ArchSketch if SketchArch add-on is present
             try:
@@ -439,13 +442,13 @@ class _CommandWall:
                 FreeCADGui.doCommand('base=ArchSketchObject.makeArchSketch()')
             except:
                 FreeCADGui.doCommand('base=FreeCAD.ActiveDocument.addObject("Sketcher::SketchObject","WallTrace")')
-            FreeCADGui.doCommand('base.Placement = FreeCAD.DraftWorkingPlane.getPlacement()')
+            FreeCADGui.doCommand('base.Placement = wp.get_placement()')
             FreeCADGui.doCommand('base.addGeometry(trace)')
         else:
             FreeCADGui.doCommand('base=Draft.makeLine(trace)')
             FreeCADGui.doCommand('FreeCAD.ActiveDocument.recompute()')
         FreeCADGui.doCommand('wall = Arch.makeWall(base,width='+str(self.Width)+',height='+str(self.Height)+',align="'+str(self.Align)+'")')
-        FreeCADGui.doCommand('wall.Normal = FreeCAD.DraftWorkingPlane.getNormal()')
+        FreeCADGui.doCommand('wall.Normal = wp.axis')
         if self.MultiMat:
             FreeCADGui.doCommand("wall.Material = FreeCAD.ActiveDocument."+self.MultiMat.Name)
         FreeCADGui.doCommand("Draft.autogroup(wall)")
@@ -467,7 +470,7 @@ class _CommandWall:
 
         if FreeCADGui.Control.activeDialog():
             b = self.points[0]
-            n = FreeCAD.DraftWorkingPlane.axis
+            n = self.wp.axis
             bv = point.sub(b)
             dv = bv.cross(n)
             dv = DraftVecUtils.scaleTo(dv,self.Width/2)
@@ -1267,6 +1270,7 @@ class _Wall(ArchComponent.Component):
 
                     # If the object is a single edge, use that as the
                     # basewires.
+                    # TODO 2023.11.26: Need to check if it is not Sketch afterall first or use algoritm for Sketch altogher?
                     elif len(obj.Base.Shape.Edges) == 1:
                         self.basewires = [Part.Wire(obj.Base.Shape.Edges)]
 
@@ -1287,7 +1291,10 @@ class _Wall(ArchComponent.Component):
                         for cluster in Part.getSortedClusters(skGeomEdges):
                             clusterTransformed = []
                             for edge in cluster:
+                                # TODO 2023.11.26: Multiplication order should be switched?
+                                # So far 'no problem' as 'edge.placement' is always '0,0,0' ?
                                 edge.Placement = edge.Placement.multiply(skPlacement)  ## TODO add attribute to skip Transform...
+
                                 clusterTransformed.append(edge)
                             # Only use cluster of edges rather than turning into wire
                             self.basewires.append(clusterTransformed)
@@ -1301,8 +1308,14 @@ class _Wall(ArchComponent.Component):
                         normal = obj.Base.getGlobalPlacement().Rotation.multVec(FreeCAD.Vector(0,0,1))
 
                     else:
-                        self.basewires = obj.Base.Shape.Wires
-
+                        # See discussion - https://forum.freecad.org/viewtopic.php?t=82207&start=10
+                        #self.basewires = obj.Base.Shape.Wires
+                        #
+                        # Now, adopt approach same as for Sketch
+                        self.basewires = []
+                        clusters = Part.getSortedClusters(obj.Base.Shape.Edges)
+                        self.basewires = clusters
+                        # Previously :
                         # Found case that after sorting below, direction of
                         # edges sorted are not as 'expected' thus resulted in
                         # bug - e.g. a Dwire with edges/vertexes in clockwise

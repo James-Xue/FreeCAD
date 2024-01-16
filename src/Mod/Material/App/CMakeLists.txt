@@ -33,14 +33,21 @@ list(APPEND Material_LIBS
     ${YAML_CPP_LIBRARIES}
 )
 
+generate_from_xml(Array2DPy)
+generate_from_xml(Array3DPy)
 generate_from_xml(MaterialManagerPy)
 generate_from_xml(MaterialPy)
 generate_from_xml(ModelManagerPy)
 generate_from_xml(ModelPropertyPy)
 generate_from_xml(ModelPy)
+generate_from_xml(UUIDsPy)
 
 SET(Python_SRCS
     Exceptions.h
+    Array2DPy.xml
+    Array2DPyImpl.cpp
+    Array3DPy.xml
+    Array3DPyImpl.cpp
     MaterialManagerPy.xml
     MaterialManagerPyImpl.cpp
     MaterialPy.xml
@@ -51,6 +58,8 @@ SET(Python_SRCS
     ModelPropertyPyImpl.cpp
     ModelPy.xml
     ModelPyImpl.cpp
+    UUIDsPy.xml
+    UUIDsPyImpl.cpp
 )
 SOURCE_GROUP("Python" FILES ${Python_SRCS})
 
@@ -60,6 +69,8 @@ SET(Material_SRCS
     FolderTree.h
     MaterialConfigLoader.cpp
     MaterialConfigLoader.h
+    MaterialFilter.cpp
+    MaterialFilter.h
     MaterialLibrary.cpp
     MaterialLibrary.h
     MaterialLoader.cpp
@@ -78,6 +89,7 @@ SET(Material_SRCS
     ModelLoader.h
     ModelManager.cpp
     ModelManager.h
+    ModelUuids.cpp
     ModelUuids.h
     PreCompiled.cpp
     PreCompiled.h
@@ -93,7 +105,18 @@ endif(FREECAD_USE_PCH)
 add_library(Material SHARED ${Material_SRCS})
 target_link_libraries(Material ${Material_LIBS})
 
-SET_BIN_DIR(Material Material /Mod/Material)
+# SET_BIN_DIR(Material Material /Mod/Material)
+SET_BIN_DIR(Material Material)
 SET_PYTHON_PREFIX_SUFFIX(Material)
 
-INSTALL(TARGETS Material DESTINATION ${CMAKE_INSTALL_LIBDIR})
+# INSTALL(TARGETS Material DESTINATION ${CMAKE_INSTALL_LIBDIR})
+if(WIN32)
+    INSTALL(TARGETS Material
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+else(WIN32)
+    INSTALL(TARGETS Material
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    )
+endif(WIN32)

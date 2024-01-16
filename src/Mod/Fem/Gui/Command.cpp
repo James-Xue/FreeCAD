@@ -459,8 +459,8 @@ void CmdFemConstraintForce::activated(int)
               "App.activeDocument().addObject(\"Fem::ConstraintForce\",\"%s\")",
               FeatName.c_str());
     doCommand(Doc,
-              "App.activeDocument().%s.Force = 1.0",
-              FeatName.c_str());  // OvG: set default not equal to 0
+              "App.activeDocument().%s.Force = \"1 N\"",
+              FeatName.c_str());  // OvG: set default to 1 N
     doCommand(Doc,
               "App.activeDocument().%s.Reversed = False",
               FeatName.c_str());  // OvG: set default to False
@@ -1091,7 +1091,7 @@ void CmdFemDefineNodesSet::activated(int)
         if (it == docObj.begin()) {
             Gui::Document* doc = getActiveGuiDocument();
             Gui::MDIView* view = doc->getActiveView();
-            if (view->getTypeId().isDerivedFrom(Gui::View3DInventor::getClassTypeId())) {
+            if (view->isDerivedFrom<Gui::View3DInventor>()) {
                 Gui::View3DInventorViewer* viewer = ((Gui::View3DInventor*)view)->getViewer();
                 viewer->setEditing(true);
                 viewer->startSelection(Gui::View3DInventorViewer::Clip);
@@ -1194,7 +1194,7 @@ CmdFemCompEmConstraints::CmdFemCompEmConstraints()
     sGroup = QT_TR_NOOP("Fem");
     sMenuText = QT_TR_NOOP("Electromagnetic boundary conditions");
     sToolTipText = QT_TR_NOOP("Electromagnetic boundary conditions");
-    sWhatsThis = "";
+    sWhatsThis = "FEM_CompEmConstraints";
     sStatusTip = sToolTipText;
 }
 
@@ -2013,7 +2013,10 @@ void CmdFemPostLinearizedStressesFilter::activated(int)
         if ((FieldName == "Tresca Stress") || (FieldName == "von Mises Stress")
             || (FieldName == "Major Principal Stress")
             || (FieldName == "Intermediate Principal Stress")
-            || (FieldName == "Minor Principal Stress")
+            || (FieldName == "Minor Principal Stress") || (FieldName == "Stress xx component")
+            || (FieldName == "Stress xy component") || (FieldName == "Stress xz component")
+            || (FieldName == "Stress yy component") || (FieldName == "Stress yz component")
+            || (FieldName == "Stress zz component")
             // names need to match with names in FemVTKTools.cpp, this is not failsafe,
             // but at the moment there is no better way for test on a stress result in vtk pipeline
         ) {

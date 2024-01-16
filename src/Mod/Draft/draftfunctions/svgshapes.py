@@ -32,8 +32,9 @@ import lazy_loader.lazy_loader as lz
 
 import FreeCAD as App
 import DraftVecUtils
-import draftutils.utils as utils
-
+import WorkingPlane
+from draftutils import params
+from draftutils import utils
 from draftutils.messages import _msg, _wrn
 
 # Delay import of module until first use because it is heavy
@@ -58,8 +59,8 @@ def get_proj(vec, plane=None):
     vec: Base::Vector3
         An arbitrary vector that will be projected on the U and V directions.
 
-    plane: WorkingPlane.Plane
-        An object of type `WorkingPlane`.
+    plane: WorkingPlane.PlaneBase
+        Working plane.
     """
     if not plane:
         return vec
@@ -89,8 +90,7 @@ def getProj(vec, plane=None):
 
 def get_discretized(edge, plane):
     """Get a discretized edge on a plane."""
-    param = App.ParamGet("User parameter:BaseApp/Preferences/Mod/Draft")
-    pieces = param.GetFloat("svgDiscretization", 10.0)
+    pieces = params.get_param("svgDiscretization")
 
     if pieces == 0:
         pieces = 10
@@ -124,13 +124,10 @@ def _get_path_circ_ellipse(plane, edge, verts, edata,
                            iscircle, isellipse,
                            fill, stroke, linewidth, lstyle):
     """Get the edge data from a path that is a circle or ellipse."""
-    if hasattr(App, "DraftWorkingPlane"):
-        drawing_plane_normal = App.DraftWorkingPlane.axis
-    else:
-        drawing_plane_normal = App.Vector(0, 0, 1)
-
     if plane:
         drawing_plane_normal = plane.axis
+    else:
+        drawing_plane_normal = WorkingPlane.get_working_plane(update=False).axis
 
     center = edge.Curve
     ax = center.Axis
@@ -272,13 +269,10 @@ def get_circle(plane,
     cen = get_proj(edge.Curve.Center, plane)
     rad = edge.Curve.Radius
 
-    if hasattr(App, "DraftWorkingPlane"):
-        drawing_plane_normal = App.DraftWorkingPlane.axis
-    else:
-        drawing_plane_normal = App.Vector(0, 0, 1)
-
     if plane:
         drawing_plane_normal = plane.axis
+    else:
+        drawing_plane_normal = WorkingPlane.get_working_plane(update=False).axis
 
     if round(edge.Curve.Axis.getAngle(drawing_plane_normal), 2) in [0, 3.14]:
         # Perpendicular projection: circle

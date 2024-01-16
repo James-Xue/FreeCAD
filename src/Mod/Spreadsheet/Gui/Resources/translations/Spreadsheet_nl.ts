@@ -671,8 +671,8 @@ switch the design configuration. The property will be created if not exist.</sou
     <message>
       <location filename="../../Command.cpp" line="194"/>
       <location filename="../../Command.cpp" line="254"/>
-      <source>All (*)</source>
-      <translation>Alle (*)</translation>
+      <source>CSV (*.csv *.CSV);;All (*)</source>
+      <translation>CSV (*.csv *.CSV);;Alle (*)</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="196"/>
@@ -729,7 +729,7 @@ Spreadsheet.my_alias_name instead of Spreadsheet.B1</source>
 Spreadsheet.mijn_alias_naam in plaats van Spreadsheet.B1</translation>
     </message>
     <message>
-      <location filename="../../AppSpreadsheetGui.cpp" line="124"/>
+      <location filename="../../AppSpreadsheetGui.cpp" line="126"/>
       <source>Spreadsheet</source>
       <translation>Rekenblad</translation>
     </message>
@@ -1010,7 +1010,7 @@ waarbij:
       <location filename="../../SheetTableView.cpp" line="139"/>
       <source>Insert %n non-contiguous rows</source>
       <translation type="unfinished">
-        <numerusform>Voeg %n afzonderlijke rijen in</numerusform>
+        <numerusform>%n Afzonderlijke rijen invoegen</numerusform>
         <numerusform>Insert %n non-contiguous rows</numerusform>
       </translation>
     </message>
@@ -1042,7 +1042,7 @@ waarbij:
       <location filename="../../SheetTableView.cpp" line="169"/>
       <source>Insert %n non-contiguous columns</source>
       <translation type="unfinished">
-        <numerusform>Voeg %n afzonderlijke kolommen in</numerusform>
+        <numerusform>%n Afzonderlijke kolommen invoegen</numerusform>
         <numerusform>Insert %n non-contiguous columns</numerusform>
       </translation>
     </message>

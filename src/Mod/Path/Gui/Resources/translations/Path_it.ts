@@ -460,7 +460,7 @@ For stock from the Base object's bounding box it means the extra material in all
     <message>
       <location filename="../panels/ToolBitLibraryEdit.ui" line="99"/>
       <source>Select a working path for the tool library editor.</source>
-      <translation type="unfinished">Select a working path for the tool library editor.</translation>
+      <translation>Seleziona un percorso di lavoro per l'editor della libreria di strumenti.</translation>
     </message>
     <message>
       <location filename="../panels/ToolBitLibraryEdit.ui" line="119"/>
@@ -470,7 +470,7 @@ For stock from the Base object's bounding box it means the extra material in all
     <message>
       <location filename="../panels/ToolBitLibraryEdit.ui" line="139"/>
       <source>Save the selected library with a new name or export to another format</source>
-      <translation type="unfinished">Save the selected library with a new name or export to another format</translation>
+      <translation>Salva la libreria selezionata con un nuovo nome o esporta in un altro formato</translation>
     </message>
     <message>
       <location filename="../panels/ToolBitLibraryEdit.ui" line="190"/>
@@ -801,12 +801,12 @@ Reset deletes all current items from the list and fills the list with all circul
     <message>
       <location filename="../panels/PageBaseLocationEdit.ui" line="40"/>
       <source>Opens a dialog to add arbitrary locations.</source>
-      <translation type="unfinished">Opens a dialog to add arbitrary locations.</translation>
+      <translation>Apre una finestra di dialogo per aggiungere posizioni arbitrarie.</translation>
     </message>
     <message>
       <location filename="../panels/PageBaseLocationEdit.ui" line="50"/>
       <source>Remove selected location from the list. The operation is no longer applied to them.</source>
-      <translation type="unfinished">Remove selected location from the list. The operation is no longer applied to them.</translation>
+      <translation>Rimuove la posizione selezionata dall'elenco. L'operazione non viene più applicata.</translation>
     </message>
     <message>
       <location filename="../panels/PageBaseLocationEdit.ui" line="60"/>
@@ -976,7 +976,7 @@ Reset deletes all current items from the list and fills the list with all circul
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="76"/>
       <source>Type of adaptive operation</source>
-      <translation type="unfinished">Type of adaptive operation</translation>
+      <translation>Tipo di operazione adattativa</translation>
     </message>
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="83"/>
@@ -1073,7 +1073,7 @@ Reset deletes all current items from the list and fills the list with all circul
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="227"/>
       <source>How much material to leave (i.e. for finishing operation)</source>
-      <translation type="unfinished">How much material to leave (i.e. for finishing operation)</translation>
+      <translation>Quanto materiale da lasciare (cioè per operazioni di finitura)</translation>
     </message>
     <message>
       <location filename="../panels/PageOpAdaptiveEdit.ui" line="237"/>
@@ -1376,7 +1376,7 @@ Reset deletes all current items from the list and fills the list with all circul
       <location filename="../panels/PageOpVcarveEdit.ui" line="36"/>
       <location filename="../panels/PageOpVcarveEdit.ui" line="50"/>
       <source>The tool and its settings to be used for this operation</source>
-      <translation type="unfinished">The tool and its settings to be used for this operation</translation>
+      <translation>Lo strumento e le sue impostazioni da utilizzare per questa operazione</translation>
     </message>
     <message>
       <location filename="../panels/PageOpPocketFullEdit.ui" line="70"/>
@@ -1568,7 +1568,7 @@ The latter can be used to face of the entire stock area to ensure uniform height
     <message>
       <location filename="../panels/PageOpProfileFullEdit.ui" line="127"/>
       <source>Check if this operation should use a starting point</source>
-      <translation type="unfinished">Check if this operation should use a starting point</translation>
+      <translation>Verifica se questa operazione deve usare un punto di partenza</translation>
     </message>
     <message>
       <location filename="../panels/PageOpProfileFullEdit.ui" line="137"/>
@@ -1623,7 +1623,7 @@ The latter can be used to face of the entire stock area to ensure uniform height
     <message>
       <location filename="../panels/PageOpSlotEdit.ui" line="90"/>
       <source> Choose what point to use on the first selected feature </source>
-      <translation type="unfinished"> Choose what point to use on the first selected feature </translation>
+      <translation> Scegli quale punto usare per la prima funzione selezionata </translation>
     </message>
     <message>
       <location filename="../panels/PageOpSlotEdit.ui" line="97"/>
@@ -1693,7 +1693,7 @@ The latter can be used to face of the entire stock area to ensure uniform height
     <message>
       <location filename="../panels/PageOpSlotEdit.ui" line="317"/>
       <source> Positive extends the end of the path, negative shortens </source>
-      <translation type="unfinished"> Positive extends the end of the path, negative shortens </translation>
+      <translation> Positivo estende la fine del percorso, negativo lo accorcia </translation>
     </message>
     <message>
       <location filename="../panels/PageOpSlotEdit.ui" line="357"/>
@@ -1703,7 +1703,7 @@ The latter can be used to face of the entire stock area to ensure uniform height
     <message>
       <location filename="../panels/PageOpSlotEdit.ui" line="381"/>
       <source> Choose the path orientation with regard to the feature(s) selected </source>
-      <translation type="unfinished"> Choose the path orientation with regard to the feature(s) selected </translation>
+      <translation> Scegliere l'orientamento del percorso per quanto riguarda le funzioni selezionate </translation>
     </message>
     <message>
       <location filename="../panels/PageOpSlotEdit.ui" line="398"/>
@@ -2509,11 +2509,11 @@ If left empty the macro directory is used.</translation>
 This can be helpful when almost all jobs will be processed by the same machine with a similar setup.
 
 If left empty no template will be preselected.</source>
-      <translation type="unfinished">The default template to be selected when creating a new Job.
+      <translation>Il modello predefinito da selezionare quando si crea un nuovo lavoro.
 
-This can be helpful when almost all jobs will be processed by the same machine with a similar setup.
+Questo può essere utile quando quasi tutti i lavori saranno elaborati dalla stessa macchina con una configurazione simile.
 
-If left empty no template will be preselected.</translation>
+Se lasciato vuoto nessun modello sarà preselezionato.</translation>
     </message>
     <message>
       <location filename="../preferences/PathJob.ui" line="247"/>
@@ -2528,12 +2528,12 @@ If left empty no template will be preselected.</translation>
     <message>
       <location filename="../preferences/PathJob.ui" line="312"/>
       <source>Select one of the post processors as the default.</source>
-      <translation type="unfinished">Select one of the post processors as the default.</translation>
+      <translation>Selezionare uno dei post processori come predefinito.</translation>
     </message>
     <message>
       <location filename="../preferences/PathJob.ui" line="332"/>
       <source>Optional arguments passed to the default Post Processor specified above. See the Post Processor's documentation for supported arguments.</source>
-      <translation type="unfinished">Optional arguments passed to the default Post Processor specified above. See the Post Processor's documentation for supported arguments.</translation>
+      <translation>Argomenti opzionali passati al Post Processor predefinito specificato sopra. Vedere la documentazione del Post Processor per gli argomenti supportati.</translation>
     </message>
     <message>
       <location filename="../preferences/PathJob.ui" line="370"/>
@@ -2879,7 +2879,7 @@ Should multiple tools or tool shapes with the same name exist in different direc
       <location filename="../panels/DressUpLeadInOutEdit.ui" line="61"/>
       <location filename="../panels/DressUpLeadInOutEdit.ui" line="135"/>
       <source>Length / Radius</source>
-      <translation type="unfinished">Length / Radius</translation>
+      <translation>Lunghezza / Raggio</translation>
     </message>
     <message>
       <location filename="../panels/DressUpLeadInOutEdit.ui" line="68"/>
@@ -2948,50 +2948,50 @@ Should multiple tools or tool shapes with the same name exist in different direc
       <translation type="unfinished">Include Layers</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="54"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="52"/>
       <source>Arc</source>
       <translation>Arco</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="55"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="53"/>
       <source>Tangent</source>
       <translation>Tangente</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="56"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="54"/>
       <source>Perpendicular</source>
       <translation>Perpendicolare</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="169"/>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="176"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="168"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="175"/>
       <source>Length/Radius positive not Null</source>
       <translation type="unfinished">Length/Radius positive not Null</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="677"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="464"/>
       <source>LeadInOut</source>
       <translation type="unfinished">LeadInOut</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="681"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="468"/>
       <source>Creates a Cutter Radius Compensation G41/G42 Entry Dressup object from a selected path</source>
       <translation type="unfinished">Creates a Cutter Radius Compensation G41/G42 Entry Dressup object from a selected path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="696"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="483"/>
       <source>Please select one path object</source>
-      <translation type="unfinished">Please select one path object</translation>
+      <translation>Selezionare un oggetto percorso</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="703"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="490"/>
       <source>The selected object is not a path</source>
-      <translation type="unfinished">The selected object is not a path</translation>
+      <translation>L'oggetto selezionato non è un percorso</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="709"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="496"/>
       <source>Please select a Profile object</source>
-      <translation type="unfinished">Please select a Profile object</translation>
+      <translation>Seleziona un oggetto Profilo</translation>
     </message>
   </context>
   <context>
@@ -4225,7 +4225,7 @@ Default: 3 mm</translation>
     <message>
       <location filename="../../../InitGui.py" line="187"/>
       <source>Project Setup</source>
-      <translation type="unfinished">Project Setup</translation>
+      <translation>Imposta Progetto</translation>
     </message>
     <message>
       <location filename="../../../InitGui.py" line="188"/>
@@ -4284,9 +4284,9 @@ Default: 3 mm</translation>
   <context>
     <name>Path</name>
     <message>
-      <location filename="../../../InitGui.py" line="282"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="69"/>
       <source>The currently selected unit schema: 
-     '{}'
+     '{}' for this document
  Does not use 'minutes' for velocity values. 
  
 CNC machines require feed rate to be expressed in 
@@ -4297,7 +4297,7 @@ For example:
     'US Customary'
     'Imperial Decimal'</source>
       <translation type="unfinished">The currently selected unit schema: 
-     '{}'
+     '{}' for this document
  Does not use 'minutes' for velocity values. 
  
 CNC machines require feed rate to be expressed in 
@@ -4309,17 +4309,17 @@ For example:
     'Imperial Decimal'</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="284"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="71"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Attenzione</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="286"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="76"/>
       <source>Ok</source>
       <translation>Ok</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="288"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="79"/>
       <source>Don't Show This Anymore</source>
       <translation>Non Mostrare Più</translation>
     </message>
@@ -4359,7 +4359,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Job.py" line="633"/>
       <source>Tool number</source>
-      <translation type="unfinished">Tool number</translation>
+      <translation>Numero utensile</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Job.py" line="636"/>
@@ -4404,7 +4404,7 @@ For example:
     <message>
       <location filename="../../../Path/Op/Base.py" line="839"/>
       <source>Tool Error</source>
-      <translation type="unfinished">Tool Error</translation>
+      <translation>Errore utensile</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="852"/>
@@ -4497,12 +4497,12 @@ For example:
     <message>
       <location filename="../../../Path/Tool/Gui/Bit.py" line="199"/>
       <source>Invalid Filename</source>
-      <translation type="unfinished">Invalid Filename</translation>
+      <translation>Nome File Non Valido</translation>
     </message>
     <message>
       <location filename="../../../PathScripts/PathUtils.py" line="545"/>
       <source>Selected tool is not a drill</source>
-      <translation type="unfinished">Selected tool is not a drill</translation>
+      <translation>L'utensile selezionato non è una punta di foratura</translation>
     </message>
     <message>
       <location filename="../../../PathScripts/PathUtils.py" line="553"/>
@@ -4600,12 +4600,12 @@ For example:
     <message>
       <location filename="../../../Path/Base/SetupSheet.py" line="117"/>
       <source>Default speed for horizontal rapid moves.</source>
-      <translation type="unfinished">Default speed for horizontal rapid moves.</translation>
+      <translation>Velocità predefinita per l'avanzamento rapido orizzontale.</translation>
     </message>
     <message>
       <location filename="../../../Path/Base/SetupSheet.py" line="125"/>
       <source>Default speed for vertical rapid moves.</source>
-      <translation type="unfinished">Default speed for vertical rapid moves.</translation>
+      <translation>Velocità predefinita per l'avanzamento rapido verticale.</translation>
     </message>
     <message>
       <location filename="../../../Path/Base/SetupSheet.py" line="131"/>
@@ -4656,20 +4656,20 @@ For example:
     </message>
     <message>
       <location filename="../../../Path/Dressup/Boundary.py" line="53"/>
-      <location filename="../../../Path/Dressup/Tags.py" line="943"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="940"/>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="54"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="423"/>
       <location filename="../../../Path/Dressup/Gui/Dragknife.py" line="58"/>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="63"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="61"/>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="57"/>
       <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="62"/>
       <source>The base path to modify</source>
-      <translation type="unfinished">The base path to modify</translation>
+      <translation>Il percorso di base da modificare</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Boundary.py" line="63"/>
       <source>Solid object to be used to limit the generated Path.</source>
-      <translation type="unfinished">Solid object to be used to limit the generated Path.</translation>
+      <translation>Oggetto solido da usare per limitare il Percorso generato.</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Boundary.py" line="73"/>
@@ -4677,72 +4677,72 @@ For example:
       <translation type="unfinished">Determines if Boundary describes an inclusion or exclusion mask.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="202"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="203"/>
       <source>The base path to dress up</source>
       <translation type="unfinished">The base path to dress up</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="210"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="211"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="429"/>
       <source>The side of path to insert bones</source>
       <translation type="unfinished">The side of path to insert bones</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="227"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="228"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="437"/>
       <source>The style of bones</source>
       <translation type="unfinished">The style of bones</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="238"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="239"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="455"/>
       <source>The algorithm to determine the bone length</source>
       <translation type="unfinished">The algorithm to determine the bone length</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="249"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="250"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="463"/>
       <source>Dressup length if incision is set to 'custom'</source>
       <translation type="unfinished">Dressup length if incision is set to 'custom'</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="257"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="258"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="445"/>
       <source>Bones that aren't dressed up</source>
       <translation type="unfinished">Bones that aren't dressed up</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="949"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="946"/>
       <source>Width of tags.</source>
       <translation type="unfinished">Width of tags.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="955"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="952"/>
       <source>Height of tags.</source>
       <translation type="unfinished">Height of tags.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="961"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="958"/>
       <source>Angle of tag plunge and ascent.</source>
       <translation type="unfinished">Angle of tag plunge and ascent.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="967"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="964"/>
       <source>Radius of the fillet for the tag.</source>
       <translation type="unfinished">Radius of the fillet for the tag.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="973"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="970"/>
       <source>Locations of inserted holding tags</source>
       <translation type="unfinished">Locations of inserted holding tags</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="979"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="976"/>
       <source>IDs of disabled holding tags</source>
       <translation type="unfinished">IDs of disabled holding tags</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="988"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="985"/>
       <source>Factor determining the # of segments used to approximate rounded tags.</source>
       <translation type="unfinished">Factor determining the # of segments used to approximate rounded tags.</translation>
     </message>
@@ -4772,57 +4772,57 @@ For example:
       <translation type="unfinished">Height to raise during corner action</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="69"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="67"/>
       <source>Calculate roll-on to path</source>
       <translation type="unfinished">Calculate roll-on to path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="75"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="73"/>
       <source>Calculate roll-off from path</source>
       <translation type="unfinished">Calculate roll-off from path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="81"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="79"/>
       <source>Keep the Tool Down in Path</source>
       <translation type="unfinished">Keep the Tool Down in Path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="87"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="85"/>
       <source>Length or Radius of the approach</source>
       <translation type="unfinished">Length or Radius of the approach</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="93"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="91"/>
       <source>Length or Radius of the exit</source>
       <translation type="unfinished">Length or Radius of the exit</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="99"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="97"/>
       <source>The Style of motion into the Path</source>
       <translation type="unfinished">The Style of motion into the Path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="106"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="104"/>
       <source>The Style of motion out of the Path</source>
       <translation type="unfinished">The Style of motion out of the Path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="113"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="111"/>
       <source>Extends LeadIn distance</source>
       <translation type="unfinished">Extends LeadIn distance</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="119"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="117"/>
       <source>Extends LeadOut distance</source>
       <translation type="unfinished">Extends LeadOut distance</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="125"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="123"/>
       <source>Perform plunges with G0</source>
       <translation type="unfinished">Perform plunges with G0</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="133"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="131"/>
       <source>Apply LeadInOut to layers within an operation</source>
       <translation type="unfinished">Apply LeadInOut to layers within an operation</translation>
     </message>
@@ -4874,12 +4874,12 @@ For example:
     <message>
       <location filename="../../../Path/Main/Job.py" line="115"/>
       <source>The G-code output file for this project</source>
-      <translation type="unfinished">The G-code output file for this project</translation>
+      <translation>Il file di output del G-code per questo progetto</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="121"/>
       <source>Select the Post Processor</source>
-      <translation type="unfinished">Select the Post Processor</translation>
+      <translation>Selezionare il Post processore</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="130"/>
@@ -4895,7 +4895,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Job.py" line="151"/>
       <source>An optional description for this job</source>
-      <translation type="unfinished">An optional description for this job</translation>
+      <translation>Una descrizione facoltativa per questa lavorazione</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="157"/>
@@ -4948,7 +4948,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Job.py" line="327"/>
       <source>The base objects for all operations</source>
-      <translation type="unfinished">The base objects for all operations</translation>
+      <translation>Gli oggetti di base per tutte le operazioni</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="363"/>
@@ -5056,7 +5056,7 @@ For example:
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="960"/>
       <source>Type of adaptive operation</source>
-      <translation type="unfinished">Type of adaptive operation</translation>
+      <translation>Tipo di operazione adattativa</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="974"/>
@@ -5099,7 +5099,7 @@ For example:
       <location filename="../../../Path/Op/Adaptive.py" line="1034"/>
       <location filename="../../../Path/Op/Adaptive.py" line="1045"/>
       <source>Stop processing</source>
-      <translation type="unfinished">Stop processing</translation>
+      <translation>Interrompi elaborazione</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1056"/>
@@ -5176,24 +5176,24 @@ For example:
     <message>
       <location filename="../../../Path/Op/Base.py" line="180"/>
       <source>An optional comment for this Operation</source>
-      <translation type="unfinished">An optional comment for this Operation</translation>
+      <translation>Un commento facoltativo per questa Operazione</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="186"/>
       <source>User Assigned Label</source>
-      <translation type="unfinished">User Assigned Label</translation>
+      <translation>Etichetta Utente Assegnata</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="206"/>
       <source>Base locations for this operation</source>
-      <translation type="unfinished">Base locations for this operation</translation>
+      <translation>La posizione di base per questa operazione</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="217"/>
       <location filename="../../../Path/Op/Gui/Array.py" line="134"/>
       <location filename="../../../Path/Op/Gui/Copy.py" line="50"/>
       <source>The tool controller that will be used to calculate the path</source>
-      <translation type="unfinished">The tool controller that will be used to calculate the path</translation>
+      <translation>Il controllore dell'utensile da usare per calcolare il percorso</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Base.py" line="226"/>
@@ -5266,17 +5266,17 @@ For example:
     <message>
       <location filename="../../../Path/Op/CircularHoleBase.py" line="80"/>
       <source>List of disabled features</source>
-      <translation type="unfinished">List of disabled features</translation>
+      <translation>Elenco delle funzioni disabilitate</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Custom.py" line="104"/>
       <source>The G-code to be inserted</source>
-      <translation type="unfinished">The G-code to be inserted</translation>
+      <translation>Il codice G da inserire</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="125"/>
       <source>The desired width of the chamfer</source>
-      <translation type="unfinished">The desired width of the chamfer</translation>
+      <translation>La larghezza desiderata della smussatura</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="131"/>
@@ -5372,7 +5372,7 @@ For example:
     <message>
       <location filename="../../../Path/Op/FeatureExtension.py" line="483"/>
       <source>Default length of extensions.</source>
-      <translation type="unfinished">Default length of extensions.</translation>
+      <translation>Lunghezza predefinita delle estensioni</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/FeatureExtension.py" line="490"/>
@@ -5968,22 +5968,22 @@ For example:
     <message>
       <location filename="../../../Path/Op/Gui/Comment.py" line="41"/>
       <source>Comment or note for CNC program</source>
-      <translation type="unfinished">Comment or note for CNC program</translation>
+      <translation>Commento o nota per il programma CNC</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/Copy.py" line="41"/>
       <source>The path to be copied</source>
-      <translation type="unfinished">The path to be copied</translation>
+      <translation>Il percorso da copiare</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/Hop.py" line="39"/>
       <source>The object to be reached by this hop</source>
-      <translation type="unfinished">The object to be reached by this hop</translation>
+      <translation>L'oggetto da raggiungere con questo salto</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/Hop.py" line="45"/>
       <source>The Z height of the hop</source>
-      <translation type="unfinished">The Z height of the hop</translation>
+      <translation>L'altezza Z del salto</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/Stop.py" line="42"/>
@@ -6003,7 +6003,7 @@ For example:
     <message>
       <location filename="../../../Path/Tool/Bit.py" line="158"/>
       <source>The file of the tool</source>
-      <translation type="unfinished">The file of the tool</translation>
+      <translation>Il file dell'utensile</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/Bit.py" line="164"/>
@@ -6019,7 +6019,7 @@ For example:
     <message>
       <location filename="../../../Path/Tool/Controller.py" line="68"/>
       <source>The active tool</source>
-      <translation type="unfinished">The active tool</translation>
+      <translation>L'utensile attivo</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/Controller.py" line="77"/>
@@ -6029,7 +6029,7 @@ For example:
     <message>
       <location filename="../../../Path/Tool/Controller.py" line="83"/>
       <source>Direction of spindle rotation</source>
-      <translation type="unfinished">Direction of spindle rotation</translation>
+      <translation>Direzione di rotazione del mandrino</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/Controller.py" line="89"/>
@@ -6054,7 +6054,7 @@ For example:
     <message>
       <location filename="../../../Path/Tool/Controller.py" line="304"/>
       <source>The tool used by this controller</source>
-      <translation type="unfinished">The tool used by this controller</translation>
+      <translation>Lo strumento usato da questo controllore</translation>
     </message>
   </context>
   <context>
@@ -6075,7 +6075,7 @@ For example:
     <message>
       <location filename="../../../Path/Dressup/Boundary.py" line="305"/>
       <source>The selected object is not a path</source>
-      <translation type="unfinished">The selected object is not a path</translation>
+      <translation>L'oggetto selezionato non è un percorso</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/Boundary.py" line="263"/>
@@ -6090,25 +6090,25 @@ For example:
     <message>
       <location filename="../../../Path/Dressup/Gui/Boundary.py" line="283"/>
       <source>Please select one path object</source>
-      <translation type="unfinished">Please select one path object</translation>
+      <translation>Selezionare un oggetto percorso</translation>
     </message>
   </context>
   <context>
     <name>Path_DressupTag</name>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1310"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1307"/>
       <source>Cannot insert holding tags for this path - please select a Profile path</source>
       <translation type="unfinished">Cannot insert holding tags for this path - please select a Profile path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1360"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1357"/>
       <source>The selected object is not a path</source>
-      <translation type="unfinished">The selected object is not a path</translation>
+      <translation>L'oggetto selezionato non è un percorso</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1365"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1362"/>
       <source>Please select a Profile object</source>
-      <translation type="unfinished">Please select a Profile object</translation>
+      <translation>Seleziona un oggetto Profilo</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/TagPreferences.py" line="94"/>
@@ -6128,7 +6128,7 @@ For example:
     <message>
       <location filename="../../../Path/Dressup/Gui/Tags.py" line="584"/>
       <source>Please select one path object</source>
-      <translation type="unfinished">Please select one path object</translation>
+      <translation>Selezionare un oggetto percorso</translation>
     </message>
   </context>
   <context>
@@ -6148,25 +6148,25 @@ For example:
     <name>Path_Dressup</name>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="284"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="368"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="366"/>
       <source>Please select one path object
 </source>
-      <translation type="unfinished">Please select one path object
+      <translation>Selezionare un percorso oggetto
 </translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="289"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="373"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="371"/>
       <source>The selected object is not a path
 </source>
-      <translation type="unfinished">The selected object is not a path
+      <translation>L'oggetto selezionato non è un percorso
 </translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="294"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="378"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="376"/>
       <source>Please select a Path object</source>
-      <translation type="unfinished">Please select a Path object</translation>
+      <translation>Seleziona un oggetto Percorso</translation>
     </message>
   </context>
   <context>
@@ -6200,13 +6200,13 @@ For example:
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="1381"/>
       <location filename="../../../Path/Dressup/Gui/DogboneII.py" line="349"/>
       <source>Please select one path object</source>
-      <translation type="unfinished">Please select one path object</translation>
+      <translation>Selezionare un oggetto percorso</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="1388"/>
       <location filename="../../../Path/Dressup/Gui/DogboneII.py" line="356"/>
       <source>The selected object is not a path</source>
-      <translation type="unfinished">The selected object is not a path</translation>
+      <translation>L'oggetto selezionato non è un percorso</translation>
     </message>
   </context>
   <context>
@@ -6224,17 +6224,17 @@ For example:
     <message>
       <location filename="../../../Path/Dressup/Gui/Dragknife.py" line="622"/>
       <source>Please select one path object</source>
-      <translation type="unfinished">Please select one path object</translation>
+      <translation>Selezionare un oggetto percorso</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/Dragknife.py" line="628"/>
       <source>The selected object is not a path</source>
-      <translation type="unfinished">The selected object is not a path</translation>
+      <translation>L'oggetto selezionato non è un percorso</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/Dragknife.py" line="634"/>
       <source>Please select a Path object</source>
-      <translation type="unfinished">Please select a Path object</translation>
+      <translation>Seleziona un oggetto Percorso</translation>
     </message>
   </context>
   <context>
@@ -6300,28 +6300,28 @@ For example:
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="918"/>
       <source>Please select one path object</source>
-      <translation type="unfinished">Please select one path object</translation>
+      <translation>Selezionare un oggetto percorso</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="925"/>
       <source>The selected object is not a path</source>
-      <translation type="unfinished">The selected object is not a path</translation>
+      <translation>L'oggetto selezionato non è un percorso</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="931"/>
       <source>Please select a Profile object</source>
-      <translation type="unfinished">Please select a Profile object</translation>
+      <translation>Seleziona un oggetto Profilo</translation>
     </message>
   </context>
   <context>
     <name>Path_Probe</name>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="293"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="292"/>
       <source>Select Probe Point File</source>
       <translation type="unfinished">Select Probe Point File</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="295"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="294"/>
       <location filename="../../../Path/Op/Gui/Probe.py" line="95"/>
       <source>All Files (*.*)</source>
       <translation>Tutti i File (*.*)</translation>
@@ -6345,12 +6345,12 @@ For example:
   <context>
     <name>Path_DressupZCorrect</name>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="347"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="346"/>
       <source>Z Depth Correction</source>
       <translation type="unfinished">Z Depth Correction</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="351"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="350"/>
       <source>Use Probe Map to correct Z depth</source>
       <translation type="unfinished">Use Probe Map to correct Z depth</translation>
     </message>
@@ -6374,19 +6374,19 @@ For example:
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="260"/>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="61"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="89"/>
       <source>2D</source>
       <translation>2D</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="261"/>
       <source>2.5D</source>
-      <translation type="unfinished">2.5D</translation>
+      <translation>2.5D</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="262"/>
       <source>Lathe</source>
-      <translation type="unfinished">Lathe</translation>
+      <translation>Tornio</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="263"/>
@@ -6431,7 +6431,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Job.py" line="1598"/>
       <source>Warning</source>
-      <translation type="unfinished">Warning</translation>
+      <translation>Attenzione</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Job.py" line="1599"/>
@@ -6469,27 +6469,27 @@ For example:
       <translation type="unfinished">Creates a Path Job</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="60"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="88"/>
       <source>Solids</source>
       <translation>Solidi</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="62"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="90"/>
       <source>Jobs</source>
-      <translation type="unfinished">Jobs</translation>
+      <translation>Lavorazione</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="330"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="358"/>
       <source>Base -/+ %.2f/%.2f %.2f/%.2f %.2f/%.2f</source>
       <translation type="unfinished">Base -/+ %.2f/%.2f %.2f/%.2f %.2f/%.2f</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="340"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="368"/>
       <source>Box: %.2f x %.2f x %.2f</source>
       <translation type="unfinished">Box: %.2f x %.2f x %.2f</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="355"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="383"/>
       <source>Unsupported stock type</source>
       <translation type="unfinished">Unsupported stock type</translation>
     </message>
@@ -6580,7 +6580,7 @@ For example:
   <context>
     <name>Path_Job:</name>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="346"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="374"/>
       <source>Cylinder: %.2f x %.2f</source>
       <translation type="unfinished">Cylinder: %.2f x %.2f</translation>
     </message>
@@ -6601,17 +6601,17 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="216"/>
       <source>Table of Contents</source>
-      <translation type="unfinished">Table of Contents</translation>
+      <translation>Sommario</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="217"/>
       <source>Part Information</source>
-      <translation type="unfinished">Part Information</translation>
+      <translation>Informazioni Parte</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="218"/>
       <source>Run Summary</source>
-      <translation type="unfinished">Run Summary</translation>
+      <translation>Esegui Riepilogo</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="219"/>
@@ -6641,42 +6641,42 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="225"/>
       <source>Base Object(s)</source>
-      <translation type="unfinished">Base Object(s)</translation>
+      <translation>Oggetto(i) Base</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="226"/>
       <source>Job Sequence</source>
-      <translation type="unfinished">Job Sequence</translation>
+      <translation>Sequenza di Lavoro</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="227"/>
       <source>Job Description</source>
-      <translation type="unfinished">Job Description</translation>
+      <translation>Descrizione Lavoro</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="228"/>
       <source>Job Type</source>
-      <translation type="unfinished">Job Type</translation>
+      <translation>Tipo di Lavoro</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="229"/>
       <source>CAD File Name</source>
-      <translation type="unfinished">CAD File Name</translation>
+      <translation>Nome File CAD</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="230"/>
       <source>Last Save Date</source>
-      <translation type="unfinished">Last Save Date</translation>
+      <translation>Data Ultimo Salvataggio</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="231"/>
       <source>Customer</source>
-      <translation type="unfinished">Customer</translation>
+      <translation>Cliente</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="233"/>
       <source>Designer</source>
-      <translation type="unfinished">Designer</translation>
+      <translation>Disegnatore</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="238"/>
@@ -6687,17 +6687,17 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="239"/>
       <source>Minimum Z Height</source>
-      <translation type="unfinished">Minimum Z Height</translation>
+      <translation>Altezza Z Minima</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="240"/>
       <source>Maximum Z Height</source>
-      <translation type="unfinished">Maximum Z Height</translation>
+      <translation>Altezza Z Massima</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="242"/>
       <source>Cycle Time</source>
-      <translation type="unfinished">Cycle Time</translation>
+      <translation>Tempo di Ciclo</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="243"/>
@@ -6707,12 +6707,12 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="244"/>
       <source>TOTAL JOB</source>
-      <translation type="unfinished">TOTAL JOB</translation>
+      <translation>TOTALE LAVORO</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="246"/>
       <source>Tool Number</source>
-      <translation type="unfinished">Tool Number</translation>
+      <translation>Numero utensile</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="509"/>
@@ -6722,12 +6722,12 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="510"/>
       <source>Manufacturer</source>
-      <translation type="unfinished">Manufacturer</translation>
+      <translation>Produttore</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="511"/>
       <source>Part Number</source>
-      <translation type="unfinished">Part Number</translation>
+      <translation>Numero Parte</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="512"/>
@@ -6737,7 +6737,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="513"/>
       <source>Inspection Notes</source>
-      <translation type="unfinished">Inspection Notes</translation>
+      <translation>Note di Ispezione</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="515"/>
@@ -6747,37 +6747,37 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="516"/>
       <source>Feed Rate</source>
-      <translation type="unfinished">Feed Rate</translation>
+      <translation>Velocità di avanzamento</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="517"/>
       <source>Spindle Speed</source>
-      <translation type="unfinished">Spindle Speed</translation>
+      <translation>Velocità Mandrino</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="518"/>
       <source>Tool Shape</source>
-      <translation type="unfinished">Tool Shape</translation>
+      <translation>Forma Utensile</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="520"/>
       <source>Tool Diameter</source>
-      <translation type="unfinished">Tool Diameter</translation>
+      <translation>Diametro Utensile</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="521"/>
       <source>X Size</source>
-      <translation type="unfinished">X Size</translation>
+      <translation>Dimensione X</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="522"/>
       <source>Y Size</source>
-      <translation type="unfinished">Y Size</translation>
+      <translation>Dimensione Y</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="523"/>
       <source>Z Size</source>
-      <translation type="unfinished">Z Size</translation>
+      <translation>Dimensione Z</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="525"/>
@@ -6802,7 +6802,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="530"/>
       <source>G-code File</source>
-      <translation type="unfinished">G-code File</translation>
+      <translation>File G-code</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="531"/>
@@ -6812,7 +6812,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="532"/>
       <source>Stops</source>
-      <translation type="unfinished">Stops</translation>
+      <translation>Stops</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="533"/>
@@ -6857,7 +6857,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="543"/>
       <source>Date</source>
-      <translation type="unfinished">Date</translation>
+      <translation>Data</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1332"/>
@@ -6986,7 +6986,7 @@ For example:
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="188"/>
       <source>Round</source>
-      <translation>Arrotondato</translation>
+      <translation type="unfinished">Round</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Deburr.py" line="189"/>
@@ -6999,12 +6999,12 @@ For example:
     <message>
       <location filename="../../../Path/Op/Drilling.py" line="69"/>
       <source>G98</source>
-      <translation type="unfinished">G98</translation>
+      <translation>G98</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Drilling.py" line="70"/>
       <source>G99</source>
-      <translation type="unfinished">G99</translation>
+      <translation>G99</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Drilling.py" line="73"/>
@@ -7082,17 +7082,17 @@ For example:
     <message>
       <location filename="../../../Path/Op/Profile.py" line="200"/>
       <source>Collectively</source>
-      <translation type="unfinished">Collectively</translation>
+      <translation>Collettivamente</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Profile.py" line="201"/>
       <source>Individually</source>
-      <translation type="unfinished">Individually</translation>
+      <translation>Individualmente</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Profile.py" line="204"/>
       <source>Round</source>
-      <translation>Arrotondato</translation>
+      <translation type="unfinished">Round</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Profile.py" line="205"/>
@@ -7135,7 +7135,7 @@ For example:
     <message>
       <location filename="../../../Path/Op/MillFace.py" line="70"/>
       <source>Perimeter</source>
-      <translation type="unfinished">Perimeter</translation>
+      <translation>Perimetro</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/MillFace.py" line="71"/>
@@ -7145,12 +7145,12 @@ For example:
     <message>
       <location filename="../../../Path/Op/Pocket.py" line="117"/>
       <source>Collectively</source>
-      <translation type="unfinished">Collectively</translation>
+      <translation/>
     </message>
     <message>
       <location filename="../../../Path/Op/Pocket.py" line="118"/>
       <source>Individually</source>
-      <translation type="unfinished">Individually</translation>
+      <translation>Individualmente</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/PocketBase.py" line="61"/>
@@ -7592,12 +7592,12 @@ For example:
     <message>
       <location filename="../../../Path/Op/Surface.py" line="475"/>
       <source>Collectively</source>
-      <translation type="unfinished">Collectively</translation>
+      <translation>Collettivamente</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Surface.py" line="476"/>
       <source>Individually</source>
-      <translation type="unfinished">Individually</translation>
+      <translation>Individualmente</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Surface.py" line="479"/>
@@ -7748,7 +7748,7 @@ For example:
     <message>
       <location filename="../../../Path/Op/ThreadMilling.py" line="287"/>
       <source>RightHand</source>
-      <translation type="unfinished">RightHand</translation>
+      <translation>Mano destra</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/ThreadMilling.py" line="293"/>
@@ -7908,12 +7908,12 @@ For example:
     <message>
       <location filename="../../../Path/Op/Waterline.py" line="134"/>
       <source>Collectively</source>
-      <translation type="unfinished">Collectively</translation>
+      <translation>Collettivamente</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Waterline.py" line="135"/>
       <source>Individually</source>
-      <translation type="unfinished">Individually</translation>
+      <translation>Individualmente</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Waterline.py" line="138"/>
@@ -8164,7 +8164,7 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Op/Gui/Deburr.py" line="145"/>
       <source>Deburr</source>
-      <translation type="unfinished">Deburr</translation>
+      <translation>Sbavatura</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/Deburr.py" line="148"/>
@@ -8200,12 +8200,12 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Op/Gui/Hop.py" line="118"/>
       <source>Please select one path object</source>
-      <translation type="unfinished">Please select one path object</translation>
+      <translation>Selezionare un oggetto percorso</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/Hop.py" line="123"/>
       <source>The selected object is not a path</source>
-      <translation type="unfinished">The selected object is not a path</translation>
+      <translation>L'oggetto selezionato non è un percorso</translation>
     </message>
   </context>
   <context>
@@ -8252,7 +8252,7 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Op/Gui/SimpleCopy.py" line="38"/>
       <source>Simple Copy</source>
-      <translation type="unfinished">Simple Copy</translation>
+      <translation>Copia semplice</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/SimpleCopy.py" line="41"/>
@@ -8297,7 +8297,7 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Post/Command.py" line="472"/>
       <source>Post Process</source>
-      <translation type="unfinished">Post Process</translation>
+      <translation>Post-elaborazione</translation>
     </message>
     <message>
       <location filename="../../../Path/Post/Command.py" line="474"/>
@@ -8359,7 +8359,7 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Tool/Gui/BitCmd.py" line="49"/>
       <source>Create Tool</source>
-      <translation type="unfinished">Create Tool</translation>
+      <translation>Crea utensile</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/Gui/BitCmd.py" line="52"/>
@@ -8372,7 +8372,7 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Tool/Gui/BitCmd.py" line="74"/>
       <source>Save Tool as...</source>
-      <translation type="unfinished">Save Tool as...</translation>
+      <translation>Salva l'utensile come...</translation>
     </message>
   </context>
   <context>
@@ -8380,7 +8380,7 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Tool/Gui/BitCmd.py" line="76"/>
       <source>Save Tool</source>
-      <translation type="unfinished">Save Tool</translation>
+      <translation>Salva l'utensile</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/Gui/BitCmd.py" line="81"/>
@@ -8393,7 +8393,7 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Tool/Gui/BitCmd.py" line="138"/>
       <source>Load Tool</source>
-      <translation type="unfinished">Load Tool</translation>
+      <translation>Carica l'utensile</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/Gui/BitCmd.py" line="141"/>

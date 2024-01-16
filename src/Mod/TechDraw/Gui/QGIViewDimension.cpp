@@ -513,11 +513,24 @@ QVariant QGIViewDimension::itemChange(GraphicsItemChange change, const QVariant&
             datumLabel->setSelected(false);
         }
         draw();
+        return value;
+    }
+    if(change == ItemPositionChange && scene()) {
+        // QGIVDimension doesn't really change position the way other views do.
+        // If we call QGIView::itemChange it will set the position to (0,0) instead of
+        // using the label's position, and the Dimension will be in the wrong place.
+        // QGIVBalloon behaves the same way.
+        return QGraphicsItem::itemChange(change, value);
     }
     return QGIView::itemChange(change, value);
 }
 
-//Set selection state for this and it's children
+bool QGIViewDimension::getGroupSelection()
+{
+    return datumLabel->isSelected();
+}
+
+//Set selection state for this and its children
 void QGIViewDimension::setGroupSelection(bool isSelected)
 {
     //    Base::Console().Message("QGIVD::setGroupSelection(%d)\n", b);
@@ -2112,7 +2125,7 @@ void QGIViewDimension::drawDistance(TechDraw::DrawViewDimension* dimension,
                              dimension->ExtensionAngle.getValue() * M_PI / 180.0);
     }
     else {
-        drawDistanceExecutive(fromQtApp(linePoints.first()), fromQtApp(linePoints.second()),
+        drawDistanceExecutive(fromQtApp(linePoints.extensionLineFirst()), fromQtApp(linePoints.extensionLineSecond()),
                               lineAngle, labelRectangle, standardStyle, renderExtent, flipArrows);
     }
 }

@@ -96,9 +96,9 @@ GENERATE_QM = {
     "Cloud",
     "Draft",
     "Inspection",
-    "Material",
     "OpenSCAD",
     "Tux",
+    "Help",
 }
 
 # locations list contains Module name, relative path to translation folder and relative path to qrc file
@@ -128,10 +128,16 @@ locations = [
         "../Mod/Fem/Gui/Resources/Fem.qrc",
     ],
     ["FreeCAD", "../Gui/Language", "../Gui/Language/translation.qrc"],
+    ["Help", "../Mod/Help/Resources/translations", "../Mod/Help/Resources/Help.qrc"],
     [
         "Inspection",
         "../Mod/Inspection/Gui/Resources/translations",
         "../Mod/Inspection/Gui/Resources/Inspection.qrc",
+    ],
+    [
+        "Material",
+        "../Mod/Material/Gui/Resources/translations",
+        "../Mod/Material/Gui/Resources/Material.qrc",
     ],
     [
         "Mesh",
@@ -441,6 +447,9 @@ def doFile(tsfilepath, targetpath, lncode, qrcpath):
         ][:-3]
     newname = basename + "_" + lncode + ".ts"
     newpath = targetpath + os.sep + newname
+    if not os.path.exists(newpath):
+        # If this language code does not exist for the given TS file, bail out
+        return
     shutil.copyfile(tsfilepath, newpath)
     if basename in GENERATE_QM:
         print(f"Generating QM for {basename}")

@@ -1306,7 +1306,11 @@ PyObject*  TopoShapePy::ancestorsOfType(PyObject *args)
         TopTools_ListIteratorOfListOfShape it(ancestors);
         for (; it.More(); it.Next()) {
             // make sure to avoid duplicates
+#if OCC_VERSION_HEX >= 0x070800
+            const size_t code = std::hash<TopoDS_Shape>{}(static_cast<TopoDS_Shape>(it.Value()));
+#else
             Standard_Integer code = it.Value().HashCode(INT_MAX);
+#endif
             if (hashes.find(code) == hashes.end()) {
                 list.append(shape2pyshape(it.Value()));
                 hashes.insert(code);
@@ -1928,7 +1932,11 @@ PyObject* TopoShapePy::hashCode(PyObject *args)
     if (!PyArg_ParseTuple(args, "|i",&upper))
         return nullptr;
 
+#if OCC_VERSION_HEX >= 0x070800
+    int hc = std::hash<TopoDS_Shape>{}(getTopoShapePtr()->getShape());
+#else
     int hc = getTopoShapePtr()->getShape().HashCode(upper);
+#endif
     return Py_BuildValue("i", hc);
 }
 
@@ -2059,7 +2067,7 @@ PyObject* TopoShapePy::reflectLines(PyObject *args, PyObject *kwds)
     static const std::array<const char *, 7> kwlist{"ViewDir", "ViewPos", "UpDir", "EdgeType", "Visible", "OnShape",
                                                     nullptr};
 
-    char* type="OutLine";
+    const char* type="OutLine";
     PyObject* vis = Py_True;
     PyObject* in3d = Py_False;
     PyObject* pPos = nullptr;
@@ -2671,8 +2679,9 @@ PyObject* TopoShapePy::optimalBoundingBox(PyObject *args)
 {
     PyObject* useT = Py_True;
     PyObject* useS = Py_False;
-    if (!PyArg_ParseTuple(args, "|O!O!", &PyBool_Type, &PyBool_Type, &useT, &useS))
+    if (!PyArg_ParseTuple(args, "|O!O!", &PyBool_Type, &useT, &PyBool_Type, &useS)) {
         return nullptr;
+    }
 
     try {
         TopoDS_Shape shape = this->getTopoShapePtr()->getShape();

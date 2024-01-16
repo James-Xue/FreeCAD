@@ -125,7 +125,7 @@ void TaskImage::initialiseTransparency()
     // NOLINTBEGIN
     auto vp = Application::Instance->getViewProvider(feature.get());
     App::Property* prop = vp->getPropertyByName("Transparency");
-    if (prop && prop->getTypeId().isDerivedFrom(App::PropertyInteger::getClassTypeId())) {
+    if (prop && prop->isDerivedFrom<App::PropertyInteger>()) {
         auto Transparency = static_cast<App::PropertyInteger*>(prop);
         ui->spinBoxTransparency->setValue(Transparency->getValue());
         ui->sliderTransparency->setValue(Transparency->getValue());
@@ -529,7 +529,7 @@ void InteractiveScale::collectPoint(const SbVec3f& pos3d)
 
             midPoint = (points[0] + points[1]) / 2;
 
-            measureLabel->startEdit(getDistance(points[1]), this);
+            measureLabel->startEdit(getDistance(points[1]), this, true);
 
             Q_EMIT enableApplyBtn();
         }

@@ -285,7 +285,7 @@ For stock from the Base object's bounding box it means the extra material in all
     <message>
       <location filename="../panels/DlgJobTemplateExport.ui" line="168"/>
       <source>Extent</source>
-      <translation type="unfinished">Extent</translation>
+      <translation>მასშტაბი</translation>
     </message>
     <message>
       <location filename="../panels/DlgJobTemplateExport.ui" line="194"/>
@@ -1835,7 +1835,7 @@ The latter can be used to face of the entire stock area to ensure uniform height
     <message>
       <location filename="../panels/PageOpSurfaceEdit.ui" line="191"/>
       <source>Dropcutter lines are created parallel to this axis.</source>
-      <translation type="unfinished">Dropcutter lines are created parallel to this axis.</translation>
+      <translation>ფრეზირების ხაზები ამ ღერძის პარალელურად შეიქმნება.</translation>
     </message>
     <message>
       <location filename="../panels/PageOpSurfaceEdit.ui" line="205"/>
@@ -2947,48 +2947,48 @@ Should multiple tools or tool shapes with the same name exist in different direc
       <translation>ფენების ჩათვლით</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="54"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="52"/>
       <source>Arc</source>
       <translation>რკალი</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="55"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="53"/>
       <source>Tangent</source>
       <translation>ტანგენსი</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="56"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="54"/>
       <source>Perpendicular</source>
       <translation>მართობულად</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="169"/>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="176"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="168"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="175"/>
       <source>Length/Radius positive not Null</source>
       <translation>სიგრძე/რადიუსი ნულზე მეტი უნდა იყოს</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="677"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="464"/>
       <source>LeadInOut</source>
       <translation>შეყვანა/გაყვანა</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="681"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="468"/>
       <source>Creates a Cutter Radius Compensation G41/G42 Entry Dressup object from a selected path</source>
       <translation type="unfinished">Creates a Cutter Radius Compensation G41/G42 Entry Dressup object from a selected path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="696"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="483"/>
       <source>Please select one path object</source>
       <translation>გთხოვთ აირჩიოთ ერთი ტრაექტორიის ობიექტი</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="703"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="490"/>
       <source>The selected object is not a path</source>
       <translation>მონიშნული ობიექტი ტრაექტორია არაა</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="709"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="496"/>
       <source>Please select a Profile object</source>
       <translation>მონიშნეთ პროფილის ობიექტი</translation>
     </message>
@@ -4282,9 +4282,9 @@ Default: 3 mm</source>
   <context>
     <name>Path</name>
     <message>
-      <location filename="../../../InitGui.py" line="282"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="69"/>
       <source>The currently selected unit schema: 
-     '{}'
+     '{}' for this document
  Does not use 'minutes' for velocity values. 
  
 CNC machines require feed rate to be expressed in 
@@ -4295,7 +4295,7 @@ For example:
     'US Customary'
     'Imperial Decimal'</source>
       <translation type="unfinished">The currently selected unit schema: 
-     '{}'
+     '{}' for this document
  Does not use 'minutes' for velocity values. 
  
 CNC machines require feed rate to be expressed in 
@@ -4307,17 +4307,17 @@ For example:
     'Imperial Decimal'</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="284"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="71"/>
       <source>Warning</source>
       <translation>გაფრთხილება</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="286"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="76"/>
       <source>Ok</source>
       <translation>დიახ</translation>
     </message>
     <message>
-      <location filename="../../../InitGui.py" line="288"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="79"/>
       <source>Don't Show This Anymore</source>
       <translation>აღარ მაჩვენო</translation>
     </message>
@@ -4654,11 +4654,11 @@ For example:
     </message>
     <message>
       <location filename="../../../Path/Dressup/Boundary.py" line="53"/>
-      <location filename="../../../Path/Dressup/Tags.py" line="943"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="940"/>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="54"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="423"/>
       <location filename="../../../Path/Dressup/Gui/Dragknife.py" line="58"/>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="63"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="61"/>
       <location filename="../../../Path/Dressup/Gui/RampEntry.py" line="57"/>
       <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="62"/>
       <source>The base path to modify</source>
@@ -4675,72 +4675,72 @@ For example:
       <translation type="unfinished">Determines if Boundary describes an inclusion or exclusion mask.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="202"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="203"/>
       <source>The base path to dress up</source>
       <translation>ძირითადი ტრაექტორია ზღუდარამდე</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="210"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="211"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="429"/>
       <source>The side of path to insert bones</source>
       <translation>ბილიკის მხარე კუთხის გარშემო შემოჭრის ჩასასმელად</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="227"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="228"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="437"/>
       <source>The style of bones</source>
       <translation>კუთხის გარშემო შემოჭრის სტილი</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="238"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="239"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="455"/>
       <source>The algorithm to determine the bone length</source>
       <translation>კუთხის გარშემო შემოჭრის სიგრძის გამოთვლის ალგორითმი</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="249"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="250"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="463"/>
       <source>Dressup length if incision is set to 'custom'</source>
       <translation>ზღუდარის სიგრძე, თუ შეჭრა დაყენებულია 'ხელით მითითებულზე'</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/DogboneII.py" line="257"/>
+      <location filename="../../../Path/Dressup/DogboneII.py" line="258"/>
       <location filename="../../../Path/Dressup/Gui/Dogbone.py" line="445"/>
       <source>Bones that aren't dressed up</source>
       <translation>კუთხის გარშემო შემოჭრები, რომლებსაც ზღუდარი არ აქვთ</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="949"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="946"/>
       <source>Width of tags.</source>
       <translation>ჭდეების სიგანე.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="955"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="952"/>
       <source>Height of tags.</source>
       <translation>ჭდეების სიმაღლე.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="961"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="958"/>
       <source>Angle of tag plunge and ascent.</source>
       <translation>ჭდის ჩაძირვისა და ამოღების კუთხე.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="967"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="964"/>
       <source>Radius of the fillet for the tag.</source>
       <translation>ჭდის მომრგვალების რადიუსი.</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="973"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="970"/>
       <source>Locations of inserted holding tags</source>
       <translation>ჩასმული სამაგრების მდებარეობები</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="979"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="976"/>
       <source>IDs of disabled holding tags</source>
       <translation>გამორთული სამაგრების ID-ები</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="988"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="985"/>
       <source>Factor determining the # of segments used to approximate rounded tags.</source>
       <translation type="unfinished">Factor determining the # of segments used to approximate rounded tags.</translation>
     </message>
@@ -4770,57 +4770,57 @@ For example:
       <translation>კუთხის მოქმედებისას აწევის სიმაღლე</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="69"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="67"/>
       <source>Calculate roll-on to path</source>
       <translation>ბილიკამდე გადასვლის გამოთვლა</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="75"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="73"/>
       <source>Calculate roll-off from path</source>
       <translation>ტრაექტორიიდან გადახვევის გამოთვლა</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="81"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="79"/>
       <source>Keep the Tool Down in Path</source>
       <translation>ხელსაწყოს ტრაექტორიაში დაბლა შეკავება</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="87"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="85"/>
       <source>Length or Radius of the approach</source>
       <translation>მიდგომის რადიუსის სიგრძე</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="93"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="91"/>
       <source>Length or Radius of the exit</source>
       <translation>გამოსვლის რადიუსის სიგრძე</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="99"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="97"/>
       <source>The Style of motion into the Path</source>
       <translation>ტრაექტორიაში მოძრაობის სტილი</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="106"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="104"/>
       <source>The Style of motion out of the Path</source>
       <translation>ტრაექტორიის გარეთ მოძრაობის სტილი</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="113"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="111"/>
       <source>Extends LeadIn distance</source>
       <translation>ადიდებს შეყვანის მანძილს</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="119"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="117"/>
       <source>Extends LeadOut distance</source>
       <translation>ზრდის გამოყვანის მანძილს</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="125"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="123"/>
       <source>Perform plunges with G0</source>
       <translation>ჩაძირვის G0-ით შესრულება</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="133"/>
+      <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="131"/>
       <source>Apply LeadInOut to layers within an operation</source>
       <translation type="unfinished">Apply LeadInOut to layers within an operation</translation>
     </message>
@@ -5091,7 +5091,7 @@ For example:
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1028"/>
       <source>To take a finishing profile path at the end</source>
-      <translation type="unfinished">To take a finishing profile path at the end</translation>
+      <translation>ბოლოს დამსრულებელი პროფილის ტრაექტორიის არჩევა</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Adaptive.py" line="1034"/>
@@ -5654,7 +5654,7 @@ For example:
     <message>
       <location filename="../../../Path/Op/Surface.py" line="162"/>
       <source>Dropcutter lines are created parallel to this axis.</source>
-      <translation type="unfinished">Dropcutter lines are created parallel to this axis.</translation>
+      <translation>ფრეზირების ხაზები ამ ღერძის პარალელურად შეიქმნება.</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Surface.py" line="170"/>
@@ -6094,17 +6094,17 @@ For example:
   <context>
     <name>Path_DressupTag</name>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1310"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1307"/>
       <source>Cannot insert holding tags for this path - please select a Profile path</source>
       <translation type="unfinished">Cannot insert holding tags for this path - please select a Profile path</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1360"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1357"/>
       <source>The selected object is not a path</source>
       <translation>მონიშნული ობიექტი ტრაექტორია არაა</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Tags.py" line="1365"/>
+      <location filename="../../../Path/Dressup/Tags.py" line="1362"/>
       <source>Please select a Profile object</source>
       <translation>მონიშნეთ პროფილის ობიექტი</translation>
     </message>
@@ -6146,7 +6146,7 @@ For example:
     <name>Path_Dressup</name>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="284"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="368"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="366"/>
       <source>Please select one path object
 </source>
       <translation>გთხოვთ აირჩიოთ ერთი ტრაექტორიის ობიექტი
@@ -6154,7 +6154,7 @@ For example:
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="289"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="373"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="371"/>
       <source>The selected object is not a path
 </source>
       <translation>მონიშნული ობიექტი ტრაექტორია არაა
@@ -6162,7 +6162,7 @@ For example:
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/AxisMap.py" line="294"/>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="378"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="376"/>
       <source>Please select a Path object</source>
       <translation>აირჩიეთ ტრაექტორიის ობიექტი</translation>
     </message>
@@ -6314,12 +6314,12 @@ For example:
   <context>
     <name>Path_Probe</name>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="293"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="292"/>
       <source>Select Probe Point File</source>
       <translation>არჩიეთ ზონდის წერტილის ფაილი</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="295"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="294"/>
       <location filename="../../../Path/Op/Gui/Probe.py" line="95"/>
       <source>All Files (*.*)</source>
       <translation>ყველა ფაილი (*.*)</translation>
@@ -6343,12 +6343,12 @@ For example:
   <context>
     <name>Path_DressupZCorrect</name>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="347"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="346"/>
       <source>Z Depth Correction</source>
       <translation>Z სიღრმის ჩასწორება</translation>
     </message>
     <message>
-      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="351"/>
+      <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="350"/>
       <source>Use Probe Map to correct Z depth</source>
       <translation>ზონდის რუკის გამოყენება Z-ის სიღრმის ჩასასწორებლად</translation>
     </message>
@@ -6372,7 +6372,7 @@ For example:
     </message>
     <message>
       <location filename="../../../Path/Main/Job.py" line="260"/>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="61"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="89"/>
       <source>2D</source>
       <translation>2D</translation>
     </message>
@@ -6467,27 +6467,27 @@ For example:
       <translation>ქმნის ტრაექტორიის დავალებას</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="60"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="88"/>
       <source>Solids</source>
       <translation>მყარი სხეულები</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="62"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="90"/>
       <source>Jobs</source>
       <translation>ვაკანსიები</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="330"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="358"/>
       <source>Base -/+ %.2f/%.2f %.2f/%.2f %.2f/%.2f</source>
       <translation>ბაზისი -/+ %.2f/%.2f %.2f/%.2f %.2f/%.2f</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="340"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="368"/>
       <source>Box: %.2f x %.2f x %.2f</source>
       <translation>შემ. ჩარჩო %.2f x %.2f x %.2f</translation>
     </message>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="355"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="383"/>
       <source>Unsupported stock type</source>
       <translation>მხარდაუჭერელი ნედლეულის ტიპი</translation>
     </message>
@@ -6578,7 +6578,7 @@ For example:
   <context>
     <name>Path_Job:</name>
     <message>
-      <location filename="../../../Path/Main/Gui/JobDlg.py" line="346"/>
+      <location filename="../../../Path/Main/Gui/JobDlg.py" line="374"/>
       <source>Cylinder: %.2f x %.2f</source>
       <translation>ცილინდრი: %.2f %.2f-ზე</translation>
     </message>
@@ -6614,7 +6614,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="219"/>
       <source>Rough Stock</source>
-      <translation type="unfinished">Rough Stock</translation>
+      <translation>უხეში მასალა</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="220"/>
@@ -6634,7 +6634,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="224"/>
       <source>Squawks</source>
-      <translation type="unfinished">Squawks</translation>
+      <translation>ჭრიალი</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="225"/>
@@ -6872,7 +6872,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1371"/>
       <source>Tool Controller '{}' has no spindlespeed</source>
-      <translation type="unfinished">Tool Controller '{}' has no spindlespeed</translation>
+      <translation>ხელსაწყოს კონტროლერს '{}' შპინდელის სიჩქარე არ გააჩნია</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1399"/>
@@ -6882,7 +6882,7 @@ For example:
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1494"/>
       <source>Consider Specifying the Stock Material</source>
-      <translation type="unfinished">Consider Specifying the Stock Material</translation>
+      <translation>განიხილეთ ნედლეულის მასალის მითითება</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/Sanity.py" line="1585"/>

@@ -461,6 +461,9 @@ private:
             false;  // indicates whether the present virtual space view is the
                     // Real Space or the Virtual Space (virtual space 1 or 2)
         bool buttonPress = false;
+
+        int stdCountSegments =
+            50;  // preferences controlled default geometry sampling for selection
     };
 
     /** @brief Private struct grouping ViewProvider and RenderManager node, to be used as SoNode
@@ -470,6 +473,31 @@ private:
     {
         ViewProviderSketch* vp;
         SoRenderManager* renderMgr;
+    };
+
+public:
+    /* API to retrieve information about the active DrawSketchHandler. In particular related to how
+     * tool widgets should be handled.
+     */
+    class ToolManager
+    {
+    public:
+        explicit ToolManager(ViewProviderSketch* vp);
+
+        /** @brief Factory function returning a tool widget of the type appropriate for the current
+         * active tool. If no tool is active, expect a nullptr.
+         */
+        std::unique_ptr<QWidget> createToolWidget() const;
+        /** @brief Returns whether the current tool's widget is intended to be visible for the user
+         */
+        bool isWidgetVisible() const;
+        /** @brief Returns the intended icon for a visible tool widget (e.g. for header/title).*/
+        QPixmap getToolIcon() const;
+        /** @brief Returns the intended text for a visible tool widget (e.g. for header/title).*/
+        QString getToolWidgetText() const;
+
+    private:
+        ViewProviderSketch* vp;
     };
 
 public:
@@ -492,6 +520,8 @@ public:
     App::PropertyString EditingWorkbench;
     SketcherGui::PropertyVisualLayerList VisualLayerList;
     //@}
+
+    const ToolManager toolManager;
 
     // TODO: It is difficult to imagine that these functions are necessary in the public interface.
     // This requires review at a second stage and possibly refactor it.
@@ -537,6 +567,10 @@ public:
     {
         return Mode;
     }
+
+    // create right click context menu based on selection in the 3D view
+    void generateContextMenu();
+
     //@}
 
     /** @name Drawing functions */
@@ -653,6 +687,15 @@ public:
     boost::signals2::signal<void()> signalElementsChanged;
     //@}
 
+    /** @name Register slot for signal */
+    //@{
+    template<typename F>
+    boost::signals2::connection registerToolChanged(F&& f)
+    {
+        return signalToolChanged.connect(std::forward<F>(f));
+    }
+    //@}
+
     /** @name Attorneys for collaboration with helper classes */
     //@{
     friend class ViewProviderSketchDrawSketchHandlerAttorney;
@@ -761,6 +804,14 @@ private:
     bool isInEditMode() const;
     //@}
 
+    /** @name signals*/
+    //@{
+    /// signals a tool change
+    boost::signals2::signal<void(const std::string& toolname)> signalToolChanged;
+    //@}
+
+    void slotToolWidgetChanged(QWidget* newwidget);
+
     /** @name Attorney functions*/
     //@{
     /* private functions to decouple Attorneys and Clients from the internal implementation of
@@ -832,6 +883,7 @@ private:
     void setAxisPickStyle(bool on);
 
     void moveCursorToSketchPoint(Base::Vector2d point);
+    void ensureFocus();
 
     void preselectAtPoint(Base::Vector2d point);
     //@}
@@ -884,6 +936,9 @@ private:
     std::unique_ptr<DrawSketchHandler> sketchHandler;
 
     ViewProviderParameters viewProviderParameters;
+
+    using Connection = boost::signals2::connection;
+    Connection connectionToolWidget;
 
     SoNodeSensor cameraSensor;
     int viewOrientationFactor;  // stores if sketch viewed from front or back

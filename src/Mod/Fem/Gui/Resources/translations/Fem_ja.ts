@@ -321,17 +321,17 @@
   <context>
     <name>CmdFemPostApllyChanges</name>
     <message>
-      <location filename="../../Command.cpp" line="2442"/>
+      <location filename="../../Command.cpp" line="2445"/>
       <source>Fem</source>
       <translation>有限要素法</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2443"/>
+      <location filename="../../Command.cpp" line="2446"/>
       <source>Apply changes to pipeline</source>
       <translation>パイプラインに変更を適用</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2444"/>
+      <location filename="../../Command.cpp" line="2447"/>
       <source>Apply changes to parameters directly and not on recompute only...</source>
       <translation>再計算時以外も、パラメーターに変更を直接適用します...</translation>
     </message>
@@ -354,12 +354,12 @@
       <translation type="unfinished">Define/create a clip filter which uses functions to define the clipped region</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2344"/>
+      <location filename="../../Command.cpp" line="2347"/>
       <source>Wrong selection</source>
       <translation>誤った選択</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2345"/>
+      <location filename="../../Command.cpp" line="2348"/>
       <source>Select a pipeline, please.</source>
       <translation>パイプラインを選択してください。</translation>
     </message>
@@ -421,37 +421,37 @@
   <context>
     <name>CmdFemPostFunctions</name>
     <message>
-      <location filename="../../Command.cpp" line="2215"/>
+      <location filename="../../Command.cpp" line="2218"/>
       <source>Fem</source>
       <translation>有限要素法</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2216"/>
+      <location filename="../../Command.cpp" line="2219"/>
       <source>Filter functions</source>
       <translation>フィルター関数</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2217"/>
+      <location filename="../../Command.cpp" line="2220"/>
       <source>Functions for use in postprocessing filter...</source>
       <translation>ポスト処理フィルターで使用する関数...</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2396"/>
+      <location filename="../../Command.cpp" line="2399"/>
       <source>Plane</source>
       <translation>平面</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2403"/>
+      <location filename="../../Command.cpp" line="2406"/>
       <source>Sphere</source>
       <translation>球体</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2410"/>
+      <location filename="../../Command.cpp" line="2413"/>
       <source>Cylinder</source>
       <translation>円柱</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2417"/>
+      <location filename="../../Command.cpp" line="2420"/>
       <source>Box</source>
       <translation>立方体</translation>
     </message>
@@ -510,14 +510,14 @@
       <translation>応力線形化プロットの定義/作成</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2031"/>
-      <location filename="../../Command.cpp" line="2040"/>
+      <location filename="../../Command.cpp" line="2034"/>
+      <location filename="../../Command.cpp" line="2043"/>
       <source>Wrong selection</source>
       <translation>誤った選択</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2032"/>
-      <location filename="../../Command.cpp" line="2041"/>
+      <location filename="../../Command.cpp" line="2035"/>
+      <location filename="../../Command.cpp" line="2044"/>
       <source>Select a Clip filter which clips a STRESS field along a line, please.</source>
       <translation>直線に沿って圧力場をクリップするクリップフィルターを選択してください。</translation>
     </message>
@@ -525,27 +525,27 @@
   <context>
     <name>CmdFemPostPipelineFromResult</name>
     <message>
-      <location filename="../../Command.cpp" line="2483"/>
+      <location filename="../../Command.cpp" line="2486"/>
       <source>Fem</source>
       <translation>有限要素法</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2484"/>
+      <location filename="../../Command.cpp" line="2487"/>
       <source>Post pipeline from result</source>
       <translation>結果によるポスト処理パイプライン</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2485"/>
+      <location filename="../../Command.cpp" line="2488"/>
       <source>Creates a post processing pipeline from a result object</source>
       <translation>結果オブジェクトからポスト処理パイプラインを作成</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2563"/>
+      <location filename="../../Command.cpp" line="2566"/>
       <source>Wrong selection type</source>
       <translation>間違った選択タイプ</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2564"/>
+      <location filename="../../Command.cpp" line="2567"/>
       <source>Select a result object, please.</source>
       <translation>結果オブジェクトを選択してください。</translation>
     </message>
@@ -553,17 +553,17 @@
   <context>
     <name>CmdFemPostScalarClipFilter</name>
     <message>
-      <location filename="../../Command.cpp" line="2067"/>
+      <location filename="../../Command.cpp" line="2070"/>
       <source>Fem</source>
       <translation>有限要素法</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2068"/>
+      <location filename="../../Command.cpp" line="2071"/>
       <source>Scalar clip filter</source>
       <translation>スカラークリップフィルター</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2070"/>
+      <location filename="../../Command.cpp" line="2073"/>
       <source>Define/create a clip filter which clips a field with a scalar value</source>
       <translation>スカラー値の場をクリップするクリップフィルターを定義/作成</translation>
     </message>
@@ -571,17 +571,17 @@
   <context>
     <name>CmdFemPostWarpVectorFilter</name>
     <message>
-      <location filename="../../Command.cpp" line="2117"/>
+      <location filename="../../Command.cpp" line="2120"/>
       <source>Fem</source>
       <translation>有限要素法</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2118"/>
+      <location filename="../../Command.cpp" line="2121"/>
       <source>Warp filter</source>
       <translation>たわみフィルター</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2119"/>
+      <location filename="../../Command.cpp" line="2122"/>
       <source>Warp the geometry along a vector field by a certain factor</source>
       <translation>ベクトル場に従って一定の係数でジオメトリーをたわめる</translation>
     </message>
@@ -684,12 +684,12 @@
       <translation>フィルターを作成</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2249"/>
+      <location filename="../../Command.cpp" line="2252"/>
       <source>Create function</source>
       <translation>関数を作成</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2535"/>
+      <location filename="../../Command.cpp" line="2538"/>
       <source>Create pipeline from result</source>
       <translation>結果からパイプラインを作成</translation>
     </message>
@@ -776,22 +776,22 @@
   <context>
     <name>FEM_PostCreateFunctions</name>
     <message>
-      <location filename="../../Command.cpp" line="2398"/>
+      <location filename="../../Command.cpp" line="2401"/>
       <source>Create a plane function, defined by its origin and normal</source>
       <translation>原点と法線で定義された平面関数を作成</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2405"/>
+      <location filename="../../Command.cpp" line="2408"/>
       <source>Create a sphere function, defined by its center and radius</source>
       <translation>中心点と半径で定義された球関数を作成</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2411"/>
+      <location filename="../../Command.cpp" line="2414"/>
       <source>Create a cylinder function, defined by its center, axis and radius</source>
       <translation>中心点、軸、半径で定義された円筒関数を作成</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2418"/>
+      <location filename="../../Command.cpp" line="2421"/>
       <source>Create a box function, defined by its center, length, width and height</source>
       <translation>中心、奥行き、幅、高さで定義された直方体関数を作成</translation>
     </message>
@@ -1697,15 +1697,9 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskDlgFemConstraintForce</name>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="474"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="517"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="487"/>
       <source>Input error</source>
       <translation>入力エラー</translation>
-    </message>
-    <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="475"/>
-      <source>Please specify a force greater than 0</source>
-      <translation>力に0より大きい値を指定してください</translation>
     </message>
   </context>
   <context>
@@ -1736,7 +1730,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskDlgFemConstraintPressure</name>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="340"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="336"/>
       <source>Input error</source>
       <translation>入力エラー</translation>
     </message>
@@ -1760,7 +1754,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskDlgFemConstraintTemperature</name>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="382"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="409"/>
       <source>Input error</source>
       <translation>入力エラー</translation>
     </message>
@@ -1789,7 +1783,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskDlgPost</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="373"/>
+      <location filename="../../TaskPostBoxes.cpp" line="333"/>
       <source>Input error</source>
       <translation>入力エラー</translation>
     </message>
@@ -2127,39 +2121,39 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskFemConstraintForce</name>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="138"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="148"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="187"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="210"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="220"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="126"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="136"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="175"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="208"/>
       <source>Selection error</source>
       <translation>選択エラー</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="138"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="210"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="126"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="198"/>
       <source>Nothing selected!</source>
       <translation>何も選択されていません!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="148"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="220"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="136"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="208"/>
       <source>Selected object is not a part!</source>
       <translation>選択されたオブジェクトは部品ではありません!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="185"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="173"/>
       <source>Only one type of selection (vertex, face or edge) per analysis feature allowed!</source>
       <translation type="unfinished">Only one type of selection (vertex, face or edge) per analysis feature allowed!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="335"/>
-      <location filename="../../TaskFemConstraintForce.cpp" line="351"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="316"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="332"/>
       <source>Wrong selection</source>
       <translation>誤った選択</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="335"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="316"/>
       <source>Select an edge or a face, please.</source>
       <translation>エッジまたは面を選択してください。</translation>
     </message>
@@ -2266,28 +2260,28 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskFemConstraintPressure</name>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="133"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="143"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="152"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="188"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="132"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="142"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="151"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="187"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="197"/>
       <source>Selection error</source>
       <translation>選択エラー</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="133"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="188"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="132"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="187"/>
       <source>Nothing selected!</source>
       <translation>何も選択されていません!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="143"/>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="142"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="197"/>
       <source>Selected object is not a part!</source>
       <translation>選択されたオブジェクトは部品ではありません!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="152"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="151"/>
       <source>Only faces can be picked</source>
       <translation>面のみを選択できます。</translation>
     </message>
@@ -2337,22 +2331,22 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskFemConstraintTemperature</name>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="153"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="163"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="204"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="214"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="188"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="239"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="249"/>
       <source>Selection error</source>
       <translation>選択エラー</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="153"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="204"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="188"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="239"/>
       <source>Nothing selected!</source>
       <translation>何も選択されていません!</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="163"/>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="214"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="198"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="249"/>
       <source>Selected object is not a part!</source>
       <translation>選択されたオブジェクトは部品ではありません!</translation>
     </message>
@@ -2433,7 +2427,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostClip</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1266"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1272"/>
       <source>Clip region, choose implicit function</source>
       <translation>クリップ領域、陰関数を選択</translation>
     </message>
@@ -2441,7 +2435,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostCut</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1567"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1566"/>
       <source>Function cut, choose implicit function</source>
       <translation>関数による切り取り、陰関数を選択</translation>
     </message>
@@ -2449,12 +2443,12 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostDataAlongLine</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="530"/>
+      <location filename="../../TaskPostBoxes.cpp" line="486"/>
       <source>Data along a line options</source>
       <translation>直線に沿うデータのオプション</translation>
     </message>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="869"/>
+      <location filename="../../TaskPostBoxes.cpp" line="882"/>
       <source>Length</source>
       <comment>X-Axis plot label</comment>
       <translation>長さ</translation>
@@ -2463,12 +2457,12 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostDataAtPoint</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="896"/>
+      <location filename="../../TaskPostBoxes.cpp" line="911"/>
       <source>Data at point options</source>
       <translation>点位置データのオプション</translation>
     </message>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1238"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1244"/>
       <source>%1 at (%2; %3; %4) is: %5 %6</source>
       <translation type="unfinished">%1 at (%2; %3; %4) is: %5 %6</translation>
     </message>
@@ -2476,7 +2470,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostDisplay</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="412"/>
+      <location filename="../../TaskPostBoxes.cpp" line="371"/>
       <source>Result display options</source>
       <translation>結果表示オプション</translation>
     </message>
@@ -2484,7 +2478,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostFunction</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="500"/>
+      <location filename="../../TaskPostBoxes.cpp" line="457"/>
       <source>Implicit function</source>
       <translation>陰関数</translation>
     </message>
@@ -2492,7 +2486,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostScalarClip</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1713"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1709"/>
       <source>Scalar clip options</source>
       <translation>スカラークリップのオプション</translation>
     </message>
@@ -2500,7 +2494,7 @@ Specify another file please.</translation>
   <context>
     <name>FemGui::TaskPostWarpVector</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1845"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1839"/>
       <source>Warp options</source>
       <translation>たわみのオプション</translation>
     </message>
@@ -3304,8 +3298,8 @@ Note: has no effect if a solid was selected</source>
     </message>
     <message>
       <location filename="../ui/MeshRegion.ui" line="14"/>
-      <source>Mesh region</source>
-      <translation>メッシュ領域</translation>
+      <source>Mesh refinement</source>
+      <translation type="unfinished">Mesh refinement</translation>
     </message>
     <message>
       <location filename="../ui/MeshRegion.ui" line="37"/>
@@ -3456,27 +3450,30 @@ Note: for 2D only setting for x is possible,
   <context>
     <name>PlaneWidget</name>
     <message>
-      <location filename="../../PlaneWidget.ui" line="22"/>
+      <location filename="../../PlaneWidget.ui" line="26"/>
+      <location filename="../../PlaneWidget.ui" line="86"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../PlaneWidget.ui" line="32"/>
+      <location filename="../../PlaneWidget.ui" line="43"/>
+      <location filename="../../PlaneWidget.ui" line="103"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../PlaneWidget.ui" line="42"/>
+      <location filename="../../PlaneWidget.ui" line="60"/>
+      <location filename="../../PlaneWidget.ui" line="120"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../PlaneWidget.ui" line="58"/>
+      <location filename="../../PlaneWidget.ui" line="20"/>
       <source>Origin</source>
       <translation>原点</translation>
     </message>
     <message>
-      <location filename="../../PlaneWidget.ui" line="104"/>
+      <location filename="../../PlaneWidget.ui" line="80"/>
       <source>Normal</source>
       <translation>標準</translation>
     </message>
@@ -3564,7 +3561,7 @@ Note: for 2D only setting for x is possible,
       <translation>ばね拘束</translation>
     </message>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="353"/>
+      <location filename="../../TaskPostBoxes.cpp" line="313"/>
       <source>Edit post processing object</source>
       <translation>ポスト処理オブジェクトを編集</translation>
     </message>
@@ -3629,7 +3626,7 @@ Note: for 2D only setting for x is possible,
       <translation>流体境界条件</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.cpp" line="452"/>
+      <location filename="../../TaskFemConstraintForce.cpp" line="433"/>
       <source>Force load</source>
       <translation type="unfinished">Force load</translation>
     </message>
@@ -3644,12 +3641,12 @@ Note: for 2D only setting for x is possible,
       <translation type="unfinished">Plane multi-point constraint</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.cpp" line="306"/>
+      <location filename="../../TaskFemConstraintPressure.cpp" line="302"/>
       <source>Pressure load</source>
       <translation type="unfinished">Pressure load</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.cpp" line="339"/>
+      <location filename="../../TaskFemConstraintTemperature.cpp" line="366"/>
       <source>Temperature boundary condition</source>
       <translation type="unfinished">Temperature boundary condition</translation>
     </message>
@@ -3967,27 +3964,27 @@ For possible variables, see the description box below.</source>
   <context>
     <name>SphereWidget</name>
     <message>
-      <location filename="../../SphereWidget.ui" line="22"/>
+      <location filename="../../SphereWidget.ui" line="26"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../SphereWidget.ui" line="32"/>
+      <location filename="../../SphereWidget.ui" line="49"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../SphereWidget.ui" line="42"/>
+      <location filename="../../SphereWidget.ui" line="72"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../SphereWidget.ui" line="110"/>
+      <location filename="../../SphereWidget.ui" line="112"/>
       <source>Radius</source>
       <translation>半径</translation>
     </message>
     <message>
-      <location filename="../../SphereWidget.ui" line="58"/>
+      <location filename="../../SphereWidget.ui" line="20"/>
       <source>Center</source>
       <translation>中心</translation>
     </message>
@@ -4472,27 +4469,32 @@ normal vector of the face is used as direction</source>
     </message>
     <message>
       <location filename="../../TaskFemConstraintForce.ui" line="93"/>
-      <source>Load [N]</source>
-      <translation>荷重 [N]</translation>
+      <source>Force</source>
+      <translation>加力</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.ui" line="111"/>
+      <location filename="../../TaskFemConstraintForce.ui" line="100"/>
+      <source>N</source>
+      <translation type="unfinished">N</translation>
+    </message>
+    <message>
+      <location filename="../../TaskFemConstraintForce.ui" line="117"/>
       <source>Select a planar edge or face, then press this button</source>
       <translation>平面エッジまたは面を選択し、このボタンを押す</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.ui" line="114"/>
+      <location filename="../../TaskFemConstraintForce.ui" line="120"/>
       <source>Direction</source>
       <translation>方向</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.ui" line="121"/>
+      <location filename="../../TaskFemConstraintForce.ui" line="127"/>
       <source>The direction of the edge or the direction of the
 normal vector of the face is used as direction</source>
       <translation>エッジ方向または面法線ベクトル方向が方向として使用されます。</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintForce.ui" line="131"/>
+      <location filename="../../TaskFemConstraintForce.ui" line="137"/>
       <source>Reverse direction</source>
       <translation>逆方向</translation>
     </message>
@@ -4610,11 +4612,6 @@ normal vector of the face is used as direction</source>
       <translation>圧力</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintPressure.ui" line="75"/>
-      <source>0 MPa</source>
-      <translation>0 MPa</translation>
-    </message>
-    <message>
       <location filename="../../TaskFemConstraintPressure.ui" line="87"/>
       <source>Reverse Direction</source>
       <translation>逆方向</translation>
@@ -4678,12 +4675,16 @@ used for the Elmer solver</source>
     </message>
     <message>
       <location filename="../../TaskFemConstraintTemperature.ui" line="56"/>
-      <location filename="../../TaskFemConstraintTemperature.ui" line="80"/>
+      <source>Constraint type</source>
+      <translation>拘束タイプ</translation>
+    </message>
+    <message>
+      <location filename="../../TaskFemConstraintTemperature.ui" line="66"/>
       <source>Temperature</source>
       <translation>温度</translation>
     </message>
     <message>
-      <location filename="../../TaskFemConstraintTemperature.ui" line="69"/>
+      <location filename="../../TaskFemConstraintTemperature.ui" line="83"/>
       <source>Concentrated heat flux</source>
       <translation>集中熱流束</translation>
     </message>
@@ -4771,57 +4772,57 @@ used for the Elmer solver</source>
       <translation>座標</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="26"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="64"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="36"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="103"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="46"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="142"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="62"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="32"/>
       <source>Point 1</source>
       <translation>点1</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="108"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="48"/>
       <source>Point 2</source>
       <translation>点2</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="151"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="184"/>
       <source>Select Points</source>
       <translation>点を選択</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="160"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="193"/>
       <source>Resolution</source>
       <translation>解像度</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="207"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="236"/>
       <source>Mode</source>
       <translation>モード</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="221"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="263"/>
       <source>Field</source>
       <translation>フィールド</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="231"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="273"/>
       <source>Vector</source>
       <translation>ベクトル</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAlongLine.ui" line="250"/>
+      <location filename="../../TaskPostDataAlongLine.ui" line="292"/>
       <source>Create Plot</source>
       <translation>プロットを作成</translation>
     </message>
@@ -4834,32 +4835,32 @@ used for the Elmer solver</source>
       <translation>中心</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="23"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="29"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="33"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="58"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="43"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="87"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="86"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="113"/>
       <source>Select Point</source>
       <translation>点を選択</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="95"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="122"/>
       <source>Value:</source>
       <translation>値:</translation>
     </message>
     <message>
-      <location filename="../../TaskPostDataAtPoint.ui" line="142"/>
+      <location filename="../../TaskPostDataAtPoint.ui" line="169"/>
       <source>Field</source>
       <translation>フィールド</translation>
     </message>
@@ -5642,19 +5643,6 @@ used for the Elmer solver</source>
     </message>
   </context>
   <context>
-    <name>FEM_MeshRegion</name>
-    <message>
-      <location filename="../../../femcommands/commands.py" line="1002"/>
-      <source>FEM mesh region</source>
-      <translation>FEMメッシュ領域</translation>
-    </message>
-    <message>
-      <location filename="../../../femcommands/commands.py" line="1006"/>
-      <source>Creates a FEM mesh region</source>
-      <translation>FEMメッシュ領域を作成</translation>
-    </message>
-  </context>
-  <context>
     <name>FEM_ResultShow</name>
     <message>
       <location filename="../../../femcommands/commands.py" line="1019"/>
@@ -6066,17 +6054,17 @@ Please select a result type first.</source>
   <context>
     <name>CmdFemPostContoursFilter</name>
     <message>
-      <location filename="../../Command.cpp" line="2166"/>
+      <location filename="../../Command.cpp" line="2169"/>
       <source>Fem</source>
       <translation>有限要素法</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2167"/>
+      <location filename="../../Command.cpp" line="2170"/>
       <source>Contours filter</source>
       <translation>等高線フィルター</translation>
     </message>
     <message>
-      <location filename="../../Command.cpp" line="2168"/>
+      <location filename="../../Command.cpp" line="2171"/>
       <source>Define/create a contours filter which displays iso contours</source>
       <translation>ISO 等高線を表示する等高線フィルターを定義/作成</translation>
     </message>
@@ -6084,7 +6072,7 @@ Please select a result type first.</source>
   <context>
     <name>FemGui::TaskPostContours</name>
     <message>
-      <location filename="../../TaskPostBoxes.cpp" line="1435"/>
+      <location filename="../../TaskPostBoxes.cpp" line="1438"/>
       <source>Contours filter options</source>
       <translation>等高線フィルターのオプション</translation>
     </message>
@@ -6106,37 +6094,37 @@ Please select a result type first.</source>
   <context>
     <name>BoxWidget</name>
     <message>
-      <location filename="../../BoxWidget.ui" line="22"/>
+      <location filename="../../BoxWidget.ui" line="32"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="32"/>
+      <location filename="../../BoxWidget.ui" line="61"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="42"/>
+      <location filename="../../BoxWidget.ui" line="84"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="58"/>
+      <location filename="../../BoxWidget.ui" line="20"/>
       <source>Center</source>
       <translation>中心</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="110"/>
+      <location filename="../../BoxWidget.ui" line="124"/>
       <source>Length</source>
       <translation>長さ</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="136"/>
+      <location filename="../../BoxWidget.ui" line="153"/>
       <source>Width</source>
       <translation>幅</translation>
     </message>
     <message>
-      <location filename="../../BoxWidget.ui" line="162"/>
+      <location filename="../../BoxWidget.ui" line="182"/>
       <source>Height</source>
       <translation>高さ</translation>
     </message>
@@ -6144,32 +6132,35 @@ Please select a result type first.</source>
   <context>
     <name>CylinderWidget</name>
     <message>
-      <location filename="../../CylinderWidget.ui" line="22"/>
+      <location filename="../../CylinderWidget.ui" line="26"/>
+      <location filename="../../CylinderWidget.ui" line="110"/>
       <source>x</source>
       <translation>x</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="32"/>
+      <location filename="../../CylinderWidget.ui" line="49"/>
+      <location filename="../../CylinderWidget.ui" line="133"/>
       <source>y</source>
       <translation>y</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="42"/>
+      <location filename="../../CylinderWidget.ui" line="72"/>
+      <location filename="../../CylinderWidget.ui" line="156"/>
       <source>z</source>
       <translation>z</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="58"/>
+      <location filename="../../CylinderWidget.ui" line="20"/>
       <source>Center</source>
       <translation>中心</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="110"/>
+      <location filename="../../CylinderWidget.ui" line="104"/>
       <source>Axis</source>
       <translation>軸</translation>
     </message>
     <message>
-      <location filename="../../CylinderWidget.ui" line="162"/>
+      <location filename="../../CylinderWidget.ui" line="196"/>
       <source>Radius</source>
       <translation>半径</translation>
     </message>
@@ -6346,6 +6337,19 @@ Please select a result type first.</source>
       <location filename="../../../femcommands/commands.py" line="373"/>
       <source>Creates a tie constraint</source>
       <translation type="unfinished">Creates a tie constraint</translation>
+    </message>
+  </context>
+  <context>
+    <name>FEM_MeshRegion</name>
+    <message>
+      <location filename="../../../femcommands/commands.py" line="1002"/>
+      <source>FEM mesh refinement</source>
+      <translation type="unfinished">FEM mesh refinement</translation>
+    </message>
+    <message>
+      <location filename="../../../femcommands/commands.py" line="1006"/>
+      <source>Creates a FEM mesh refinement</source>
+      <translation type="unfinished">Creates a FEM mesh refinement</translation>
     </message>
   </context>
 </TS>

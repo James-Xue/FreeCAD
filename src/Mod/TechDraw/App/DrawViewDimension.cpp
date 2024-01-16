@@ -42,6 +42,10 @@
 # include <gp_Circ.hxx>
 # include <gp_Elips.hxx>
 # include <gp_Pnt.hxx>
+# include <gp_Pnt2d.hxx>
+# include <Geom_Plane.hxx>
+# include <Geom2d_Curve.hxx>
+# include <Geom2dAPI_ProjectPointOnCurve.hxx>
 # include <TopExp.hxx>
 # include <TopExp_Explorer.hxx>
 # include <TopoDS_Edge.hxx>
@@ -232,11 +236,9 @@ void DrawViewDimension::onChanged(const App::Property* prop)
             MeasureType.touch();               //run MeasureType logic for this case
         }
         updateSavedGeometry();
-        return;
     }
-    else if (prop == &Type) {//why??
+    else if (prop == &Type) {
         FormatSpec.setValue(getDefaultFormatSpec().c_str());
-
         DimensionType type = static_cast<DimensionType>(Type.getValue());
         if (type == DimensionType::Angle || type == DimensionType::Angle3Pt) {
             OverTolerance.setUnit(Base::Unit::Angle);
@@ -246,7 +248,6 @@ void DrawViewDimension::onChanged(const App::Property* prop)
             OverTolerance.setUnit(Base::Unit::Length);
             UnderTolerance.setUnit(Base::Unit::Length);
         }
-        return;
     }
     else if (prop == &TheoreticalExact) {
         // if TheoreticalExact disable tolerances and set them to zero
@@ -269,7 +270,6 @@ void DrawViewDimension::onChanged(const App::Property* prop)
                 FormatSpecUnderTolerance.setReadOnly(false);
             }
         }
-        return;
     }
     else if (prop == &EqualTolerance) {
         // if EqualTolerance set negated overtolerance for untertolerance
@@ -293,7 +293,6 @@ void DrawViewDimension::onChanged(const App::Property* prop)
                 FormatSpecUnderTolerance.setReadOnly(false);
             }
         }
-        return;
     }
     else if (prop == &OverTolerance) {
         // if EqualTolerance set negated overtolerance for untertolerance
@@ -301,19 +300,16 @@ void DrawViewDimension::onChanged(const App::Property* prop)
             UnderTolerance.setValue(-1.0 * OverTolerance.getValue());
             UnderTolerance.setUnit(OverTolerance.getUnit());
         }
-        return;
     }
     else if (prop == &FormatSpecOverTolerance) {
         if (!ArbitraryTolerances.getValue()) {
             FormatSpecUnderTolerance.setValue(FormatSpecOverTolerance.getValue());
         }
-        return;
     }
     else if (prop == &FormatSpecUnderTolerance) {
         if (!ArbitraryTolerances.getValue()) {
             FormatSpecOverTolerance.setValue(FormatSpecUnderTolerance.getValue());
         }
-        return;
     }
 
     DrawView::onChanged(prop);
@@ -395,11 +391,15 @@ App::DocumentObjectExecReturn* DrawViewDimension::execute()
     resetAngular();
     resetArc();
 
-    m_referencesCorrect = compareSavedGeometry();
-    if (!m_referencesCorrect) {
-        m_referencesCorrect = fixExactMatch();
+    const std::vector<TopoShape> savedGeometry = SavedGeometry.getValues();
+    if (!savedGeometry.empty()) {
+        // we can only correct references if we have saved geometry for comparison
+        m_referencesCorrect = compareSavedGeometry();
         if (!m_referencesCorrect) {
-            handleNoExactMatch();
+            m_referencesCorrect = fixExactMatch();
+            if (!m_referencesCorrect) {
+                handleNoExactMatch();
+            }
         }
     }
 
@@ -473,12 +473,6 @@ bool DrawViewDimension::okToProceed()
         //can't do anything until Source has geometry
         return false;
     }
-
-//    if (References3D.getValues().empty() && !checkReferences2D()) {
-//        Base::Console().Warning("DVD::okToProceed - %s has invalid 2D References\n",
-//                                getNameInDocument());
-//        return false;
-//    }
 
     return true;
 }
@@ -751,7 +745,31 @@ pointPair DrawViewDimension::getPointsEdgeVert(ReferenceVector references)
         if (!vertex || !edge) {
             throw Base::RuntimeError("Missing geometry for dimension (4)");
         }
-        return closestPoints(edge->getOCCEdge(), vertex->getOCCVertex());
+
+        //get curve from edge
+        double start, end; // curve parameters
+        const Handle(Geom_Surface) hplane = new Geom_Plane(gp_Ax3());
+        auto const occCurve = BRep_Tool::CurveOnPlane(edge->getOCCEdge()
+                                                      , hplane
+                                                      , TopLoc_Location()
+                                                      , start
+                                                      , end);
+        auto const occPoint = gp_Pnt2d(vertex->x(), vertex->y());
+        //project point on curve
+        auto projector = Geom2dAPI_ProjectPointOnCurve(occPoint, occCurve);
+        if (projector.NbPoints() > 0) {
+                auto p1 = Base::Vector3d(vertex->x(), vertex->y(), 0.0);
+                auto p2 = Base::Vector3d(projector.NearestPoint().X()
+                                         , projector.NearestPoint().Y()
+                                         , 0.0);
+                pointPair result = pointPair(p1, p2);
+                result.setExtensionLine(closestPoints(edge->getOCCEdge(), vertex->getOCCVertex()));
+                return result;
+        }
+        else {
+                // unable to project
+                return closestPoints(edge->getOCCEdge(), vertex->getOCCVertex());
+        }
     }
 
     //this is a 3d object
@@ -1404,7 +1422,7 @@ bool DrawViewDimension::compareSavedGeometry()
     if (savedGeometry.empty()) {
         // no saved geometry, so we have nothing to compare, so we don't know if there has been a change
         // this should return false, since something != nothing
-//        Base::Console().Warning("%s has no saved reference geometry!\n", getNameInDocument());
+//        Base::Console().("%s has no saved reference geometry!\n", getNameInDocument());
         return false;
     }
 
@@ -1451,11 +1469,16 @@ bool DrawViewDimension::fixExactMatch()
         // could not get refs, something is wrong!
         return false;
     }
+
+    if (SavedGeometry.getValues().empty()) {
+        // there is no saved geometry, so we can't repair anything.
+        return false;
+    }
     std::vector< std::pair<int, std::string> > refsToFix2d;
     std::vector< std::pair<int, std::string> > refsToFix3d;
     bool success(true);
-    int referenceCount = references.size();
-    int iRef = 0;
+    size_t referenceCount = references.size();
+    size_t iRef = 0;
     for ( ; iRef < referenceCount; iRef++)  {
         std::string newReference("");
         TopoDS_Shape geomShape = references.at(iRef).getGeometry();
@@ -1473,7 +1496,7 @@ bool DrawViewDimension::fixExactMatch()
                 std::pair<int, std::string> toFix(iRef, newReference);
                 refsToFix3d.push_back(toFix);
             } else {
-                Base::Console().Warning("%s - no exact match for changed 3d reference: %d\n", getNameInDocument(), iRef);
+                Base::Console().Message("%s - no exact match for changed 3d reference: %d\n", getNameInDocument(), iRef);
                 success = false;
             }
         } else {
@@ -1486,7 +1509,7 @@ bool DrawViewDimension::fixExactMatch()
                 std::pair<int, std::string> toFix(iRef, newReference);
                 refsToFix2d.push_back(toFix);
             } else {
-                Base::Console().Warning("%s - no exact match for changed 2d reference: %d\n", getNameInDocument(), iRef);
+                Base::Console().Message("%s - no exact match for changed 2d reference: %d\n", getNameInDocument(), iRef);
                 success = false;
             }
         }
@@ -1547,7 +1570,7 @@ std::string DrawViewDimension::recoverChangedVertex2d(int iReference)
     double scale = getViewPart()->getScale();
     std::vector<Part::TopoShape> savedAll = SavedGeometry.getValues();
     if (savedAll.empty() ||
-        iReference >= savedAll.size()) {
+        iReference >= int(savedAll.size())) {
             return std::string();
         }
     Part::TopoShape savedGeometryItem = SavedGeometry.getValues().at(iReference);

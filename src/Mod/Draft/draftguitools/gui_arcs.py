@@ -37,14 +37,14 @@ import FreeCADGui as Gui
 import Draft
 import Draft_rc
 import DraftVecUtils
-import draftguitools.gui_base_original as gui_base_original
-import draftguitools.gui_base as gui_base
-import draftguitools.gui_tool_utils as gui_tool_utils
-import draftguitools.gui_trackers as trackers
-import draftutils.utils as utils
-
 from FreeCAD import Units as U
-from draftutils.messages import _msg, _err
+from draftguitools import gui_base
+from draftguitools import gui_base_original
+from draftguitools import gui_tool_utils
+from draftguitools import gui_trackers as trackers
+from draftutils import params
+from draftutils import utils
+from draftutils.messages import _err, _toolmsg
 from draftutils.translate import translate
 
 # The module is used to prevent complaints from code checkers (flake8)
@@ -85,7 +85,7 @@ class Arc(gui_base_original.Creator):
             self.linetrack = trackers.lineTracker(dotted=True)
             self.arctrack = trackers.arcTracker()
             self.call = self.view.addEventCallback("SoEvent", self.action)
-            _msg(translate("draft", "Pick center point"))
+            _toolmsg(translate("draft", "Pick center point"))
 
     def finish(self, cont=False):
         """Terminate the operation.
@@ -155,7 +155,7 @@ class Arc(gui_base_original.Creator):
                 if not DraftVecUtils.isNull(viewdelta):
                     self.point = self.point.add(viewdelta.negative())
             if self.step == 0:  # choose center
-                if gui_tool_utils.hasMod(arg, gui_tool_utils.MODALT):
+                if gui_tool_utils.hasMod(arg, gui_tool_utils.get_mod_alt_key()):
                     if not self.altdown:
                         self.altdown = True
                         self.ui.switchUi(True)
@@ -178,7 +178,7 @@ class Arc(gui_base_original.Creator):
                     _c = DraftGeomUtils.findClosestCircle(self.point, cir)
                     self.center = _c.Center
                     self.arctrack.setCenter(self.center)
-                if gui_tool_utils.hasMod(arg, gui_tool_utils.MODALT):
+                if gui_tool_utils.hasMod(arg, gui_tool_utils.get_mod_alt_key()):
                     if not self.altdown:
                         self.altdown = True
                     if info:
@@ -237,7 +237,7 @@ class Arc(gui_base_original.Creator):
                             gui_tool_utils.getSupport(arg)
                             (self.point,
                              ctrlPoint, info) = gui_tool_utils.getPoint(self, arg)
-                        if gui_tool_utils.hasMod(arg, gui_tool_utils.MODALT):
+                        if gui_tool_utils.hasMod(arg, gui_tool_utils.get_mod_alt_key()):
                             snapped = self.view.getObjectInfo((arg["Position"][0],
                                                                arg["Position"][1]))
                             if snapped:
@@ -251,7 +251,7 @@ class Arc(gui_base_original.Creator):
                                     self.step = 1
                                     self.ui.setNextFocus()
                                     self.linetrack.on()
-                                    _msg(translate("draft", "Pick radius"))
+                                    _toolmsg(translate("draft", "Pick radius"))
                         else:
                             if len(self.tangents) == 1:
                                 self.tanpoints.append(self.point)
@@ -267,7 +267,7 @@ class Arc(gui_base_original.Creator):
                             self.step = 1
                             self.ui.setNextFocus()
                             self.linetrack.on()
-                            _msg(translate("draft", "Pick radius"))
+                            _toolmsg(translate("draft", "Pick radius"))
                             if self.planetrack:
                                 self.planetrack.set(self.point)
                     elif self.step == 1:  # choose radius
@@ -280,15 +280,16 @@ class Arc(gui_base_original.Creator):
                             self.linetrack.p1(self.center)
                             self.linetrack.on()
                             self.step = 2
-                            _msg(translate("draft", "Pick start angle"))
+                            _toolmsg(translate("draft", "Pick start angle"))
                     elif self.step == 2:  # choose first angle
                         self.ui.labelRadius.setText(translate("draft", "Aperture angle"))
                         self.ui.radiusValue.setToolTip(translate("draft", "Aperture angle"))
+                        ang_offset = DraftVecUtils.angle(self.wp.u,
+                                                         self.arctrack.getDeviation(),
+                                                         self.wp.axis)
+                        self.arctrack.setStartAngle(self.firstangle - ang_offset)
                         self.step = 3
-                        # scale center->point vector for proper display
-                        # u = DraftVecUtils.scaleTo(self.point.sub(self.center), self.rad) obsolete?
-                        self.arctrack.setStartAngle(self.firstangle)
-                        _msg(translate("draft", "Pick aperture"))
+                        _toolmsg(translate("draft", "Pick aperture"))
                     else:  # choose second angle
                         self.step = 4
                         self.drawArc()
@@ -301,7 +302,7 @@ class Arc(gui_base_original.Creator):
                 # The command to run is built as a series of text strings
                 # to be committed through the `draftutils.todo.ToDo` class.
                 Gui.addModule("Draft")
-                if utils.getParam("UsePartPrimitives", False):
+                if params.get_param("UsePartPrimitives"):
                     # Insert a Part::Primitive object
                     _base = DraftVecUtils.toString(self.center)
                     _cmd = 'FreeCAD.ActiveDocument.'
@@ -347,7 +348,7 @@ class Arc(gui_base_original.Creator):
 
             try:
                 Gui.addModule("Draft")
-                if utils.getParam("UsePartPrimitives", False):
+                if params.get_param("UsePartPrimitives"):
                     # Insert a Part::Primitive object
                     _base = DraftVecUtils.toString(self.center)
                     _cmd = 'FreeCAD.ActiveDocument.'
@@ -403,7 +404,7 @@ class Arc(gui_base_original.Creator):
         self.ui.radiusUi()
         self.step = 1
         self.ui.setNextFocus()
-        _msg(translate("draft", "Pick radius"))
+        _toolmsg(translate("draft", "Pick radius"))
 
     def numericRadius(self, rad):
         """Validate the entry radius in the user interface.
@@ -444,21 +445,19 @@ class Arc(gui_base_original.Creator):
                 self.linetrack.on()
                 self.ui.radiusValue.setText("")
                 self.ui.radiusValue.setFocus()
-                _msg(translate("draft", "Pick start angle"))
+                _toolmsg(translate("draft", "Pick start angle"))
         elif self.step == 2:
             self.ui.labelRadius.setText(translate("draft", "Aperture angle"))
             self.ui.radiusValue.setToolTip(translate("draft", "Aperture angle"))
             self.firstangle = math.radians(rad)
-            if DraftVecUtils.equals(self.wp.axis, App.Vector(1, 0, 0)):
-                u = App.Vector(0, self.rad, 0)
-            else:
-                u = DraftVecUtils.scaleTo(App.Vector(1, 0, 0).cross(self.wp.axis), self.rad)
-            urotated = DraftVecUtils.rotate(u, math.radians(rad), self.wp.axis)
-            self.arctrack.setStartAngle(self.firstangle)
+            ang_offset = DraftVecUtils.angle(self.wp.u,
+                                             self.arctrack.getDeviation(),
+                                             self.wp.axis)
+            self.arctrack.setStartAngle(self.firstangle - ang_offset)
             self.step = 3
             self.ui.radiusValue.setText("")
             self.ui.radiusValue.setFocus()
-            _msg(translate("draft", "Pick aperture angle"))
+            _toolmsg(translate("draft", "Pick aperture angle"))
         else:
             self.updateAngle(rad)
             self.angle = math.radians(rad)
@@ -495,8 +494,8 @@ class Arc_3Points(gui_base.GuiCommandSimplest):
         # Set up the working plane and launch the Snapper
         # with the indicated callbacks: one for when the user clicks
         # on the 3D view, and another for when the user moves the pointer.
-        if hasattr(App, "DraftWorkingPlane"):
-            App.DraftWorkingPlane.setup()
+        import WorkingPlane
+        WorkingPlane.get_working_plane()
 
         Gui.Snapper.getPoint(callback=self.getPoint,
                              movecallback=self.drawArc)
@@ -551,7 +550,7 @@ class Arc_3Points(gui_base.GuiCommandSimplest):
             # If three points were already picked in the 3D view
             # proceed with creating the final object.
             # Draw a simple `Part::Feature` if the parameter is `True`.
-            if utils.get_param("UsePartPrimitives", False):
+            if params.get_param("UsePartPrimitives"):
                 Draft.make_arc_3points([self.points[0],
                                         self.points[1],
                                         self.points[2]], primitive=True)
