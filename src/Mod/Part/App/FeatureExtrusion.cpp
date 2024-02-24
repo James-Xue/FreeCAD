@@ -334,12 +334,12 @@ TYPESYSTEM_SOURCE(Part::FaceMakerExtrusion, Part::FaceMakerCheese)
 
 std::string FaceMakerExtrusion::getUserFriendlyName() const
 {
-    return {QT_TRANSLATE_NOOP("Part_FaceMaker", "Part Extrude facemaker")};
+    return {tr("Part Extrude facemaker").toStdString()};
 }
 
 std::string FaceMakerExtrusion::getBriefExplanation() const
 {
-    return {QT_TRANSLATE_NOOP("Part_FaceMaker", "Supports making faces with holes, does not support nesting.")};
+    return {tr("Supports making faces with holes, does not support nesting.").toStdString()};
 }
 
 #if OCC_VERSION_HEX >= 0x070600
@@ -356,14 +356,14 @@ void FaceMakerExtrusion::Build()
     if (mySourceShapes.empty())
         throw Base::ValueError("No input shapes!");
     if (mySourceShapes.size() == 1) {
-        inputShape = mySourceShapes[0];
+        inputShape = mySourceShapes[0].getShape();
     }
     else {
         TopoDS_Builder builder;
         TopoDS_Compound cmp;
         builder.MakeCompound(cmp);
-        for (const TopoDS_Shape& sh : mySourceShapes) {
-            builder.Add(cmp, sh);
+        for (const auto &sh : mySourceShapes) {
+            builder.Add(cmp, sh.getShape());
         }
         inputShape = cmp;
     }

@@ -88,6 +88,15 @@ bool Sketcher::isBSplineCurve(const Part::Geometry& geom)
     return geom.is<Part::GeomBSplineCurve>();
 }
 
+bool Sketcher::isPeriodicBSplineCurve(const Part::Geometry& geom)
+{
+    if (geom.is<Part::GeomBSplineCurve>()) {
+        auto* spline = static_cast<const Part::GeomBSplineCurve*>(&geom);
+        return spline->isPeriodic();
+    }
+    return false;
+}
+
 bool Sketcher::isPoint(const Part::Geometry& geom)
 {
     return geom.is<Part::GeomPoint>();
@@ -855,4 +864,17 @@ bool SketcherGui::areColinear(const Base::Vector2d& p1,
     }
 
     return false;
+}
+
+int SketcherGui::indexOfGeoId(const std::vector<int>& vec, int elem)
+{
+    if (elem == GeoEnum::GeoUndef) {
+        return GeoEnum::GeoUndef;
+    }
+    for (size_t i = 0; i < vec.size(); i++) {
+        if (vec[i] == elem) {
+            return static_cast<int>(i);
+        }
+    }
+    return -1;
 }

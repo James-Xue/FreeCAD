@@ -21,10 +21,9 @@
 
 #include "PreCompiled.h"
 #ifndef _PreComp_
+#include <QMenu>
 #include <QMessageBox>
 #endif
-
-#include <QMenu>
 
 #include <Gui/MainWindow.h>
 
@@ -141,8 +140,6 @@ void Array2D::onDataChanged(const QModelIndex& topLeft,
 
 void Array2D::onContextMenu(const QPoint& pos)
 {
-    QModelIndex index = ui->tableView->indexAt(pos);
-
     QMenu contextMenu(tr("Context menu"), this);
 
     contextMenu.addAction(&_deleteAction);

@@ -56,6 +56,28 @@
 
 using namespace Gui::Dialog;
 
+bool isParentOf(const QModelIndex& parent, const QModelIndex& child)
+{
+    for (auto it = child; it.isValid(); it = it.parent()) {
+        if (it == parent) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+QModelIndex findRootIndex(const QModelIndex& index)
+{
+    auto root = index;
+
+    while (root.parent().isValid()) {
+        root = root.parent();
+    }
+
+    return root;
+}
+
 QWidget* PreferencesPageItem::getWidget() const
 {
     return _widget;
@@ -307,6 +329,7 @@ void DlgPreferencesImp::createPageInGroup(PreferencesPageItem *groupItem, const 
         }
 
         pages->addWidget(page);
+        addSizeHint(page);
     }
     catch (const Base::Exception& e) {
         Base::Console().Error("Base exception thrown for '%s'\n", pageName.c_str());
@@ -315,6 +338,29 @@ void DlgPreferencesImp::createPageInGroup(PreferencesPageItem *groupItem, const 
     catch (const std::exception& e) {
         Base::Console().Error("C++ exception thrown for '%s' (%s)\n", pageName.c_str(), e.what());
     }
+}
+
+void DlgPreferencesImp::addSizeHint(QWidget* page)
+{
+    _sizeHintOfPages = _sizeHintOfPages.expandedTo(page->minimumSizeHint());
+}
+
+int DlgPreferencesImp::minimumPageWidth() const
+{
+    return _sizeHintOfPages.width();
+}
+
+int DlgPreferencesImp::minimumDialogWidth(int pageWidth) const
+{
+    QSize size = ui->groupWidgetStack->sizeHint();
+    int diff = pageWidth - size.width();
+    int dw = width();
+    if (diff > 0) {
+        const int offset = 2;
+        dw += diff + offset;
+    }
+
+    return dw;
 }
 
 void DlgPreferencesImp::updatePageDependentWidgets()
@@ -712,17 +758,20 @@ void DlgPreferencesImp::showEvent(QShowEvent* ev)
         resize(width(), maxStartHeight);
         move(x(), heightDifference / 2);
     }
+
+    expandToMinimumDialogWidth();
 }
 
-QModelIndex findRootIndex(const QModelIndex& index)
+void DlgPreferencesImp::expandToMinimumDialogWidth()
 {
-    auto root = index;
+    auto screen = windowHandle()->screen();
+    auto availableSize = screen->availableSize();
 
-    while (root.parent().isValid()) {
-        root = root.parent();
+    // if the expanded dialog occupies less than 50% of the screen
+    int mw = minimumDialogWidth(minimumPageWidth());
+    if (availableSize.width() > 2 * mw) {
+        resize(mw, height());
     }
-    
-    return root;
 }
 
 void DlgPreferencesImp::onPageSelected(const QModelIndex& index)
@@ -790,14 +839,20 @@ void DlgPreferencesImp::onStackWidgetChange(int index)
         return;
     }
 
-    ui->groupsTreeView->selectionModel()->select(currentItem->index(), QItemSelectionModel::ClearAndSelect);
+    auto currentIndex = currentItem->index();
 
     auto root = _model.invisibleRootItem();
     for (int i = 0; i < root->rowCount(); i++) {
         auto currentGroup = static_cast<PreferencesPageItem*>(root->child(i));
+        auto currentGroupIndex = currentGroup->index();
+
+        // don't do anything to group of selected item
+        if (isParentOf(currentGroupIndex, currentIndex)) {
+            continue;
+        }
 
         if (!currentGroup->isExpanded()) {
-            ui->groupsTreeView->collapse(currentGroup->index());
+            ui->groupsTreeView->collapse(currentGroupIndex);
         }
     }
 
@@ -807,6 +862,8 @@ void DlgPreferencesImp::onStackWidgetChange(int index)
         ui->groupsTreeView->expand(parentItem->index());
         parentItem->setExpanded(wasExpanded);
     }
+    
+    ui->groupsTreeView->selectionModel()->select(currentIndex, QItemSelectionModel::ClearAndSelect);
 }
 
 void DlgPreferencesImp::changeEvent(QEvent *e)
@@ -829,8 +886,10 @@ void DlgPreferencesImp::changeEvent(QEvent *e)
             }
         }
 
+        expandToMinimumDialogWidth();
         updatePageDependentWidgets();
-    } else {
+    }
+    else {
         QWidget::changeEvent(e);
     }
 }

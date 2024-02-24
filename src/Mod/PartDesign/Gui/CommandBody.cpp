@@ -33,6 +33,7 @@
 #include <App/Origin.h>
 #include <App/Part.h>
 #include <Base/Console.h>
+#include <Base/Tools.h>
 #include <Gui/Command.h>
 #include <Gui/Control.h>
 #include <Gui/Document.h>
@@ -194,8 +195,9 @@ void CmdPartDesignBody::activated(int iMsg)
     // add the Body feature itself, and make it active
     doCommand(Doc,"App.activeDocument().addObject('PartDesign::Body','%s')", bodyString);
     // set Label for i18n/L10N
-    QByteArray labelByteArray = QObject::tr("Body").toUtf8();
-    doCommand(Doc,"App.ActiveDocument.getObject('%s').Label = '%s'", bodyString, labelByteArray.constData());
+    std::string labelString = QObject::tr("Body").toUtf8().toStdString();
+    labelString = Base::Tools::escapeEncodeString(labelString);
+    doCommand(Doc,"App.ActiveDocument.getObject('%s').Label = '%s'", bodyString, labelString.c_str());
     if (baseFeature) {
         if (partOfBaseFeature){
             //withdraw base feature from Part, otherwise visibility madness results
@@ -895,18 +897,17 @@ void CmdPartDesignMoveFeatureInTree::activated(int iMsg)
 
     openCommand(QT_TRANSLATE_NOOP("Command", "Move an object inside tree"));
 
-    App::DocumentObject* lastObject = nullptr;
+    App::DocumentObject* lastObject = target;
     for ( auto feat: features ) {
         if ( feat == target ) continue;
 
-        // Remove and re-insert the feature to/from the Body
+        // Remove and re-insert the feature to/from the Body, preserving their order.
         // TODO: if tip was moved the new position of tip is quite undetermined (2015-08-07, Fat-Zer)
         // TODO: warn the user if we are moving an object to some place before the object's link (2015-08-07, Fat-Zer)
         FCMD_OBJ_CMD(body,"removeObject(" << getObjectCmd(feat) << ")");
-        FCMD_OBJ_CMD(body,"insertObject(" << getObjectCmd(feat) << ","<< getObjectCmd(target) << ", True)");
+        FCMD_OBJ_CMD(body,"insertObject(" << getObjectCmd(feat) << ","<< getObjectCmd(lastObject) << ", True)");
 
-        if (!lastObject)
-            lastObject = feat;
+        lastObject = feat;
     }
 
     // Dependency order check.
@@ -952,7 +953,7 @@ void CmdPartDesignMoveFeatureInTree::activated(int iMsg)
     // If the selected objects have been moved after the current tip then ask the
     // user if they want the last object to be the new tip.
     // Only do this for features that can hold a tip (not for e.g. datums)
-    if ( lastObject && body->Tip.getValue() == target
+    if ( lastObject != target && body->Tip.getValue() == target
         && lastObject->isDerivedFrom(PartDesign::Feature::getClassTypeId()) ) {
         QMessageBox msgBox(Gui::getMainWindow());
         msgBox.setIcon(QMessageBox::Question);

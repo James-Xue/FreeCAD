@@ -84,6 +84,8 @@ public:
 
     virtual DrawPage* findParentPage() const;
     virtual std::vector<DrawPage*> findAllParentPages() const;
+    virtual DrawView *claimParent() const;
+
     virtual int countParentPages() const;
     virtual QRectF getRect() const;                      //must be overridden by derived class
     QRectF getRectAligned() const;
@@ -100,6 +102,7 @@ public:
     void showProgressMessage(std::string featureName, std::string text);
 
     virtual double getScale(void) const;
+    virtual int getScaleType() const { return ScaleType.getValue(); };
     void checkScale(void);
 
     virtual void handleXYLock(void);

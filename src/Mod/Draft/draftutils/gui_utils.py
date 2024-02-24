@@ -42,12 +42,13 @@ import os
 import FreeCAD as App
 from draftutils import params
 from draftutils import utils
-from draftutils.messages import _err, _msg, _wrn
+from draftutils.messages import _err, _wrn
 from draftutils.translate import translate
 
 if App.GuiUp:
     import FreeCADGui as Gui
     from pivy import coin
+    from PySide import QtCore
     from PySide import QtGui
     # from PySide import QtSvg  # for load_texture
 
@@ -328,7 +329,6 @@ def remove_hidden(objectslist):
         if obj.ViewObject:
             if not obj.ViewObject.isVisible():
                 newlist.remove(obj)
-                _msg(translate("draft", "Visibility off; removed from list: ") + obj.Label)
     return newlist
 
 
@@ -527,7 +527,7 @@ def format_object(target, origin=None):
                 obrep.DisplayMode = dm
     if Gui.draftToolBar.isConstructionMode():
         doc = App.ActiveDocument
-        col = Gui.draftToolBar.getDefaultColor("constr") + (0.0,)
+        col = params.get_param("constructioncolor") & 0xFFFFFF00
         grp = doc.getObject("Draft_Construction")
         if not grp:
             grp = doc.addObject("App::DocumentObjectGroup", "Draft_Construction")
@@ -821,7 +821,6 @@ def get_bbox(obj, debug=False):
         If there is a problem it will return `None`.
     """
     _name = "get_bbox"
-    utils.print_header(_name, "Bounding box", debug=debug)
 
     found, doc = utils.find_doc(App.activeDocument())
     if not found:
@@ -833,12 +832,8 @@ def get_bbox(obj, debug=False):
 
     found, obj = utils.find_object(obj, doc)
     if not found:
-        _msg("obj: {}".format(obj_str))
-        _err(translate("draft", "Wrong input: object not in document."))
+        _err(translate("draft", "Wrong input: object {} not in document.").format(obj_str))
         return None
-
-    if debug:
-        _msg("obj: {}".format(obj.Label))
 
     if (not hasattr(obj, "ViewObject")
             or not obj.ViewObject
@@ -861,5 +856,23 @@ def get_bbox(obj, debug=False):
     xmax, ymax, zmax = bb.getMax().getValue()
 
     return App.BoundBox(xmin, ymin, zmin, xmax, ymax, zmax)
+
+
+# Code by Chris Hennes (chennes).
+# See https://forum.freecadweb.org/viewtopic.php?p=656362#p656362.
+# Used to fix https://github.com/FreeCAD/FreeCAD/issues/10469.
+def end_all_events():
+    class DelayEnder:
+        def __init__(self):
+            self.delay_is_done = False
+        def stop(self):
+            self.delay_is_done = True
+    ender = DelayEnder()
+    timer = QtCore.QTimer()
+    timer.timeout.connect(ender.stop)
+    timer.setSingleShot(True)
+    timer.start(100)  # 100ms (50ms is too short) timer guarantees the loop below runs at least that long
+    while not ender.delay_is_done:
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
 ## @}

@@ -535,15 +535,17 @@ inline void SketcherAddWorkbenchTools<Gui::MenuItem>(Gui::MenuItem& consaccel)
               << "Separator"
               << "Sketcher_Offset"
               << "Sketcher_Rotate"
+              << "Sketcher_Scale"
               << "Sketcher_Symmetry"
-              << "Sketcher_Clone"
-              << "Sketcher_Copy"
-              << "Sketcher_Move"
-              << "Sketcher_RectangularArray"
+              << "Sketcher_Translate"
               << "Sketcher_RemoveAxesAlignment"
               << "Separator"
               << "Sketcher_DeleteAllGeometry"
-              << "Sketcher_DeleteAllConstraints";
+              << "Sketcher_DeleteAllConstraints"
+              << "Separator"
+              << "Sketcher_CopyClipboard"
+              << "Sketcher_Cut"
+              << "Sketcher_Paste";
 }
 
 template<>
@@ -560,9 +562,9 @@ inline void SketcherAddWorkbenchTools<Gui::ToolBarItem>(Gui::ToolBarItem& consac
         << "Sketcher_RestoreInternalAlignmentGeometry"
         << "Sketcher_Offset"
         << "Sketcher_Rotate"
+        << "Sketcher_Scale"
         << "Sketcher_Symmetry"
-        << "Sketcher_CompCopy"
-        << "Sketcher_RectangularArray"
+        << "Sketcher_Translate"
         << "Sketcher_RemoveAxesAlignment";
 }
 

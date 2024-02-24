@@ -42,6 +42,7 @@ import ArchIFCSchema
 import importIFCHelper
 import importIFCmulticore
 
+from draftutils import params
 from draftutils.messages import _msg, _err
 
 if FreeCAD.GuiUp:
@@ -379,7 +380,7 @@ def insert(srcfile, docname, skip=[], only=[], root=None, preferences=None):
                     if preferences['DEBUG']: print(" no layer found", ptype,end="")
 
         # checking for full FreeCAD parametric definition, overriding everything else
-        if psets and FreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/Arch").GetBool("IfcImportFreeCADProperties",False):
+        if psets and params.get_param_arch("IfcImportFreeCADProperties"):
             if "FreeCADPropertySet" in [ifcfile[pset].Name for pset in psets.keys()]:
                 if preferences['DEBUG']: print(" restoring from parametric definition...",end="")
                 obj,parametrics = importIFCHelper.createFromProperties(psets,ifcfile,parametrics)
@@ -640,7 +641,7 @@ def insert(srcfile, docname, skip=[], only=[], root=None, preferences=None):
                         if clone.Shape.Solids:
                             s2 = clone.Shape.Solids[0]
                         else:
-                            s1 = clone.Shape
+                            s2 = clone.Shape
                         if hasattr(s1,"CenterOfMass") and hasattr(s2,"CenterOfMass"):
                             v = s1.CenterOfMass.sub(s2.CenterOfMass)
                             if product.Representation:
@@ -670,10 +671,13 @@ def insert(srcfile, docname, skip=[], only=[], root=None, preferences=None):
                         obj.Width = 0
                         obj.Length = 0
                     if (freecadtype in ["Rebar"]) and baseobj:
-                        # TODO rebars don't keep link to their baee object - we can remove it
+                        # TODO rebars don't keep link to their base object - we can remove it
                         bn = baseobj.Name
                         doc.removeObject(bn)
                     if store:
+                        # Recompute required otherwise obj has a null shape and then
+                        # cloning distances cannot be determined in the next loop.
+                        obj.recompute()
                         sharedobjects[store] = obj
 
                 # set the placement from the storey's elevation property

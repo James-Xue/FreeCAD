@@ -61,6 +61,7 @@ bool isLineSegment(const Part::Geometry&);
 bool isArcOfHyperbola(const Part::Geometry&);
 bool isArcOfParabola(const Part::Geometry&);
 bool isBSplineCurve(const Part::Geometry&);
+bool isPeriodicBSplineCurve(const Part::Geometry&);
 bool isPoint(const Part::Geometry&);
 
 bool isCircleOrArc(const Part::Geometry& geo);
@@ -206,6 +207,8 @@ std::string lengthToDisplayFormat(double value, int digits);
 std::string angleToDisplayFormat(double value, int digits);
 
 bool areColinear(const Base::Vector2d& p1, const Base::Vector2d& p2, const Base::Vector2d& p3);
+
+int indexOfGeoId(const std::vector<int>& vec, int elem);
 
 }  // namespace SketcherGui
 

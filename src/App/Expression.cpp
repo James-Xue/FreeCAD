@@ -37,7 +37,6 @@
 #include <sstream>
 #include <stack>
 #include <string>
-#include <regex>
 
 #include <App/Application.h>
 #include <App/DocumentObject.h>
@@ -518,29 +517,6 @@ Py::Object pyFromQuantity(const Quantity &quantity) {
     }
 }
 
-static const std::regex REGEX_QUANTITY(
-    R"(\s*)"
-    R"(([-+]?[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?))" // value
-    R"(\s*)"
-    R"(([^\s]+)?)" // unit
-    R"(\s*)"
-);
-
-// https://github.com/FreeCAD/FreeCAD/issues/11825
-Quantity parseQuantityFromText(std::string text) {
-    std::smatch match;
-    if (std::regex_match(text, match, REGEX_QUANTITY)) {
-        std::string value_text = match[1];
-        std::string unit_text = match[3];
-        double value = std::stod(value_text);
-        Unit unit = Unit(QString::fromStdString(unit_text));
-        return Quantity(value, unit);
-    } else {
-        std::string error_message = "Failed to parse to Quantity: text='" + text + "'";
-        PARSER_THROW(error_message);
-    }
-}
-
 Quantity anyToQuantity(const App::any &value, const char *msg) {
     if (is_type(value,typeid(Quantity))) {
         return cast<Quantity>(value);
@@ -554,10 +530,6 @@ Quantity anyToQuantity(const App::any &value, const char *msg) {
         return Quantity(cast<float>(value));
     } else if (is_type(value,typeid(double))) {
         return Quantity(cast<double>(value));
-    } else if (is_type(value,typeid(const char*))) {
-        return parseQuantityFromText(std::string(cast<const char*>(value)));
-    } else if (is_type(value,typeid(std::string))) {
-        return parseQuantityFromText(cast<std::string>(value));
     }
     if(!msg)
         msg = "Failed to convert to Quantity";
@@ -1782,6 +1754,7 @@ FunctionExpression::FunctionExpression(const DocumentObject *_owner, Function _f
     case SINH:
     case SQRT:
     case STR:
+    case PARSEQUANT:
     case TAN:
     case TANH:
     case TRUNC:
@@ -2319,6 +2292,11 @@ Py::Object FunctionExpression::evaluate(const Expression *expr, int f, const std
     }
     case STR:
         return Py::String(args[0]->getPyValue().as_string());
+    case PARSEQUANT: {
+        auto quantity_text = args[0]->getPyValue().as_string();
+        auto quantity_object =  Quantity::parse(QString::fromStdString(quantity_text));
+        return Py::asObject(new QuantityPy(new Quantity(quantity_object)));
+    }
     case TRANSLATIONM: {
         if (args.size() != 1)
             break; // Break and proceed to 3 size version.
@@ -2825,6 +2803,8 @@ void FunctionExpression::_toString(std::ostream &ss, bool persistent,int) const
         ss << "rotationz("; break;;
     case STR:
         ss << "str("; break;;
+    case PARSEQUANT:
+        ss << "parsequant("; break;;
     case TRANSLATIONM:
         ss << "translationm("; break;;
     case TUPLE:
@@ -3707,6 +3687,7 @@ static void initParser(const App::DocumentObject *owner)
         registered_functions["rotationy"] = FunctionExpression::ROTATIONY;
         registered_functions["rotationz"] = FunctionExpression::ROTATIONZ;
         registered_functions["str"] = FunctionExpression::STR;
+        registered_functions["parsequant"] = FunctionExpression::PARSEQUANT;
         registered_functions["translationm"] = FunctionExpression::TRANSLATIONM;
         registered_functions["tuple"] = FunctionExpression::TUPLE;
         registered_functions["vector"] = FunctionExpression::VECTOR;

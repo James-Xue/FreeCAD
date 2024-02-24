@@ -262,15 +262,14 @@ class Rotate(gui_base_original.Modifier):
             Restart (continue) the command if `True`, or if `None` and
             `ui.continueMode` is `True`.
         """
+        self.end_callbacks(self.call)
         if self.arctrack:
             self.arctrack.finalize()
         for ghost in self.ghosts:
             ghost.finalize()
+        super().finish()
         if cont or (cont is None and self.ui and self.ui.continueMode):
             todo.ToDo.delayAfter(self.Activated, [])
-        super().finish()
-        if self.doc:
-            self.doc.recompute()
 
     def rotate(self, is_copy=False):
         """Perform the rotation of the subelements or the entire object."""

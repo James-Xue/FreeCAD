@@ -31,9 +31,8 @@
 #include <QSvgRenderer>
 #include <QTextStream>
 #include <QVariant>
-#endif
-
 #include <limits>
+#endif
 
 #include <App/Application.h>
 #include <Base/Interpreter.h>
@@ -264,7 +263,7 @@ void MaterialDelegate::showImageModal(const QString& propertyName, QStandardItem
 
     dlg->adjustSize();
 
-    connect(dlg, &QDialog::finished, this, [&](int result) {});
+    //connect(dlg, &QDialog::finished, this, [&](int result) {});
 
     dlg->exec();
 }
@@ -278,7 +277,7 @@ void MaterialDelegate::showListModal(const QString& propertyName, QStandardItem*
 
     dlg->adjustSize();
 
-    connect(dlg, &QDialog::finished, this, [&](int result) {});
+    //connect(dlg, &QDialog::finished, this, [&](int result) {});
 
     dlg->exec();
 }
@@ -292,7 +291,7 @@ void MaterialDelegate::showMultiLineStringModal(const QString& propertyName, QSt
 
     dlg->adjustSize();
 
-    connect(dlg, &QDialog::finished, this, [&](int result) {});
+    //connect(dlg, &QDialog::finished, this, [&](int result) {});
 
     dlg->exec();
 }
@@ -307,7 +306,7 @@ void MaterialDelegate::showArray2DModal(const QString& propertyName, QStandardIt
 
     dlg->adjustSize();
 
-    connect(dlg, &QDialog::finished, this, [&](int result) {});
+    //connect(dlg, &QDialog::finished, this, [&](int result) {});
 
     dlg->exec();
 }
@@ -321,7 +320,7 @@ void MaterialDelegate::showArray3DModal(const QString& propertyName, QStandardIt
 
     dlg->adjustSize();
 
-    connect(dlg, &QDialog::finished, this, [&](int result) {});
+    //connect(dlg, &QDialog::finished, this, [&](int result) {});
 
     dlg->exec();
 }
