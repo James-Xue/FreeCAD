@@ -189,6 +189,17 @@ const std::string &ComplexGeoData::elementMapPrefix() {
     return prefix;
 }
 
+std::string ComplexGeoData::getElementMapVersion() const {
+    return "4";
+}
+
+bool ComplexGeoData::checkElementMapVersion(const char * ver) const
+{
+    return !boost::equals(ver, "3")
+        && !boost::equals(ver, "4")
+        && !boost::starts_with(ver, "3.");
+}
+
 size_t ComplexGeoData::getElementMapSize(bool flush) const
 {
     if (flush) {
@@ -626,6 +637,10 @@ unsigned int ComplexGeoData::getMemSize() const
     return 0;
 }
 
+std::vector<IndexedName> ComplexGeoData::getHigherElements(const char *, bool) const
+{
+    return {};
+}
 
 void ComplexGeoData::setMappedChildElements(const std::vector<Data::ElementMap::MappedChildElements> & children)
 {
@@ -653,5 +668,33 @@ void ComplexGeoData::beforeSave() const
     }
 }
 
+void ComplexGeoData::hashChildMaps()
+{
+    flushElementMap();
+    if (_elementMap)
+        _elementMap->hashChildMaps(Tag);
+}
+
+bool ComplexGeoData::hasChildElementMap() const
+{
+    flushElementMap();
+    return _elementMap && _elementMap->hasChildElementMap();
+}
+
+void ComplexGeoData::dumpElementMap(std::ostream& stream) const
+{
+    auto map = getElementMap();
+    std::sort(map.begin(), map.end());
+    for ( auto& element : map ) {
+        stream << element.index << " : " << element.name << std::endl;
+    }
+}
+
+const std::string ComplexGeoData::dumpElementMap() const
+{
+    std::stringstream ss;
+    dumpElementMap(ss);
+    return ss.str();
+}
 
 // NOLINTEND(cppcoreguidelines-pro-bounds-pointer-arithmetic)

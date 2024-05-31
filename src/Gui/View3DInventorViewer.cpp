@@ -227,7 +227,12 @@ public:
         else if (event->type() == QEvent::KeyPress) {
             auto ke = static_cast<QKeyEvent*>(event);  // NOLINT
             if (ke->matches(QKeySequence::SelectAll)) {
-                static_cast<View3DInventorViewer*>(obj)->selectAll();
+                auto* viewer3d = static_cast<View3DInventorViewer*>(obj);
+                auto* editingVP = viewer3d->getEditingViewProvider();
+                if(!editingVP || !editingVP->selectAll())
+                {
+                    viewer3d->selectAll();
+                }
                 return true;
             }
         }
@@ -1086,6 +1091,12 @@ void View3DInventorViewer::resetEditingViewProvider()
 bool View3DInventorViewer::isEditingViewProvider() const
 {
     return this->editViewProvider != nullptr;
+}
+
+/// return currently editing view provider
+ViewProvider* View3DInventorViewer::getEditingViewProvider() const
+{
+    return this->editViewProvider;
 }
 
 /// display override mode
@@ -1963,6 +1974,8 @@ int View3DInventorViewer::getNumSamples()
         return 2;
     case View3DInventorViewer::MSAA4x:
         return 4;
+    case View3DInventorViewer::MSAA6x:
+        return 6;
     case View3DInventorViewer::MSAA8x:
         return 8;
     case View3DInventorViewer::Smoothing:
@@ -2271,7 +2284,6 @@ void View3DInventorViewer::renderFramebuffer()
     glEnd();
 
     printDimension();
-    navigation->redraw();
 
     for (auto it : this->graphicsItems) {
         it->paintGL();
@@ -2305,7 +2317,6 @@ void View3DInventorViewer::renderGLImage()
     glDrawPixels(glImage.width(), glImage.height(), GL_BGRA,GL_UNSIGNED_BYTE, glImage.bits());
 
     printDimension();
-    navigation->redraw();
 
     for (auto it : this->graphicsItems) {
         it->paintGL();
@@ -2403,7 +2414,6 @@ void View3DInventorViewer::renderScene()
     }
 
     printDimension();
-    navigation->redraw();
 
     for (auto it : this->graphicsItems) {
         it->paintGL();
@@ -2735,6 +2745,13 @@ SbVec3f View3DInventorViewer::getPointOnLine(const SbVec2s& pnt, const SbVec3f& 
     vol.projectPointToLine(pnt2d, line);
     focalPlane.intersect(line, ptOnFocalPlane);
 
+    // Check if line is orthogonal to the focal plane
+    SbVec3f focalPlaneNormal = focalPlane.getNormal();
+    float dotProduct = fabs(axis.dot(focalPlaneNormal));
+    if (dotProduct > (1.0 - 1e-6)) {
+        return ptOnFocalPlane;
+    }
+
     SbLine projectedLine = projectLineOntoPlane(axisCenter, axisCenter + axis, focalPlane);
     ptOnFocalPlaneAndOnLine = projectedLine.getClosestPoint(ptOnFocalPlane);
 
@@ -2742,10 +2759,10 @@ SbVec3f View3DInventorViewer::getPointOnLine(const SbVec2s& pnt, const SbVec3f& 
     // - the line passing by ptOnFocalPlaneAndOnLine normal to focalPlane
     // - The line (axisCenter, axisCenter + axis)
 
-    // Line normal to focal plane through ptOnFocalPlane
-    SbLine normalLine(ptOnFocalPlane, ptOnFocalPlane + focalPlane.getNormal());
+    // Line normal to focal plane through ptOnFocalPlaneAndOnLine
+    SbLine normalLine(ptOnFocalPlaneAndOnLine, ptOnFocalPlaneAndOnLine + focalPlaneNormal);
     SbLine axisLine(axisCenter, axisCenter + axis);
-    pt = intersection(ptOnFocalPlane, ptOnFocalPlane + focalPlane.getNormal(), axisCenter, axisCenter + axis);
+    pt = intersection(ptOnFocalPlaneAndOnLine, ptOnFocalPlaneAndOnLine + focalPlaneNormal, axisCenter, axisCenter + axis);
 
     return pt;
 }
@@ -3335,6 +3352,39 @@ void View3DInventorViewer::viewSelection()
     }
 }
 
+void View3DInventorViewer::alignToSelection()
+{
+    if (!getCamera()) {
+        return;
+    }
+
+    const auto selection = Selection().getSelection();
+
+    // Empty selection
+    if (selection.empty()) {
+        return;
+    }
+
+    // Too much selections
+    if (selection.size() > 1) {
+        return;
+    }
+
+    // Get the geo feature
+    App::GeoFeature* geoFeature = nullptr;
+    std::pair<std::string, std::string> elementName;
+    App::GeoFeature::resolveElement(selection[0].pObject, selection[0].SubName, elementName, false, App::GeoFeature::ElementNameType::Normal, nullptr, nullptr, &geoFeature);
+    if (!geoFeature) {
+        return;
+    }
+
+    Base::Vector3d direction;
+    if (geoFeature->getCameraAlignmentDirection(direction, selection[0].SubName)) {
+        const auto orientation = SbRotation(SbVec3f(0, 0, 1), Base::convertTo<SbVec3f>(direction));
+        setCameraOrientation(orientation);
+    }
+}
+
 /**
  * @brief Decide if it should be possible to start any animation
  *
@@ -3409,11 +3459,15 @@ void View3DInventorViewer::startAnimation(const SbRotation& orientation,
     if (duration < 0) {
         duration = App::GetApplication()
                        .GetParameterGroupByPath("User parameter:BaseApp/Preferences/View")
-                       ->GetInt("AnimationDuration", 250);
+                       ->GetInt("AnimationDuration", 500);
     }
 
+    QEasingCurve::Type easingCurve = static_cast<QEasingCurve::Type>(App::GetApplication()
+                         .GetParameterGroupByPath("User parameter:BaseApp/Preferences/View")
+                         ->GetInt("NavigationAnimationEasingCurve", QEasingCurve::Type::InOutCubic));
+
     auto animation = std::make_shared<FixedTimeAnimation>(
-        navigation, orientation, rotationCenter, translation, duration);
+        navigation, orientation, rotationCenter, translation, duration, easingCurve);
 
     navigation->startAnimating(animation, wait);
 }

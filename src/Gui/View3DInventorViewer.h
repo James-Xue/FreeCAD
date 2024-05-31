@@ -117,11 +117,12 @@ public:
       */
     //@{
     enum AntiAliasing {
-        None,
-        Smoothing,
-        MSAA2x,
-        MSAA4x,
-        MSAA8x
+        None = 0,
+        Smoothing = 1,
+        MSAA2x = 2,
+        MSAA4x = 3,
+        MSAA6x = 5,
+        MSAA8x = 4
     };
     //@}
 
@@ -219,6 +220,8 @@ public:
     void setEditingViewProvider(Gui::ViewProvider* vp, int ModNum);
     /// return whether a view provider is edited
     bool isEditingViewProvider() const;
+    /// return currently editing view provider
+    ViewProvider* getEditingViewProvider() const;
     /// reset from edit mode
     void resetEditingViewProvider();
     void setupEditingRoot(SoNode *node=nullptr, const Base::Matrix4D *mat=nullptr);
@@ -412,6 +415,8 @@ public:
      * none of them is selected nothing happens.
      */
     void viewSelection();
+
+    void alignToSelection();
 
     void setGradientBackground(Background);
     Background getGradientBackground() const;

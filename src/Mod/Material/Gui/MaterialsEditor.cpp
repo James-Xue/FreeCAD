@@ -47,6 +47,7 @@
 
 #include <Mod/Material/App/Exceptions.h>
 #include <Mod/Material/App/ModelManager.h>
+#include <Mod/Material/App/ModelUuids.h>
 
 #include "MaterialDelegate.h"
 #include "MaterialSave.h"
@@ -59,14 +60,33 @@ using namespace MatGui;
 
 /* TRANSLATOR MatGui::MaterialsEditor */
 
+MaterialsEditor::MaterialsEditor(std::shared_ptr<Materials::MaterialFilter> filter, QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui_MaterialsEditor)
+    , _material(std::make_shared<Materials::Material>())
+    , _rendered(nullptr)
+    , _materialSelected(false)
+    , _recentMax(0)
+    , _filter(filter)
+{
+    setup();
+}
+
 MaterialsEditor::MaterialsEditor(QWidget* parent)
     : QDialog(parent)
     , ui(new Ui_MaterialsEditor)
     , _material(std::make_shared<Materials::Material>())
     , _rendered(nullptr)
-    , _edited(false)
+    , _materialSelected(false)
     , _recentMax(0)
+    , _filter(nullptr)
 {
+    setup();
+}
+
+void MaterialsEditor::setup()
+{
+    Gui::WaitCursor wc;
     ui->setupUi(this);
 
     _warningIcon = QIcon(QString::fromStdString(":/icons/Warning.svg"));
@@ -158,7 +178,9 @@ void MaterialsEditor::getFavorites()
     for (int i = 0; static_cast<long>(i) < count; i++) {
         QString key = QString::fromLatin1("FAV%1").arg(i);
         QString uuid = QString::fromStdString(param->GetASCII(key.toStdString().c_str(), ""));
-        _favorites.push_back(uuid);
+        if (!_filter || _filter->modelIncluded(uuid)) {
+            _favorites.push_back(uuid);
+        }
     }
 }
 
@@ -234,7 +256,9 @@ void MaterialsEditor::getRecents()
     for (int i = 0; static_cast<long>(i) < count; i++) {
         QString key = QString::fromLatin1("MRU%1").arg(i);
         QString uuid = QString::fromStdString(param->GetASCII(key.toStdString().c_str(), ""));
-        _recents.push_back(uuid);
+        if (!_filter || _filter->modelIncluded(uuid)) {
+            _recents.push_back(uuid);
+        }
     }
 }
 
@@ -332,7 +356,7 @@ void MaterialsEditor::onDescription()
     _material->setDescription(ui->editDescription->toPlainText());
 }
 
-void MaterialsEditor::propertyChange(const QString& property, const QString value)
+void MaterialsEditor::propertyChange(const QString& property, const QVariant& value)
 {
     if (_material->hasPhysicalProperty(property)) {
         _material->setPhysicalValue(property, value);
@@ -342,7 +366,6 @@ void MaterialsEditor::propertyChange(const QString& property, const QString valu
         updatePreview();
     }
     update();
-    _edited = true;
 }
 
 void MaterialsEditor::onURL(bool checked)
@@ -403,6 +426,13 @@ void MaterialsEditor::onAppearanceAdd(bool checked)
     if (dialog.exec() == QDialog::Accepted) {
         QString selected = dialog.selectedModel();
         _material->addAppearance(selected);
+        auto model = getModelManager().getModel(selected);
+        if (selected == Materials::ModelUUIDs::ModelUUID_Rendering_Basic
+            || model->inherits(Materials::ModelUUIDs::ModelUUID_Rendering_Basic)) {
+            // Add default appearance properties
+            *_material = *(getMaterialManager().defaultAppearance());
+        }
+
         updateMaterial();
     }
     else {
@@ -486,6 +516,7 @@ void MaterialsEditor::onNewMaterial(bool checked)
     // Create a new material
     _material = std::make_shared<Materials::Material>();
     setMaterialDefaults();
+    _materialSelected = false;
 }
 
 void MaterialsEditor::onInheritNewMaterial(bool checked)
@@ -548,6 +579,7 @@ void MaterialsEditor::saveMaterial()
         updateMaterialGeneral();
         _material->resetEditState();
         refreshMaterialTree();
+        _materialSelected = true;
     }
 }
 
@@ -807,27 +839,39 @@ void MaterialsEditor::fillMaterialTree()
     auto tree = ui->treeMaterials;
     auto model = dynamic_cast<QStandardItemModel*>(tree->model());
 
-    auto lib = new QStandardItem(tr("Favorites"));
-    lib->setFlags(Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
-    addExpanded(tree, model, lib, param);
-    addFavorites(lib);
+    if (_filterOptions.includeFavorites()) {
+        auto lib = new QStandardItem(tr("Favorites"));
+        lib->setFlags(Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+        addExpanded(tree, model, lib, param);
+        addFavorites(lib);
+    }
 
-    lib = new QStandardItem(tr("Recent"));
-    lib->setFlags(Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
-    addExpanded(tree, model, lib, param);
-    addRecents(lib);
+    if (_filterOptions.includeRecent()) {
+        auto lib = new QStandardItem(tr("Recent"));
+        lib->setFlags(Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+        addExpanded(tree, model, lib, param);
+        addRecents(lib);
+    }
 
     auto libraries = getMaterialManager().getMaterialLibraries();
     for (const auto& library : *libraries) {
-        lib = new QStandardItem(library->getName());
-        lib->setFlags(Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
-        addExpanded(tree, model, lib, param);
-
-        QIcon icon(library->getIconPath());
-        QIcon folderIcon(QString::fromStdString(":/icons/folder.svg"));
-
         auto modelTree = getMaterialManager().getMaterialTree(library);
-        addMaterials(*lib, modelTree, folderIcon, icon, param);
+
+        bool showLibraries = _filterOptions.includeEmptyLibraries();
+        if (!_filterOptions.includeEmptyLibraries() && modelTree->size() > 0) {
+            showLibraries = true;
+        }
+
+        if (showLibraries) {
+            auto lib = new QStandardItem(library->getName());
+            lib->setFlags(Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            addExpanded(tree, model, lib, param);
+
+            QIcon icon(library->getIconPath());
+            QIcon folderIcon(QString::fromStdString(":/icons/folder.svg"));
+
+            addMaterials(*lib, modelTree, folderIcon, icon, param);
+        }
     }
 }
 
@@ -963,13 +1007,16 @@ void MaterialsEditor::updateMaterialAppearance()
                     QList<QStandardItem*> items;
 
                     QString key = itp->first;
-                    auto propertyItem = new QStandardItem(key);
+                    // auto propertyItem = new QStandardItem(key);
+                    auto propertyItem = new QStandardItem(itp->second.getDisplayName());
+                    propertyItem->setData(key);
                     propertyItem->setToolTip(itp->second.getDescription());
                     items.append(propertyItem);
 
                     auto valueItem = new QStandardItem(_material->getAppearanceValueString(key));
                     valueItem->setToolTip(itp->second.getDescription());
                     QVariant variant;
+                    // variant.setValue(_material->getAppearanceValueString(key));
                     variant.setValue(_material);
                     valueItem->setData(variant);
                     items.append(valueItem);
@@ -1026,7 +1073,9 @@ void MaterialsEditor::updateMaterialProperties()
                     QString key = itp->first;
                     Materials::ModelProperty modelProperty =
                         static_cast<Materials::ModelProperty>(itp->second);
-                    auto propertyItem = new QStandardItem(key);
+                    // auto propertyItem = new QStandardItem(key);
+                    auto propertyItem = new QStandardItem(modelProperty.getDisplayName());
+                    propertyItem->setData(key);
                     propertyItem->setToolTip(modelProperty.getDescription());
                     items.append(propertyItem);
 
@@ -1143,6 +1192,7 @@ void MaterialsEditor::onSelectMaterial(const QItemSelection& selected,
 
     updateMaterial();
     _material->resetEditState();
+    _materialSelected = true;
 }
 
 void MaterialsEditor::onDoubleClick(const QModelIndex& index)
@@ -1158,6 +1208,7 @@ void MaterialsEditor::onDoubleClick(const QModelIndex& index)
         }
     }
 
+    _materialSelected = true;
     accept();
 }
 

@@ -19,12 +19,15 @@ set(Assembly_LIBS
 
 generate_from_xml(AssemblyObjectPy)
 generate_from_xml(JointGroupPy)
+generate_from_xml(ViewGroupPy)
 
 SET(Python_SRCS
     AssemblyObjectPy.xml
     AssemblyObjectPyImp.cpp
     JointGroupPy.xml
     JointGroupPyImp.cpp
+    ViewGroupPy.xml
+    ViewGroupPyImp.cpp
 )
 SOURCE_GROUP("Python" FILES ${Python_SRCS})
 
@@ -41,12 +44,17 @@ SET(Assembly_SRCS
     AssemblyObject.h
     JointGroup.cpp
     JointGroup.h
+    ViewGroup.cpp
+    ViewGroup.h
     ${Module_SRCS}
     ${Python_SRCS}
 )
 
 add_library(Assembly SHARED ${Assembly_SRCS})
 target_link_libraries(Assembly ${Assembly_LIBS})
+if (FREECAD_WARN_ERROR)
+    target_compile_warn_error(Assembly)
+endif()
 
 if(FREECAD_USE_PCH)
     add_definitions(-D_PreComp_)

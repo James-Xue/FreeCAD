@@ -241,6 +241,8 @@ public:
                 return isEndPointSelected;
             case Sketcher::PointPos::mid:
                 return isMidPointSelected;
+            default:
+                return false;
         }
     }
 
@@ -490,7 +492,7 @@ private:
     {
         int hue, sat, val, alp;
         QIcon Normal = Gui::BitmapFactory().iconFromTheme(name);
-        QImage imgConstr(Normal.pixmap(qAsConst(Normal).availableSizes()[0]).toImage());
+        QImage imgConstr(Normal.pixmap(std::as_const(Normal).availableSizes()[0]).toImage());
         QImage imgExt(imgConstr);
         QImage imgInt(imgConstr);
 
@@ -656,15 +658,15 @@ void ElementView::contextMenuEvent(QContextMenuEvent* event)
                  "Sketcher_ConstrainPointOnObject",
                  doPointOnObjectConstraint,
                  true)
-    CONTEXT_ITEM("Constraint_Vertical",
-                 "Vertical Constraint",
-                 "Sketcher_ConstrainVertical",
-                 doVerticalConstraint,
-                 true)
     CONTEXT_ITEM("Constraint_Horizontal",
                  "Horizontal Constraint",
                  "Sketcher_ConstrainHorizontal",
                  doHorizontalConstraint,
+                 true)
+    CONTEXT_ITEM("Constraint_Vertical",
+                 "Vertical Constraint",
+                 "Sketcher_ConstrainVertical",
+                 doVerticalConstraint,
                  true)
     CONTEXT_ITEM("Constraint_Parallel",
                  "Parallel Constraint",
@@ -694,8 +696,6 @@ void ElementView::contextMenuEvent(QContextMenuEvent* event)
     CONTEXT_ITEM(
         "Constraint_Block", "Block Constraint", "Sketcher_ConstrainBlock", doBlockConstraint, true)
 
-    CONTEXT_ITEM(
-        "Constraint_Lock", "Lock Constraint", "Sketcher_ConstrainLock", doLockConstraint, true)
     CONTEXT_ITEM("Constraint_HorizontalDistance",
                  "Horizontal Distance",
                  "Sketcher_ConstrainDistanceX",
@@ -711,6 +711,11 @@ void ElementView::contextMenuEvent(QContextMenuEvent* event)
                  "Sketcher_ConstrainDistance",
                  doLengthConstraint,
                  true)
+    CONTEXT_ITEM("Constraint_Radiam",
+                 "Radiam Constraint",
+                 "Sketcher_ConstrainRadiam",
+                 doRadiamConstraint,
+                 true)
     CONTEXT_ITEM("Constraint_Radius",
                  "Radius Constraint",
                  "Sketcher_ConstrainRadius",
@@ -721,16 +726,13 @@ void ElementView::contextMenuEvent(QContextMenuEvent* event)
                  "Sketcher_ConstrainDiameter",
                  doDiameterConstraint,
                  true)
-    CONTEXT_ITEM("Constraint_Radiam",
-                 "Radiam Constraint",
-                 "Sketcher_ConstrainRadiam",
-                 doRadiamConstraint,
-                 true)
     CONTEXT_ITEM("Constraint_InternalAngle",
                  "Angle Constraint",
                  "Sketcher_ConstrainAngle",
                  doAngleConstraint,
                  true)
+    CONTEXT_ITEM(
+        "Constraint_Lock", "Lock Constraint", "Sketcher_ConstrainLock", doLockConstraint, true)
 
     menu.addSeparator();
 
@@ -790,8 +792,8 @@ void ElementView::contextMenuEvent(QContextMenuEvent* event)
 
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainCoincident", doPointCoincidence)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainPointOnObject", doPointOnObjectConstraint)
-CONTEXT_MEMBER_DEF("Sketcher_ConstrainVertical", doVerticalConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainHorizontal", doHorizontalConstraint)
+CONTEXT_MEMBER_DEF("Sketcher_ConstrainVertical", doVerticalConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainParallel", doParallelConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainPerpendicular", doPerpendicularConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainTangent", doTangentConstraint)
@@ -799,14 +801,14 @@ CONTEXT_MEMBER_DEF("Sketcher_ConstrainEqual", doEqualConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainSymmetric", doSymmetricConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainBlock", doBlockConstraint)
 
-CONTEXT_MEMBER_DEF("Sketcher_ConstrainLock", doLockConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainDistanceX", doHorizontalDistance)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainDistanceY", doVerticalDistance)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainDistance", doLengthConstraint)
+CONTEXT_MEMBER_DEF("Sketcher_ConstrainRadiam", doRadiamConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainRadius", doRadiusConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainDiameter", doDiameterConstraint)
-CONTEXT_MEMBER_DEF("Sketcher_ConstrainRadiam", doRadiamConstraint)
 CONTEXT_MEMBER_DEF("Sketcher_ConstrainAngle", doAngleConstraint)
+CONTEXT_MEMBER_DEF("Sketcher_ConstrainLock", doLockConstraint)
 
 CONTEXT_MEMBER_DEF("Sketcher_ToggleConstruction", doToggleConstruction)
 
@@ -1157,7 +1159,7 @@ void ElementFilterList::languageChange()
 /* TRANSLATOR SketcherGui::TaskSketcherElements */
 
 TaskSketcherElements::TaskSketcherElements(ViewProviderSketch* sketchView)
-    : TaskBox(Gui::BitmapFactory().pixmap("document-new"), tr("Elements"), true, nullptr)
+    : TaskBox(Gui::BitmapFactory().pixmap("Sketcher_CreateLine"), tr("Elements"), true, nullptr)
     , sketchView(sketchView)
     , ui(new Ui_TaskSketcherElements())
     , focusItemIndex(-1)
@@ -1228,7 +1230,7 @@ void TaskSketcherElements::connectSignals()
                      &TaskSketcherElements::onFilterBoxStateChanged);
     QObject::connect(
         ui->settingsButton, &QToolButton::clicked, ui->settingsButton, &QToolButton::showMenu);
-    QObject::connect(qAsConst(ui->settingsButton)->actions()[0],
+    QObject::connect(std::as_const(ui->settingsButton)->actions()[0],
                      &QAction::changed,
                      this,
                      &TaskSketcherElements::onSettingsExtendedInformationChanged);
@@ -1248,7 +1250,7 @@ void TaskSketcherElements::createFilterButtonActions()
     auto* action = new QWidgetAction(this);
     filterList = new ElementFilterList(this);
     action->setDefaultWidget(filterList);
-    qAsConst(ui->filterButton)->addAction(action);
+    std::as_const(ui->filterButton)->addAction(action);
 }
 
 void TaskSketcherElements::onFilterBoxStateChanged(int val)

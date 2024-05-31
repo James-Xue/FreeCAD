@@ -63,6 +63,7 @@ set(FemGui_UIC_SRCS
     TaskFemConstraint.ui
     TaskFemConstraintBearing.ui
     TaskFemConstraintFixed.ui
+    TaskFemConstraintRigidBody.ui
     TaskFemConstraintForce.ui
     TaskFemConstraintFluidBoundary.ui
     TaskFemConstraintPressure.ui
@@ -134,6 +135,9 @@ SET(FemGui_DLG_SRCS
     TaskFemConstraintFixed.ui
     TaskFemConstraintFixed.cpp
     TaskFemConstraintFixed.h
+    TaskFemConstraintRigidBody.ui
+    TaskFemConstraintRigidBody.cpp
+    TaskFemConstraintRigidBody.h
     TaskFemConstraintForce.ui
     TaskFemConstraintForce.cpp
     TaskFemConstraintForce.h
@@ -210,6 +214,8 @@ SET(FemGui_SRCS_ViewProvider
     ViewProviderFemConstraintBearing.h
     ViewProviderFemConstraintFixed.cpp
     ViewProviderFemConstraintFixed.h
+    ViewProviderFemConstraintRigidBody.cpp
+    ViewProviderFemConstraintRigidBody.h
     ViewProviderFemConstraintForce.cpp
     ViewProviderFemConstraintForce.h
     ViewProviderFemConstraintFluidBoundary.cpp
@@ -346,12 +352,32 @@ SET(FemGuiIcon_SVG
     Resources/icons/FemWorkbench.svg
 )
 
-add_library(FemGui SHARED ${FemGui_SRCS} ${FemGuiIcon_SVG})
+SET(FemGuiSymbol_IV
+    Resources/symbols/ConstraintContact.iv
+    Resources/symbols/ConstraintDisplacement.iv
+    Resources/symbols/ConstraintFixed.iv
+    Resources/symbols/ConstraintForce.iv
+    Resources/symbols/ConstraintHeatFlux.iv
+    Resources/symbols/ConstraintPlaneRotation.iv
+    Resources/symbols/ConstraintPressure.iv
+    Resources/symbols/ConstraintRigidBody.iv
+    Resources/symbols/ConstraintSectionPrint.iv
+    Resources/symbols/ConstraintSpring.iv
+    Resources/symbols/ConstraintTemperature.iv
+    Resources/symbols/ConstraintTie.iv
+)
+
+add_library(FemGui SHARED ${FemGui_SRCS} ${FemGuiIcon_SVG} ${FemGuiSymbol_IV})
 target_link_libraries(FemGui ${FemGui_LIBS} ${VTK_LIBRARIES})
+if (FREECAD_WARN_ERROR)
+    target_compile_warn_error(FemGui)
+endif()
 
 fc_copy_sources(FemGui "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/Fem" ${FemGuiIcon_SVG})
+fc_copy_sources(FemGui "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/Fem" ${FemGuiSymbol_IV})
 
 INSTALL(FILES ${FemGuiIcon_SVG} DESTINATION "${CMAKE_INSTALL_DATADIR}/Mod/Fem/Resources/icons")
+INSTALL(FILES ${FemGuiSymbol_IV} DESTINATION "${CMAKE_INSTALL_DATADIR}/Mod/Fem/Resources/symbols")
 
 # Python modules ui files, they are copied as they are, thus the need not to be added to Fem.qrc
 # see https://forum.freecad.org/viewtopic.php?f=10&t=25833

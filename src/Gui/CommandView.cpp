@@ -46,6 +46,7 @@
 #include <App/ComplexGeoDataPy.h>
 #include <App/Document.h>
 #include <App/DocumentObject.h>
+#include <App/DocumentObjectGroup.h>
 #include <App/GeoFeature.h>
 #include <App/GeoFeatureGroupExtension.h>
 #include <App/Part.h>
@@ -61,7 +62,6 @@
 #include "Control.h"
 #include "Clipping.h"
 #include "DemoMode.h"
-#include "DlgDisplayPropertiesImp.h"
 #include "DlgSettingsImageImp.h"
 #include "Document.h"
 #include "FileDialog.h"
@@ -76,6 +76,7 @@
 #include "SelectionObject.h"
 #include "SoAxisCrossKit.h"
 #include "SoFCOffscreenRenderer.h"
+#include "TaskMeasure.h"
 #include "TextureMapping.h"
 #include "Tools.h"
 #include "Tree.h"
@@ -925,33 +926,44 @@ void StdCmdToggleTransparency::activated(int iMsg)
         if (!obj)
             continue;
 
-        if (!dynamic_cast<App::Part*>(obj) && !dynamic_cast<App::LinkGroup*>(obj)) {
-            Gui::ViewProvider* view = Application::Instance->getDocument(sel.pDoc)->getViewProvider(obj);
+        bool isGroup = dynamic_cast<App::Part*>(obj) 
+                || dynamic_cast<App::LinkGroup*>(obj)
+                || dynamic_cast<App::DocumentObjectGroup*>(obj);
+
+        auto addObjects = [](App::DocumentObject* obj, std::vector<Gui::ViewProvider*>& views) {
+            App::Document* doc = obj->getDocument();
+            Gui::ViewProvider* view = Application::Instance->getDocument(doc)->getViewProvider(obj);
             App::Property* prop = view->getPropertyByName("Transparency");
             if (prop && prop->getTypeId().isDerivedFrom(App::PropertyInteger::getClassTypeId())) {
-                viewsToToggle.push_back(view);
+                // To prevent toggling the tip of a PD body (see #11353), we check if the parent has a
+                // Tip prop.
+                const std::vector<App::DocumentObject*> parents = obj->getInList();
+                if (!parents.empty()) {
+                    App::Document* parentDoc = parents[0]->getDocument();
+                    Gui::ViewProvider* parentView = Application::Instance->getDocument(parentDoc)->getViewProvider(parents[0]);
+                    App::Property* parentProp = parents[0]->getPropertyByName("Tip");
+                    if (parentProp) {
+                        // Make sure it has a transparency prop too
+                        parentProp = parentView->getPropertyByName("Transparency");
+                        if (parentProp && parentProp->getTypeId().isDerivedFrom(App::PropertyInteger::getClassTypeId())) {
+                            view = parentView;
+                        }
+                    }
+                }
+
+                if (std::find(views.begin(), views.end(), view) == views.end()) {
+                    views.push_back(view);
+                }
+            }
+        };
+
+        if (isGroup) {
+            for (App::DocumentObject* subobj : obj->getOutListRecursive()) {
+                addObjects(subobj, viewsToToggle);
             }
         }
         else {
-            std::function<void(App::DocumentObject*, std::vector<Gui::ViewProvider*>&)> addSubObjects =
-                [&addSubObjects](App::DocumentObject* obj, std::vector<Gui::ViewProvider*>& viewsToToggle) {
-                if (!dynamic_cast<App::Part*>(obj) && !dynamic_cast<App::LinkGroup*>(obj)) {
-                    App::Document* doc = obj->getDocument();
-                    Gui::ViewProvider* view = Application::Instance->getDocument(doc)->getViewProvider(obj);
-                    App::Property* prop = view->getPropertyByName("Transparency");
-                    if (prop && prop->getTypeId().isDerivedFrom(App::PropertyInteger::getClassTypeId())
-                        && std::find(viewsToToggle.begin(), viewsToToggle.end(), view) == viewsToToggle.end()) {
-                        viewsToToggle.push_back(view);
-                    }
-                }
-                else {
-                    for (App::DocumentObject* subobj : obj->getOutList()) {
-                        addSubObjects(subobj, viewsToToggle);
-                    }
-                }
-            };
-
-            addSubObjects(obj, viewsToToggle);
+            addObjects(obj, viewsToToggle);
         }
     }
 
@@ -1248,36 +1260,6 @@ void StdCmdHideObjects::activated(int iMsg)
 bool StdCmdHideObjects::isActive()
 {
     return App::GetApplication().getActiveDocument();
-}
-
-//===========================================================================
-// Std_SetAppearance
-//===========================================================================
-DEF_STD_CMD_A(StdCmdSetAppearance)
-
-StdCmdSetAppearance::StdCmdSetAppearance()
-  : Command("Std_SetAppearance")
-{
-    sGroup        = "Standard-View";
-    sMenuText     = QT_TR_NOOP("Appearance...");
-    sToolTipText  = QT_TR_NOOP("Sets the display properties of the selected object");
-    sWhatsThis    = "Std_SetAppearance";
-    sStatusTip    = QT_TR_NOOP("Sets the display properties of the selected object");
-    sPixmap       = "Std_SetAppearance";
-    sAccel        = "Ctrl+D";
-    eType         = Alter3DView;
-}
-
-void StdCmdSetAppearance::activated(int iMsg)
-{
-    Q_UNUSED(iMsg);
-    Gui::Control().showDialog(new Gui::Dialog::TaskDisplayProperties());
-}
-
-bool StdCmdSetAppearance::isActive()
-{
-    return (Gui::Control().activeDialog() == nullptr) &&
-           (Gui::Selection().size() != 0);
 }
 
 //===========================================================================
@@ -1632,6 +1614,46 @@ bool StdCmdViewFitSelection::isActive()
 {
   return getGuiApplication()->sendHasMsgToActiveView("ViewSelection");
 }
+
+//===========================================================================
+// Std_ViewCommandGroup
+//===========================================================================
+class StdCmdViewGroup: public Gui::GroupCommand
+{
+public:
+    StdCmdViewGroup()
+        : GroupCommand("Std_ViewGroup")
+    {
+        sGroup = "Standard-View";
+        sMenuText = QT_TR_NOOP("Standard views");
+        sToolTipText = QT_TR_NOOP("Change to a standard view");
+        sStatusTip = QT_TR_NOOP("Change to a standard view");
+        sWhatsThis = "Std_ViewGroup";
+        sPixmap = "view-isometric";
+        eType = Alter3DView;
+
+        setCheckable(false);
+        setRememberLast(true);
+
+        addCommand("Std_ViewIsometric");
+        addCommand("Std_ViewFront");
+        addCommand("Std_ViewTop");
+        addCommand("Std_ViewRight");
+        addCommand("Std_ViewRear");
+        addCommand("Std_ViewBottom");
+        addCommand("Std_ViewLeft");
+    }
+
+    const char* className() const override
+    {
+        return "StdCmdViewGroup";
+    }
+
+    bool isActive() override
+    {
+        return hasActiveDocument();
+    }
+};
 
 //===========================================================================
 // Std_ViewDock
@@ -2665,6 +2687,24 @@ public:
         Application::Instance->commandManager().testActive();
         currentSelectionHandler = nullptr;
     }
+
+    static QCursor makeCursor(QWidget* widget, const QSize& size, const char* svgFile, int hotX, int hotY)
+    {
+        qreal pRatio = widget->devicePixelRatioF();
+        qreal hotXF = hotX;
+        qreal hotYF = hotY;
+#if !defined(Q_OS_WIN32) && !defined(Q_OS_MAC)
+        if (qApp->platformName() == QLatin1String("xcb")) {
+            hotXF *= pRatio;
+            hotYF *= pRatio;
+        }
+#endif
+        qreal cursorWidth = size.width() * pRatio;
+        qreal cursorHeight = size.height() * pRatio;
+        QPixmap px(Gui::BitmapFactory().pixmapFromSvg(svgFile, QSizeF(cursorWidth, cursorHeight)));
+        px.setDevicePixelRatio(pRatio);
+        return QCursor(px, hotXF, hotYF);
+    }
 };
 }
 
@@ -2672,44 +2712,6 @@ std::unique_ptr<SelectionCallbackHandler> SelectionCallbackHandler::currentSelec
 //===========================================================================
 // Std_ViewBoxZoom
 //===========================================================================
-/* XPM */
-static const char * cursor_box_zoom[] = {
-"32 32 3 1",
-" 	c None",
-".	c #FFFFFF",
-"@	c #FF0000",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"                                ",
-".....   .....                   ",
-"                                ",
-"      .      @@@@@@@            ",
-"      .    @@@@@@@@@@@          ",
-"      .   @@         @@         ",
-"      .  @@. . . . . .@@        ",
-"      .  @             @        ",
-"        @@ .         . @@       ",
-"        @@             @@       ",
-"        @@ .         . @@       ",
-"        @@             @@       ",
-"        @@ .         . @@       ",
-"        @@             @@       ",
-"        @@ .         . @@       ",
-"         @             @        ",
-"         @@. . . . . .@@@       ",
-"          @@          @@@@      ",
-"           @@@@@@@@@@@@  @@     ",
-"             @@@@@@@ @@   @@    ",
-"                      @@   @@   ",
-"                       @@   @@  ",
-"                        @@   @@ ",
-"                         @@  @@ ",
-"                          @@@@  ",
-"                           @@   ",
-"                                " };
 
 DEF_3DV_CMD(StdViewBoxZoom)
 
@@ -2733,7 +2735,11 @@ void StdViewBoxZoom::activated(int iMsg)
     if ( view ) {
         View3DInventorViewer* viewer = view->getViewer();
         if (!viewer->isSelecting()) {
-            SelectionCallbackHandler::Create(viewer, View3DInventorViewer::BoxZoom, QCursor(QPixmap(cursor_box_zoom), 7, 7));
+            // NOLINTBEGIN
+            QCursor cursor = SelectionCallbackHandler::makeCursor(viewer, QSize(32, 32),
+                                                                  "zoom-border-cross", 6, 6);
+            SelectionCallbackHandler::Create(viewer, View3DInventorViewer::BoxZoom, cursor);
+            // NOLINTEND
         }
     }
 }
@@ -2742,46 +2748,6 @@ void StdViewBoxZoom::activated(int iMsg)
 // Std_BoxSelection
 //===========================================================================
 DEF_3DV_CMD(StdBoxSelection)
-
-/* XPM */
-static const char * cursor_box_select[] = {
-"32 32 4 1",
-" 	c None",
-".	c #FFFFFF",
-"+	c #FF0000",
-"@	c #000000",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"                                ",
-".....   .....                   ",
-"                                ",
-"      .                         ",
-"      .                         ",
-"      .   +    +++   +++    +++ ",
-"      .   +@@                   ",
-"      .   +@.@@@                ",
-"            @...@@@             ",
-"            @......@@           ",
-"            @........@@@      + ",
-"             @..........@@    + ",
-"          +  @............@   + ",
-"          +   @........@@@      ",
-"          +   @.......@         ",
-"              @........@        ",
-"               @........@     + ",
-"               @...@.....@    + ",
-"          +    @..@ @.....@   + ",
-"          +     @.@  @.....@    ",
-"          +     @.@   @.....@   ",
-"                 @     @.....@  ",
-"                        @...@   ",
-"                         @.@  + ",
-"                          @   + ",
-"          +++    +++   +++    + ",
-"                                " };
 
 StdBoxSelection::StdBoxSelection()
   : Command("Std_BoxSelection")
@@ -2992,8 +2958,12 @@ void StdBoxSelection::activated(int iMsg)
                 viewer->navigationStyle()->processEvent(&ev);
             }
 
-            SelectionCallbackHandler::Create(viewer, View3DInventorViewer::Rubberband, QCursor(QPixmap(cursor_box_select), 7, 7), doSelect, nullptr);
+            // NOLINTBEGIN
+            QCursor cursor = SelectionCallbackHandler::makeCursor(viewer, QSize(32, 32),
+                                                                  "edit-select-box-cross", 6, 6);
+            SelectionCallbackHandler::Create(viewer, View3DInventorViewer::Rubberband, cursor, doSelect, nullptr);
             viewer->setSelectionEnabled(false);
+            // NOLINTEND
         }
     }
 }
@@ -3001,47 +2971,6 @@ void StdBoxSelection::activated(int iMsg)
 //===========================================================================
 // Std_BoxElementSelection
 //===========================================================================
-/* XPM */
-static const char * cursor_box_element_select[] = {
-"32 32 6 1",
-" 	c None",
-".	c #FFFFFF",
-"+	c #00FF1B",
-"@	c #19A428",
-"#	c #FF0000",
-"$	c #000000",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"                                ",
-".....   .....                   ",
-"       ++++++++++++             ",
-"      .+@@@@@@@@@@+             ",
-"      .+@@@@@@@@@@+             ",
-"      .+@@#@@@@###+  ###    ### ",
-"      .+@@#$$@@@@@+             ",
-"      .+@@#$.$$$@@+             ",
-"       +@@@@$...$$$             ",
-"       +@@@@$......$$           ",
-"       +@@@@$........$$$      # ",
-"       +@@@@@$..........$$    # ",
-"       +@@#@@$............$   # ",
-"       +++#+++$........$$$      ",
-"          #   $.......$         ",
-"              $........$        ",
-"               $........$     # ",
-"               $...$.....$    # ",
-"          #    $..$ $.....$   # ",
-"          #     $.$  $.....$    ",
-"          #     $.$   $.....$   ",
-"                 $     $.....$  ",
-"                        $...$   ",
-"                         $.$  # ",
-"                          $   # ",
-"          ###    ###   ###    # ",
-"                                " };
 
 DEF_3DV_CMD(StdBoxElementSelection)
 
@@ -3073,8 +3002,12 @@ void StdBoxElementSelection::activated(int iMsg)
                 viewer->navigationStyle()->processEvent(&ev);
             }
 
-            SelectionCallbackHandler::Create(viewer, View3DInventorViewer::Rubberband, QCursor(QPixmap(cursor_box_element_select), 7, 7), doSelect, this);
+            // NOLINTBEGIN
+            QCursor cursor = SelectionCallbackHandler::makeCursor(viewer, QSize(32, 32),
+                                                                  "edit-element-select-box-cross", 6, 6);
+            SelectionCallbackHandler::Create(viewer, View3DInventorViewer::Rubberband, cursor, doSelect, this);
             viewer->setSelectionEnabled(false);
+            // NOLINTEND
         }
     }
 }
@@ -3224,45 +3157,6 @@ StdCmdMeasureDistance::StdCmdMeasureDistance()
     eType         = Alter3DView;
 }
 
-// Yay for cheezy drawings!
-/* XPM */
-static const char * cursor_ruler[] = {
-"32 32 3 1",
-" 	c None",
-".	c #FFFFFF",
-"+	c #FF0000",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"      .                         ",
-"                                ",
-".....   .....                   ",
-"                                ",
-"      .                         ",
-"      .                         ",
-"      .        ++               ",
-"      .       +  +              ",
-"      .      +   ++             ",
-"            +   +  +            ",
-"           +   +    +           ",
-"          +   +     ++          ",
-"          +        +  +         ",
-"           +           +        ",
-"            +         + +       ",
-"             +       +   +      ",
-"              +           +     ",
-"               +         + +    ",
-"                +       +   +   ",
-"                 +           +  ",
-"                  +         + + ",
-"                   +       +  ++",
-"                    +     +   + ",
-"                     +       +  ",
-"                      +     +   ",
-"                       +   +    ",
-"                        + +     ",
-"                         +      "};
 void StdCmdMeasureDistance::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
@@ -3271,7 +3165,12 @@ void StdCmdMeasureDistance::activated(int iMsg)
     if (view) {
         Gui::View3DInventorViewer* viewer = view->getViewer();
         viewer->setEditing(true);
-        viewer->setEditingCursor(QCursor(QPixmap(cursor_ruler), 7, 7));
+
+        // NOLINTBEGIN
+        QCursor cursor = SelectionCallbackHandler::makeCursor(viewer, QSize(32, 32),
+                                                              "view-measurement-cross", 6, 25);
+        viewer->setEditingCursor(cursor);
+        // NOLINTEND
 
         // Derives from QObject and we have a parent object, so we don't
         // require a delete.
@@ -3294,6 +3193,38 @@ bool StdCmdMeasureDistance::isActive()
     }
 
     return false;
+}
+
+//===========================================================================
+// Std_Measure
+// this is the Unified Measurement Facility Measure command
+//===========================================================================
+
+
+DEF_STD_CMD_A(StdCmdMeasure)
+
+StdCmdMeasure::StdCmdMeasure()
+  :Command("Std_Measure")
+{
+    sGroup        = "Measure";
+    sMenuText     = QT_TR_NOOP("&Measure");
+    sToolTipText  = QT_TR_NOOP("Measure a feature");
+    sWhatsThis    = "Std_Measure";
+    sStatusTip    = QT_TR_NOOP("Measure a feature");
+    sPixmap       = "umf-measurement";
+}
+
+void StdCmdMeasure::activated(int iMsg)
+{
+    Q_UNUSED(iMsg);
+
+    TaskMeasure *task = new TaskMeasure();
+    Gui::Control().showDialog(task);
+}
+
+
+bool StdCmdMeasure::isActive(){
+    return true;
 }
 
 //===========================================================================
@@ -3385,64 +3316,6 @@ void StdCmdDemoMode::activated(int iMsg)
     dlg->show();
 }
 
-//===========================================================================
-// Part_Measure_Clear_All
-//===========================================================================
-
-DEF_STD_CMD(CmdViewMeasureClearAll)
-
-CmdViewMeasureClearAll::CmdViewMeasureClearAll()
-  : Command("View_Measure_Clear_All")
-{
-    sGroup        = "Measure";
-    sMenuText     = QT_TR_NOOP("Clear measurement");
-    sToolTipText  = QT_TR_NOOP("Clear all visible measurements");
-    sWhatsThis    = "View_Measure_Clear_All";
-    sStatusTip    = sToolTipText;
-    sPixmap       = "Part_Measure_Clear_All";
-}
-
-void CmdViewMeasureClearAll::activated(int iMsg)
-{
-    Q_UNUSED(iMsg);
-    auto view = dynamic_cast<Gui::View3DInventor*>(Gui::Application::Instance->
-        activeDocument()->getActiveView());
-    if (!view)
-        return;
-    Gui::View3DInventorViewer *viewer = view->getViewer();
-    if (!viewer)
-        return;
-    viewer->eraseAllDimensions();
-}
-
-//===========================================================================
-// Part_Measure_Toggle_All
-//===========================================================================
-
-DEF_STD_CMD(CmdViewMeasureToggleAll)
-
-CmdViewMeasureToggleAll::CmdViewMeasureToggleAll()
-  : Command("View_Measure_Toggle_All")
-{
-    sGroup        = "Measure";
-    sMenuText     = QT_TR_NOOP("Toggle measurement");
-    sToolTipText  = QT_TR_NOOP("Turn on or off the display of all measurements");
-    sWhatsThis    = "View_Measure_Toggle_All";
-    sStatusTip    = sToolTipText;
-    sPixmap       = "Part_Measure_Toggle_All";
-}
-
-void CmdViewMeasureToggleAll::activated(int iMsg)
-{
-    Q_UNUSED(iMsg);
-    ParameterGrp::handle group = App::GetApplication().GetUserParameter().
-    GetGroup("BaseApp")->GetGroup("Preferences")->GetGroup("View");
-    bool visibility = group->GetBool("DimensionsVisible", true);
-    if (visibility)
-        group->SetBool("DimensionsVisible", false);
-    else
-      group->SetBool("DimensionsVisible", true);
-}
 
 //===========================================================================
 // Std_SelBack
@@ -4151,6 +4024,33 @@ bool StdRecallWorkingView::isActive()
 }
 
 //===========================================================================
+// Std_AlignToSelection
+//===========================================================================
+DEF_STD_CMD_A(StdCmdAlignToSelection)
+
+StdCmdAlignToSelection::StdCmdAlignToSelection()
+  : Command("Std_AlignToSelection")
+{
+    sGroup        = "View";
+    sMenuText     = QT_TR_NOOP("Align to selection");
+    sToolTipText  = QT_TR_NOOP("Align the view with the selection");
+    sWhatsThis    = "Std_AlignToSelection";
+    sPixmap       = "align-to-selection";
+    eType         = Alter3DView;
+}
+
+void StdCmdAlignToSelection::activated(int iMsg)
+{
+    Q_UNUSED(iMsg);
+    doCommand(Command::Gui,"Gui.SendMsgToActiveView(\"AlignToSelection\")");
+}
+
+bool StdCmdAlignToSelection::isActive()
+{
+    return getGuiApplication()->sendHasMsgToActiveView("AlignToSelection");
+}
+
+//===========================================================================
 // Instantiation
 //===========================================================================
 
@@ -4180,6 +4080,8 @@ void CreateViewStdCommands()
     rcCmdMgr.addCommand(new StdCmdViewRotateRight());
     rcCmdMgr.addCommand(new StdStoreWorkingView());
     rcCmdMgr.addCommand(new StdRecallWorkingView());
+    rcCmdMgr.addCommand(new StdCmdViewGroup());
+    rcCmdMgr.addCommand(new StdCmdAlignToSelection());
 
     rcCmdMgr.addCommand(new StdCmdViewExample1());
     rcCmdMgr.addCommand(new StdCmdViewExample2());
@@ -4198,7 +4100,6 @@ void CreateViewStdCommands()
     rcCmdMgr.addCommand(new StdViewLoadImage());
     rcCmdMgr.addCommand(new StdMainFullscreen());
     rcCmdMgr.addCommand(new StdViewDockUndockFullscreen());
-    rcCmdMgr.addCommand(new StdCmdSetAppearance());
     rcCmdMgr.addCommand(new StdCmdToggleVisibility());
     rcCmdMgr.addCommand(new StdCmdToggleTransparency());
     rcCmdMgr.addCommand(new StdCmdToggleSelectability());
@@ -4224,13 +4125,12 @@ void CreateViewStdCommands()
     rcCmdMgr.addCommand(new StdCmdTreeCollapse());
     rcCmdMgr.addCommand(new StdCmdTreeSelectAllInstances());
     rcCmdMgr.addCommand(new StdCmdMeasureDistance());
+    rcCmdMgr.addCommand(new StdCmdMeasure());
     rcCmdMgr.addCommand(new StdCmdSceneInspector());
     rcCmdMgr.addCommand(new StdCmdTextureMapping());
     rcCmdMgr.addCommand(new StdCmdDemoMode());
     rcCmdMgr.addCommand(new StdCmdToggleNavigation());
     rcCmdMgr.addCommand(new StdCmdAxisCross());
-    rcCmdMgr.addCommand(new CmdViewMeasureClearAll());
-    rcCmdMgr.addCommand(new CmdViewMeasureToggleAll());
     rcCmdMgr.addCommand(new StdCmdSelBoundingBox());
     rcCmdMgr.addCommand(new StdCmdTreeViewActions());
     rcCmdMgr.addCommand(new StdCmdDockOverlay());

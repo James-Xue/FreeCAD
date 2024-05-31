@@ -41,7 +41,6 @@ using namespace PartGui;
     qApp->translate("Workbench", "Split");
     qApp->translate("Workbench", "Compound");
     qApp->translate("Workbench", "Create a copy");
-    qApp->translate("Workbench", "Measure");
 #endif
 
 /// @namespace PartGui @class Workbench
@@ -118,6 +117,8 @@ Gui::MenuItem* Workbench::setupMenuBar() const
           << copy
           << "Part_CheckGeometry"
           << "Part_Defeaturing"
+          << "Materials_InspectAppearance"
+          << "Materials_InspectMaterial"
           << "Separator"
           << bop << join << split << compound
           << "Separator"
@@ -139,18 +140,6 @@ Gui::MenuItem* Workbench::setupMenuBar() const
           << "Part_ProjectionOnSurface"
           << "Separator"
           << "Part_EditAttachment";
-
-    Gui::MenuItem* measure = new Gui::MenuItem;
-    root->insertItem(item,measure);
-    measure->setCommand("Measure");
-    *measure << "Part_Measure_Linear"
-             << "Part_Measure_Angular"
-             << "Separator"
-             << "Part_Measure_Refresh"
-             << "Part_Measure_Clear_All"
-             << "Part_Measure_Toggle_All"
-             << "Part_Measure_Toggle_3D"
-             << "Part_Measure_Toggle_Delta";
 
     Gui::MenuItem* view = root->findItem("&View");
     if (view) {
@@ -209,17 +198,6 @@ Gui::ToolBarItem* Workbench::setupToolBars() const
             << "Part_CompSplitFeatures"
             << "Part_CheckGeometry"
             << "Part_Defeaturing";
-
-    Gui::ToolBarItem* measure = new Gui::ToolBarItem(root);
-    measure->setCommand("Measure");
-    *measure << "Part_Measure_Linear"
-             << "Part_Measure_Angular"
-             << "Separator"
-             << "Part_Measure_Refresh"
-             << "Part_Measure_Clear_All"
-             << "Part_Measure_Toggle_All"
-             << "Part_Measure_Toggle_3D"
-             << "Part_Measure_Toggle_Delta";
 
     return root;
 }

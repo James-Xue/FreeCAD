@@ -87,6 +87,7 @@ generate_from_xml(LinkBaseExtensionPy)
 generate_from_xml(DocumentObjectGroupPy)
 generate_from_xml(GeoFeaturePy)
 generate_from_xml(GeoFeatureGroupExtensionPy)
+generate_from_xml(SuppressibleExtensionPy)
 generate_from_xml(MetadataPy)
 generate_from_xml(OriginGroupExtensionPy)
 generate_from_xml(PartPy)
@@ -96,6 +97,7 @@ generate_from_xml(StringIDPy)
 generate_from_xml(ComplexGeoDataPy)
 generate_from_xml(PropertyContainerPy)
 generate_from_xml(MaterialPy)
+generate_from_xml(MeasureManagerPy)
 
 generate_from_py(FreeCADInit InitScript.h)
 generate_from_py(FreeCADTest TestScript.h)
@@ -112,11 +114,13 @@ SET(FreeCADApp_XML_SRCS
     GeoFeaturePy.xml
     GeoFeatureGroupExtensionPy.xml
     OriginGroupExtensionPy.xml
+    SuppressibleExtensionPy.xml
     PartPy.xml
     DocumentPy.xml
     PropertyContainerPy.xml
     ComplexGeoDataPy.xml
     MaterialPy.xml
+    MeasureManagerPy.xml
     StringHasherPy.xml
     StringIDPy.xml
 )
@@ -154,6 +158,8 @@ SET(Document_CPP_SRCS
     ImagePlane.cpp
     OriginGroupExtensionPyImp.cpp
     OriginGroupExtension.cpp
+    SuppressibleExtensionPyImp.cpp
+    SuppressibleExtension.cpp
     PartPyImp.cpp
     Part.cpp
     Origin.cpp
@@ -161,6 +167,7 @@ SET(Document_CPP_SRCS
     InventorObject.cpp
     MeasureDistance.cpp
     Placement.cpp
+    ProjectFile.cpp
     OriginFeature.cpp
     Range.cpp
     Transactions.cpp
@@ -200,12 +207,14 @@ SET(Document_HPP_SRCS
     GeoFeatureGroupExtension.h
     ImagePlane.h
     OriginGroupExtension.h
+    SuppressibleExtension.h
     Part.h
     Origin.h
     Path.h
     InventorObject.h
     MeasureDistance.h
     Placement.h
+    ProjectFile.h
     OriginFeature.h
     Range.h
     Transactions.h
@@ -264,6 +273,7 @@ SET(FreeCADApp_CPP_SRCS
     ApplicationPy.cpp
     AutoTransaction.cpp
     Branding.cpp
+    CleanupProcess.cpp
     Color.cpp
     ColorModel.cpp
     ComplexGeoData.cpp
@@ -275,6 +285,8 @@ SET(FreeCADApp_CPP_SRCS
     MappedName.cpp
     Material.cpp
     MaterialPyImp.cpp
+    MeasureManager.cpp
+    MeasureManagerPyImp.cpp
     Metadata.cpp
     MetadataPyImp.cpp
     ElementNamingUtils.cpp
@@ -289,6 +301,7 @@ SET(FreeCADApp_HPP_SRCS
     Application.h
     AutoTransaction.h
     Branding.h
+    CleanupProcess.h
     Color.h
     ColorModel.h
     ComplexGeoData.h
@@ -298,12 +311,21 @@ SET(FreeCADApp_HPP_SRCS
     MappedName.h
     MappedElement.h
     Material.h
+    MeasureManager.h
     Metadata.h
     ElementNamingUtils.h
     StringHasher.h
 )
 
+# auto-generate resource file with all available translations
+set (FreeCADApp_TR_QRC ${CMAKE_CURRENT_BINARY_DIR}/Resources/App_translation.qrc)
+qt_find_and_add_translation(QM_SRCS "Resources/translations/*_*.ts"
+    ${CMAKE_CURRENT_BINARY_DIR}/Resources/translations)
+qt_create_resource_file(${FreeCADApp_TR_QRC} ${QM_SRCS})
+qt_add_resources(FreeCADApp_QRC_SRCS ${FreeCADApp_TR_QRC})
+
 SET(FreeCADApp_SRCS
+    ${FreeCADApp_QRC_SRCS}
     ${FreeCADApp_CPP_SRCS}
     ${FreeCADApp_HPP_SRCS}
     ${FreeCADApp_XML_SRCS}
@@ -320,6 +342,9 @@ endif(FREECAD_USE_PCH)
 
 add_library(FreeCADApp SHARED ${FreeCADApp_SRCS})
 target_link_libraries(FreeCADApp ${FreeCADApp_LIBS})
+if (FREECAD_WARN_ERROR)
+    target_compile_warn_error(FreeCADApp)
+endif()
 
 add_dependencies(FreeCADApp fc_version)
 

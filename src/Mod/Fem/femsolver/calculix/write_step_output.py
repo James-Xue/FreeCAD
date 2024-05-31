@@ -51,10 +51,13 @@ def write_step_output(f, ccxwriter):
         f.write("U\n")
     if not ccxwriter.member.geos_fluidsection:
         f.write("*EL FILE\n")
+        variables = "S, E"
+        if ccxwriter.analysis_type == "thermomech":
+            variables += ", HFL"
         if ccxwriter.solver_obj.MaterialNonlinearity == "nonlinear":
-            f.write("S, E, PEEQ\n")
-        else:
-            f.write("S, E\n")
+            variables += ", PEEQ"
+
+        f.write(variables + "\n")
 
         # dat file
         # reaction forces: freecad.org/tracker/view.php?id=2934
@@ -83,6 +86,7 @@ def write_step_output(f, ccxwriter):
                     f.write("RF\n")
         if ccxwriter.member.cons_fixed or ccxwriter.member.cons_displacement:
             f.write("\n")
+        f.write("*OUTPUT, FREQUENCY={}".format(ccxwriter.solver_obj.OutputFrequency))
 
         # there is no need to write all integration point results
         # as long as there is no reader for them

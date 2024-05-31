@@ -41,6 +41,7 @@ set(PartDesignGui_UIC_SRCS
     TaskHoleParameters.ui
     TaskRevolutionParameters.ui
     TaskTransformedMessages.ui
+    TaskTransformedParameters.ui
     TaskMirroredParameters.ui
     TaskLinearPatternParameters.ui
     TaskPolarPatternParameters.ui
@@ -258,6 +259,9 @@ SET(PartDesignGuiIcon_SVG
 
 add_library(PartDesignGui SHARED ${PartDesignGui_SRCS} ${PartDesignGuiIcon_SVG})
 target_link_libraries(PartDesignGui ${PartDesignGui_LIBS})
+if (FREECAD_WARN_ERROR)
+    target_compile_warn_error(PartDesignGui)
+endif()
 
 SET_BIN_DIR(PartDesignGui PartDesignGui /Mod/PartDesign)
 SET_PYTHON_PREFIX_SUFFIX(PartDesignGui)

@@ -14,8 +14,11 @@ SET(MaterialScripts_Files
     importFCMat.py
     MaterialEditor.py
     TestMaterialsApp.py
-    Resources/ui/materials-editor.ui
     Templatematerial.yml
+)
+
+SET(Material_Ui_Files
+    Resources/ui/materials-editor.ui
 )
 
 # SOURCE_GROUP("MaterialScripts" FILES ${MaterialScripts_Files})
@@ -31,6 +34,7 @@ SET(Material_Icon_Files
 
 # collect all the material cards:
 SET(MaterialLib_Files
+    Resources/Materials/Standard/Default.FCMat
     Resources/Materials/Standard/Aggregate/Concrete-EN-C35_45.FCMat
     Resources/Materials/Standard/Aggregate/Concrete-Generic.FCMat
     Resources/Materials/Standard/Aggregate/Reinforcement-FIB-B500.FCMat
@@ -232,11 +236,25 @@ SET(MaterialModel_Files
     Resources/Models/Fluid/Fluid.yml
     Resources/Models/Legacy/Father.yml
     Resources/Models/Legacy/MaterialStandard.yml
+    Resources/Models/Mechanical/ArrudaBoyce.yml
     Resources/Models/Mechanical/Density.yml
+    Resources/Models/Mechanical/Hardness.yml
     Resources/Models/Mechanical/IsotropicLinearElastic.yml
     Resources/Models/Mechanical/LinearElastic.yml
+    Resources/Models/Mechanical/MooneyRivlin.yml
+    Resources/Models/Mechanical/NeoHooke.yml
+    Resources/Models/Mechanical/OgdenN1.yml
+    Resources/Models/Mechanical/OgdenN2.yml
+    Resources/Models/Mechanical/OgdenN3.yml
     Resources/Models/Mechanical/OgdenYld2004p18.yml
     Resources/Models/Mechanical/OrthotropicLinearElastic.yml
+    Resources/Models/Mechanical/PolynomialN1.yml
+    Resources/Models/Mechanical/PolynomialN2.yml
+    Resources/Models/Mechanical/PolynomialN3.yml
+    Resources/Models/Mechanical/ReducedPolynomialN1.yml
+    Resources/Models/Mechanical/ReducedPolynomialN2.yml
+    Resources/Models/Mechanical/ReducedPolynomialN3.yml
+    Resources/Models/Mechanical/Yeoh.yml
     Resources/Models/Patterns/PAT.yml
     "Resources/Models/Patterns/Pattern File.yml"
     "Resources/Models/Render Workbench/RenderAppleseed.yml"
@@ -267,27 +285,48 @@ set(MaterialTest_Files
     materialtests/__init__.py
     materialtests/TestModels.py
     materialtests/TestMaterials.py
+    materialtests/TestMaterialCreation.py
+    materialtests/TestMaterialFilter.py
 )
 
-ADD_CUSTOM_TARGET(MateriaTestLib ALL
+ADD_CUSTOM_TARGET(MaterialTest ALL
     SOURCES ${MaterialTest_Files}
 )
 
-fc_target_copy_resource(MateriaTestLib
+fc_target_copy_resource(MaterialTest
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}/Mod/Material
     ${MaterialTest_Files})
 
+set(MaterialPythonTestData_Files
+    materialtests/Materials/TestAcrylicLegacy.FCMat
+    materialtests/Materials/TestAluminumAppearance.FCMat
+    materialtests/Materials/TestAluminumMixed.FCMat
+    materialtests/Materials/TestAluminumPhysical.FCMat
+    materialtests/Materials/TestBrassAppearance.FCMat
+)
+
+ADD_CUSTOM_TARGET(MaterialPythonTestData ALL
+    SOURCES ${MaterialPythonTestData_Files}
+)
+
+fc_target_copy_resource(MaterialPythonTestData
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_BINARY_DIR}/Mod/Material
+    ${MaterialPythonTestData_Files})
+
 ADD_CUSTOM_TARGET(MaterialScripts ALL
-    SOURCES ${MaterialScripts_Files} ${Material_QRC_SRCS}
+    SOURCES ${MaterialScripts_Files} ${Material_Ui_Files} ${Material_QRC_SRCS}
 )
 
 fc_target_copy_resource(MaterialScripts
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_BINARY_DIR}/Mod/Material
-    ${MaterialScripts_Files})
+    ${MaterialScripts_Files}
+    ${Material_Ui_Files})
 
 INSTALL(FILES ${MaterialScripts_Files} DESTINATION Mod/Material)
+INSTALL(FILES ${Material_Ui_Files} DESTINATION Mod/Material/Resources/ui)
 
 ADD_CUSTOM_TARGET(MaterialToolsLib ALL
     SOURCES ${MaterialTools_Files}
@@ -357,13 +396,13 @@ fc_target_copy_resource(MaterialModelLib
     ${MaterialModel_Files})
 
 INSTALL(
-    FILES ${Material_SRCS} ${Material_QRC_SRCS}
-    DESTINATION Mod/Material
+    FILES ${MaterialTest_Files}
+    DESTINATION Mod/Material/materialtests
 )
 
 INSTALL(
-    FILES ${MaterialTest_Files}
-    DESTINATION Mod/Material/materialtests
+    FILES ${MaterialPythonTestData_Files}
+    DESTINATION Mod/Material/materialtests/Materials
 )
 
 foreach(file ${MaterialLib_Files} ${FluidMaterial_Files} ${AppearanceLib_Files} ${PatternLib_Files} ${MaterialTestLib_Files} ${MaterialModel_Files})
