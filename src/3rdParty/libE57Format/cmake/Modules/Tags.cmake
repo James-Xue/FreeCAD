@@ -20,7 +20,8 @@ elseif (MSVC70)
     set(T1_ "-vc7")
 elseif (MINGW)
     set(T1_ "-mgw")
-    exec_program(${CMAKE_CXX_COMPILER}
+    # exec_program(${CMAKE_CXX_COMPILER}
+    execute_process(COMMAND ${CMAKE_CXX_COMPILER}
         ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
         OUTPUT_VARIABLE T2_
     )
@@ -28,7 +29,8 @@ elseif (MINGW)
     set(T1_ ${T1_}${T2_})
 elseif (CMAKE_COMPILER_IS_GNUCXX)
     set(T1_ "-gcc")
-    exec_program(${CMAKE_CXX_COMPILER}
+    # exec_program(${CMAKE_CXX_COMPILER}
+    execute_process(COMMAND ${CMAKE_CXX_COMPILER}
         ARGS ${CMAKE_CXX_COMPILER_ARG1} -dumpversion
         OUTPUT_VARIABLE T2_
     )
