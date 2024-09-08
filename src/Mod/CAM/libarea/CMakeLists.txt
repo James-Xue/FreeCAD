@@ -27,7 +27,8 @@ if(NOT FREECAD_USE_PYBIND11)
             set(BOOST_PY_SUFFIX ${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
         endif ()
 
-        find_package( Boost COMPONENTS python${BOOST_PY_SUFFIX} )
+        find_package(Boost CONFIG
+            COMPONENTS python${BOOST_PY_SUFFIX} )
         if (NOT Boost_PYTHON${BOOST_PY_SUFFIX}_FOUND)
             # try just the major version
             find_package( Boost COMPONENTS python${PYTHON_VERSION_MAJOR} )
