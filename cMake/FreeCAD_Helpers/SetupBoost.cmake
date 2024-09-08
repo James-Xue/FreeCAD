@@ -4,7 +4,7 @@ macro(SetupBoost)
     set(_boost_TEST_VERSIONS ${Boost_ADDITIONAL_VERSIONS})
 
     set (BOOST_COMPONENTS filesystem program_options regex system thread date_time)
-    find_package(Boost ${BOOST_MIN_VERSION}
+    find_package(Boost CONFIG #${BOOST_MIN_VERSION}
         COMPONENTS ${BOOST_COMPONENTS} REQUIRED)
 
     if(UNIX AND NOT APPLE)
