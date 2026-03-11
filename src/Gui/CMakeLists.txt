@@ -421,11 +421,11 @@ endif(FREECAD_USE_3DCONNEXION_NAVLIB AND (MSVC OR APPLE))
 
 set_property(SOURCE GraphvizView.h GraphvizView.cpp PROPERTY SKIP_AUTOMOC ON)
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/moc_GraphvizView-internal.cpp
-    COMMAND ${QtCore_MOC_EXECUTABLE} -o ${CMAKE_CURRENT_BINARY_DIR}/moc_GraphvizView-internal.cpp ${CMAKE_CURRENT_SOURCE_DIR}/GraphvizView.cpp
+    COMMAND ${QtCore_MOC_EXECUTABLE} -p ${CMAKE_CURRENT_SOURCE_DIR} -o ${CMAKE_CURRENT_BINARY_DIR}/moc_GraphvizView-internal.cpp ${CMAKE_CURRENT_SOURCE_DIR}/GraphvizView.cpp
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/GraphvizView.cpp)
 
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/moc_GraphvizView.cpp
-    COMMAND ${QtCore_MOC_EXECUTABLE} -o ${CMAKE_CURRENT_BINARY_DIR}/moc_GraphvizView.cpp ${CMAKE_CURRENT_SOURCE_DIR}/GraphvizView.h
+    COMMAND ${QtCore_MOC_EXECUTABLE} -p ${CMAKE_CURRENT_SOURCE_DIR} -o ${CMAKE_CURRENT_BINARY_DIR}/moc_GraphvizView.cpp ${CMAKE_CURRENT_SOURCE_DIR}/GraphvizView.h
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/GraphvizView.h)
 
 set_property(SOURCE GraphvizView.cpp APPEND PROPERTY OBJECT_DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/moc_GraphvizView-internal.cpp)
@@ -946,8 +946,9 @@ set(qsint_MOC_HDRS
     QSint/actionpanel/actionpanel.h
     QSint/actionpanel/taskheader_p.h
 )
+list(TRANSFORM qsint_MOC_HDRS PREPEND "${CMAKE_CURRENT_SOURCE_DIR}/")
 
-qt_wrap_cpp(qsint_MOC_SRCS ${qsint_MOC_HDRS})
+qt_wrap_cpp(qsint_MOC_SRCS ${qsint_MOC_HDRS} OPTIONS -p ${CMAKE_CURRENT_SOURCE_DIR}/QSint/actionpanel)
 SOURCE_GROUP("Widget\\QSintActionPanel\\Mocs" FILES ${qsint_MOC_SRCS})
 
 # The 3d view
@@ -1027,18 +1028,26 @@ SOURCE_GROUP("Navigation" FILES ${Navigation_SRCS})
 FILE(GLOB_RECURSE Quarter_CPP_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} Quarter/*.cpp)
 FILE(GLOB_RECURSE Quarter_H_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} Quarter/*.h)
 
-SET(Quarter_MOC_HDR
-    Quarter/SignalThread.h
-    Quarter/InteractionMode.h
-    Quarter/SensorManager.h
-    Quarter/ContextMenu.h
-    Quarter/eventhandlers/FocusHandler.h
-    Quarter/eventhandlers/DragDropHandler.h
-    Quarter/eventhandlers/EventFilter.h
-    Quarter/QuarterWidget.h
+set(Quarter_MOC_HDR_ROOT
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quarter/SignalThread.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quarter/InteractionMode.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quarter/SensorManager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quarter/ContextMenu.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quarter/QuarterWidget.h
+)
+set(Quarter_MOC_HDR_EVENT
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quarter/eventhandlers/FocusHandler.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quarter/eventhandlers/DragDropHandler.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Quarter/eventhandlers/EventFilter.h
 )
 
-qt_wrap_cpp(Quarter_MOC_SRCS ${Quarter_MOC_HDR})
+qt_wrap_cpp(Quarter_MOC_SRCS_ROOT ${Quarter_MOC_HDR_ROOT} OPTIONS -p ${CMAKE_CURRENT_SOURCE_DIR}/Quarter)
+qt_wrap_cpp(
+    Quarter_MOC_SRCS_EVENT
+    ${Quarter_MOC_HDR_EVENT}
+    OPTIONS -p ${CMAKE_CURRENT_SOURCE_DIR}/Quarter/eventhandlers
+)
+set(Quarter_MOC_SRCS ${Quarter_MOC_SRCS_ROOT} ${Quarter_MOC_SRCS_EVENT})
 
 SET(Quarter_SRCS
     ${Quarter_CPP_SRC}
