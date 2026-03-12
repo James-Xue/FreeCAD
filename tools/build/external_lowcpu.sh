@@ -45,7 +45,7 @@ Usage:
 Defaults:
   source dir:      ${SOURCE_DIR}
   build root:      ${DEFAULT_BUILD_ROOT}
-  build dir:       <build-root>/debug
+    build dir:       <build-root>/<build-type-lowercase>
   command:         all (configure + build)
   jobs:            auto (at most half-minus-one CPUs, so >50% stays free)
 
@@ -109,7 +109,8 @@ while (($#)); do
     esac
 done
 
-BUILD_DIR="${BUILD_ROOT}/debug"
+BUILD_TYPE_LOWER="$(printf '%s' "${BUILD_TYPE}" | tr '[:upper:]' '[:lower:]')"
+BUILD_DIR="${BUILD_ROOT}/${BUILD_TYPE_LOWER}"
 JOBS="${JOBS:-$(default_jobs)}"
 
 if ! [[ "${JOBS}" =~ ^[0-9]+$ ]] || (( JOBS < 1 )); then

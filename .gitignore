@@ -13,6 +13,7 @@
 !/.pre-commit-config.yaml
 !/.pylintrc
 !/contrib/.vscode/
+!/.vscode/
 *.clangd
 *.DS_Store
 *.dep
@@ -42,7 +43,6 @@ install_manifest.txt
 moc_*.cpp
 qrc_*.cpp
 ui_*.h
-/.vscode/
 /ALL_BUILD.dir/
 /Mod/
 /ZERO_CHECK.dir/
