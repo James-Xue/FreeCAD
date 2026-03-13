@@ -90,6 +90,10 @@
             "options": {
                 "cwd": "${workspaceFolder}"
             },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "dependsOn": [
                 "CMake: Configure (MVP)"
             ],
@@ -128,8 +132,7 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": {
-                "kind": "build",
-                "isDefault": true
+                "kind": "build"
             },
             "dependsOn": [
                 "CMake: Configure (Release)"
