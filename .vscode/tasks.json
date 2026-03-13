@@ -65,6 +65,54 @@
             ]
         },
         {
+            "label": "CMake: Configure (MVP)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--preset",
+                "mvp-linux-debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "CMake: Build (MVP)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-lc",
+                "cpu=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc 2>/dev/null || echo 2); jobs=$(((cpu - 1) / 2)); if [ \"$jobs\" -lt 1 ]; then jobs=1; fi; cmake --build build/mvp --parallel \"$jobs\""
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": [
+                "CMake: Configure (MVP)"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "CMake: Build Only (MVP)",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-lc",
+                "cpu=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc 2>/dev/null || echo 2); jobs=$(((cpu - 1) / 2)); if [ \"$jobs\" -lt 1 ]; then jobs=1; fi; cmake --build build/mvp --parallel \"$jobs\""
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
             "label": "CMake: Build (Release)",
             "type": "shell",
             "command": "bash",
